@@ -48,10 +48,10 @@ void Emulator6502::RenderUI()
 {
     ImGui::Begin("6502 Emulator");
     ImGui::Text(m_CPU.ToString());
-    mem_edit.DrawWindow("Memory Editor", Memory::RAM, 65536);
+    mem_edit.DrawWindow("Memory Editor", Memory::RAM, MEMORY_16KB);
 
-    static char asm_code[1024] = "";
-    ImGui::InputTextMultiline("Code", asm_code, sizeof(asm_code));
+    static char asmCode[BUFFER_SIZE] = "";
+    ImGui::InputTextMultiline("Code", asmCode, sizeof(asmCode));
 
     if (ImGui::Button("Assemble"))
     {
