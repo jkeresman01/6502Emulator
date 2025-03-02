@@ -12,9 +12,9 @@ void CPU6502::Init()
 
 void CPU6502::Reset()
 {
-    m_A = 0;
-    m_X = 0;
-    m_Y = 0;
+    m_A = 0x00;
+    m_X = 0x00;
+    m_Y = 0x00;
     m_SP = 0xFD;
     m_PC = 0x8000;
     m_Status = 0x00;
