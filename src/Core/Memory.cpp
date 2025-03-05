@@ -12,7 +12,7 @@ void Memory::Init()
 
 void Memory::Reset()
 {
-    for (std::size_t i = 0; i < MEMORY_16KB; ++i)
+    for (std::size_t i = 0; i < MEMORY_64KB; ++i)
         s_RAM[i] = 0;
 }
 

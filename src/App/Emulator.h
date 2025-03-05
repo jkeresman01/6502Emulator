@@ -1,7 +1,7 @@
 #pragma once
 
 #define BUFFER_SIZE 1024
-#define MEMORY_16KB 65536
+#define MEMORY_64KB 65536
 
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"

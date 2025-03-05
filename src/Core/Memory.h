@@ -16,9 +16,9 @@ class Memory
     static void Write(const uint16_t address, const uint8_t value);
 
   private:
-    static const uint32_t MEMORY_16KB = 65536;
+    static const uint32_t MEMORY_64KB = 65536;
 
-    static uint8_t s_RAM[MEMORY_16KB];
+    static uint8_t s_RAM[MEMORY_64KB];
 };
 
 } // namespace emulator6502
