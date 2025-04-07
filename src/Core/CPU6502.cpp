@@ -20,27 +20,24 @@ void CPU6502::Reset()
     m_Status = 0x00;
 }
 
-void CPU6502::ExecuteInstruction()
+void CPU6502::Step() 
 {
     uint8_t opcode = ReadMemory(m_PC);
+    m_PC++;
+    DecodeAndExecute(opcode);
+}
 
-    EMULATOR_6502_DEBUG(TEXT("Executing instruction: %02X at %04X"), opcode, m_PC);
-
+void CPU6502::DecodeAndExecute(const uint8_t opcode)
+{
     switch (opcode)
     {
     case 0xA9:
-        m_A = ReadMemory(m_PC + 1);
-        m_PC += 2;
-        EMULATOR_6502_DEBUG(TEXT("LDA immediate: %02X"), m_A);
+        ExecuteLDA();
         break;
 
-    case 0x8D: {
-        uint16_t address = ReadMemory(m_PC + 1) | (ReadMemory(m_PC + 2) << 8);
-        WriteMemory(address, m_A);
-        m_PC += 3;
-        EMULATOR_6502_DEBUG(TEXT("STA: Stored %02X at %04X"), m_A, address);
+    case 0x8D:
+        ExecuteSTA();
         break;
-    }
 
     case 0x00:
         EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
@@ -51,6 +48,26 @@ void CPU6502::ExecuteInstruction()
         break;
     }
 
+    PrintRegisterState();
+}
+
+void CPU6502::ExecuteLDA()
+{
+    m_A = ReadMemory(m_PC);
+    m_PC++;
+    EMULATOR_6502_DEBUG(TEXT("LDA immediate: %02X"), m_A);
+}
+
+void CPU6502::ExecuteSTA()
+{
+    uint16_t address = ReadMemory(m_PC) | (ReadMemory(m_PC + 1) << 8);
+    m_PC += 2;
+    WriteMemory(address, m_A);
+    EMULATOR_6502_DEBUG(TEXT("STA: Stored %02X at %04X"), m_A, address);
+}
+
+void CPU6502::PrintRegisterState()
+{
     EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X"), m_A, m_X, m_Y, m_SP, m_PC);
 }
 

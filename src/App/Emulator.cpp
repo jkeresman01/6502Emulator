@@ -96,7 +96,7 @@ void Emulator6502::RenderUI()
     ImGui::SameLine();
     if (ImGui::Button("Step"))
     {
-        m_CPU.ExecuteInstruction();
+        m_CPU.Step();
     }
 
     const uint32_t gridSize = 32;
@@ -106,7 +106,7 @@ void Emulator6502::RenderUI()
         ImVec4(0, 0, 0, 1),       ImVec4(1, 1, 1, 1),
         ImVec4(1, 0, 0, 1),       ImVec4(0, 1, 0, 1),
         ImVec4(0, 0, 1, 1),       ImVec4(1, 1, 0, 1),
-        ImVec4(1, 0, 1, 1),         ImVec4(0, 1, 1, 1),
+        ImVec4(1, 0, 1, 1),          ImVec4(0, 1, 1, 1),
         ImVec4(0.5, 0.5, 0.5, 1), ImVec4(0.75, 0.75, 0.75, 1),
         ImVec4(0.5, 0, 0, 1),     ImVec4(0, 0.5, 0, 1),
         ImVec4(0, 0, 0.5, 1),     ImVec4(0.5, 0.5, 0, 1),

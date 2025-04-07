@@ -14,7 +14,7 @@ class CPU6502
 
     void Init();
     void Reset();
-    void ExecuteInstruction();
+    void Step();
 
     uint8_t GetAccumulator() const { return m_A; };
     uint8_t GetRegisterX() const { return m_X; };
@@ -28,6 +28,17 @@ class CPU6502
   private:
     uint8_t ReadMemory(const uint16_t address) const;
     void WriteMemory(const uint16_t address, const uint8_t value);
+
+  private:
+    void Fetch();
+    void DecodeAndExecute(const uint8_t opcode);
+
+  private:
+    void ExecuteLDA();
+    void ExecuteSTA();
+
+  private:
+    void PrintRegisterState();
 
   private:
     uint8_t m_A;
