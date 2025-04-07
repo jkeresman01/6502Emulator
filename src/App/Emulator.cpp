@@ -131,6 +131,15 @@ void Emulator6502::RenderUI()
                 ImGui::SameLine();
         }
     }
+    
+    ImGui::Text("CPU Registers:");
+
+    ImGui::Text("A  = 0x%02X", m_CPU.GetAccumulator());
+    ImGui::Text("X  = 0x%02X", m_CPU.GetRegisterX());
+    ImGui::Text("Y  = 0x%02X", m_CPU.GetRegisterY());
+    ImGui::Text("SP = 0x%02X", m_CPU.GetStackPointer());
+    ImGui::Text("PC = 0x%04X", m_CPU.GetProgramCounter());
+    ImGui::Text("Status = 0x%02X", m_CPU.GetStatusFlags());
 
     ImGui::NextColumn();
 
@@ -161,6 +170,7 @@ void Emulator6502::RenderUI()
     ImGui::End();
 }
 
+//TODO move to separate Assembler class and refactor whole thing
 void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
 {
     std::vector<uint8_t> machineCode;
