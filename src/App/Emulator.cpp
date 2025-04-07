@@ -11,9 +11,7 @@ static char asmCode[BUFFER_SIZE] = "";
 
 void Emulator6502::Init()
 {
-    Memory::Init();
-    m_CPU.Reset();
-
+    Reset();
     glfwInit();
     m_Window = glfwCreateWindow(1000, 700, "6502 Emulator", NULL, NULL);
     glfwMakeContextCurrent(m_Window);
@@ -21,6 +19,14 @@ void Emulator6502::Init()
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init();
 }
+
+
+void Emulator6502::Reset()
+{
+    Memory::Init();
+    m_CPU.Reset();
+}
+
 
 void Emulator6502::Run()
 {
@@ -81,6 +87,12 @@ void Emulator6502::RenderUI()
     if (ImGui::Button("Run"))
     {
         // TODO: Implement execution
+    }
+    
+    ImGui::SameLine();
+    if (ImGui::Button("Reset"))
+    {
+        Reset();
     }
 
     ImGui::NextColumn();

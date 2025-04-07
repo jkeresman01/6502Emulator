@@ -24,6 +24,7 @@ class Emulator6502
     void Shutdown();
 
   private:
+    void Reset();
     void RenderUI();
     void LoadProgramIntoMemory(const std::string &asmCode);
 
