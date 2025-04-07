@@ -99,14 +99,14 @@ void Emulator6502::RenderUI()
         m_CPU.ExecuteInstruction();
     }
 
-    const int32_t gridSize = 32;
+    const uint32_t gridSize = 32;
     const float pixelSize = 6.0f;
 
     static const ImVec4 colors[] = {
         ImVec4(0, 0, 0, 1),       ImVec4(1, 1, 1, 1),
         ImVec4(1, 0, 0, 1),       ImVec4(0, 1, 0, 1),
         ImVec4(0, 0, 1, 1),       ImVec4(1, 1, 0, 1),
-        ImVec4(1, 0, 1, 1),          ImVec4(0, 1, 1, 1),
+        ImVec4(1, 0, 1, 1),         ImVec4(0, 1, 1, 1),
         ImVec4(0.5, 0.5, 0.5, 1), ImVec4(0.75, 0.75, 0.75, 1),
         ImVec4(0.5, 0, 0, 1),     ImVec4(0, 0.5, 0, 1),
         ImVec4(0, 0, 0.5, 1),     ImVec4(0.5, 0.5, 0, 1),
@@ -114,9 +114,9 @@ void Emulator6502::RenderUI()
     };
 
     ImGui::Text("Pixel Display:");
-    for (int y = 0; y < gridSize; ++y)
+    for (uint32_t y = 0; y < gridSize; ++y)
     {
-        for (int x = 0; x < gridSize; ++x)
+        for (uint32_t x = 0; x < gridSize; ++x)
         {
             uint16_t address = 0x0200 + (y * gridSize + x);
             uint8_t colorIndex = Memory::Read(address) & 0x0F;
