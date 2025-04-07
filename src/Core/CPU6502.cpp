@@ -59,7 +59,12 @@ std::string CPU6502::ToString() const
 {
     std::stringstream ss;
 
-    // TODO print register state
+    ss << "Accumulator (A): " << std::hex << std::uppercase << (int)m_A << "\r\n";
+    ss << "X Register (X): " << std::hex << (int32_t)m_X << "\r\n";
+    ss << "Y Register (Y): " << std::hex << (int32_t)m_Y << "\r\n";
+    ss << "Stack Pointer (SP): " << std::hex << (int32_t)m_SP << "\r\n";
+    ss << "Program Counter (PC): " << std::hex << (int32_t)m_PC << "\r\n";
+    ss << "Status Register (Status): " << std::hex << (int32_t)m_Status << "\r\n";
 
     return ss.str();
 }
