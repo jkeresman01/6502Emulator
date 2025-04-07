@@ -1,7 +1,5 @@
 #pragma once
 
-#include "TimeUtil.h"
-
 #include <chrono>
 #include <cstdarg>
 #include <cstdint>
@@ -58,7 +56,6 @@ class Logger
                               uint32_t lineNumber, const char *file)
     {
         log << "[";
-        TimeUtil::putTime(log, TimeUtil::now());
         log << "] ";
 
         std::ostringstream location;
@@ -66,7 +63,7 @@ class Logger
 
         log << location.str();
 
-        int padding = 74 - location.str().length();
+        size_t padding = 74 - location.str().length();
         if (padding > 0)
         {
             log << std::setw(padding) << " ";

@@ -10,7 +10,7 @@ namespace emulator6502
 class CPU6502
 {
   public:
-    CPU6502();
+    CPU6502() = default;
 
     void Init();
     void Reset();

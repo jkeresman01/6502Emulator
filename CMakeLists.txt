@@ -1,27 +1,42 @@
-icmake_minimum_required(VERSION 3.10)
-
+cmake_minimum_required(VERSION 3.10)
 project(6502Emulator)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(lib/imgui)
-add_subdirectory(lib/glfw)
+set(SRC_DIR src)
+set(EXTERNAL_DIR external)
 
-include_directories(${CMAKE_SOURCE_DIR}/lib/imgui)
-include_directories(${CMAKE_SOURCE_DIR}/lib/glfw/include)
-include_directories(${CMAKE_SOURCE_DIR}/include)
+add_subdirectory(${EXTERNAL_DIR}/glfw)
 
-set(SOURCES 
-    src/main.cpp 
-    src/Core/CPU6502.cpp 
-    src/Core/Memory.cpp
-    src/App/Emulator.cpp
-    src/Util/Time.cpp
-    src/Util/Logger.cpp
+include_directories(${EXTERNAL_DIR}/glfw/include)
+
+add_library(imgui STATIC
+    ${EXTERNAL_DIR}/imgui/imgui.cpp
+    ${EXTERNAL_DIR}/imgui/imgui_draw.cpp
+    ${EXTERNAL_DIR}/imgui/imgui_tables.cpp
+    ${EXTERNAL_DIR}/imgui/imgui_widgets.cpp
+    ${EXTERNAL_DIR}/imgui/backends/imgui_impl_glfw.cpp
+    ${EXTERNAL_DIR}/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-add_executable(6502Emulator ${SOURCES})
+target_include_directories(imgui PUBLIC
+    ${EXTERNAL_DIR}/imgui
+    ${EXTERNAL_DIR}/imgui/backends
+    ${EXTERNAL_DIR}/glfw/include
+)
 
-target_link_libraries(6502Emulator glfw imgui)
+find_package(OpenGL REQUIRED)
 
+file(GLOB_RECURSE PROJECT_SOURCES 
+    ${SRC_DIR}/*.cpp 
+    ${SRC_DIR}/*.h
+)
+
+add_executable(6502Emulator ${PROJECT_SOURCES})
+
+target_include_directories(6502Emulator PRIVATE ${SRC_DIR})
+target_include_directories(6502Emulator PRIVATE ${EXTERNAL_DIR}/imgui)
+target_include_directories(6502Emulator PRIVATE ${EXTERNAL_DIR}/glfw/include)
+
+target_link_libraries(6502Emulator PRIVATE imgui glfw OpenGL::GL)

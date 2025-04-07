@@ -1,8 +1,5 @@
 #pragma once
 
-#define BUFFER_SIZE 1024
-#define MEMORY_64KB 65536
-
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "imgui.h"
@@ -14,7 +11,6 @@
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
 
-#include "imgui_memory_editor.h"
 
 namespace emulator6502
 {
@@ -32,7 +28,6 @@ class Emulator6502
 
   private:
     GLFWwindow *m_Window;
-    MemoryEditor m_MemoryEditor;
     CPU6502 m_CPU;
 };
 } // namespace emulator6502

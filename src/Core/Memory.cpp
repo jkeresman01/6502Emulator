@@ -5,6 +5,8 @@
 namespace emulator6502
 {
 
+uint8_t Memory::s_RAM[MEMORY_64KB] = {0};
+
 void Memory::Init()
 {
     Reset();
@@ -12,8 +14,10 @@ void Memory::Init()
 
 void Memory::Reset()
 {
-    for (std::size_t i = 0; i < MEMORY_64KB; ++i)
-        s_RAM[i] = 0;
+    for (size_t i = 0; i < MEMORY_64KB; ++i)
+    {
+        s_RAM[i] = 0x00;
+    }
 }
 
 uint8_t Memory::Read(uint16_t address)
