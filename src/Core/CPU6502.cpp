@@ -1,7 +1,5 @@
 #include "CPU6502.h"
 
-#include <iostream>
-
 #include "Memory.h"
 
 namespace emulator6502
@@ -38,7 +36,6 @@ void CPU6502::ExecuteInstruction()
 
     case 0x8D: {
         uint16_t address = ReadMemory(m_PC + 1) | (ReadMemory(m_PC + 2) << 8);
-        std::cout << "Address: " << address << std::endl;
         WriteMemory(address, m_A);
         m_PC += 3;
         EMULATOR_6502_DEBUG(TEXT("STA: Stored %02X at %04X"), m_A, address);
