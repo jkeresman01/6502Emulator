@@ -1,5 +1,7 @@
 #include "CPU6502.h"
 
+#include <iostream>
+
 #include "Memory.h"
 
 namespace emulator6502
@@ -16,7 +18,7 @@ void CPU6502::Reset()
     m_X = 0x00;
     m_Y = 0x00;
     m_SP = 0xFD;
-    m_PC = 0x8000;
+    m_PC = 0x0800;
     m_Status = 0x00;
 }
 
@@ -24,25 +26,35 @@ void CPU6502::ExecuteInstruction()
 {
     uint8_t opcode = ReadMemory(m_PC);
 
-    EMULATOR_6502_DEBUG(TEXT("Executing instruction: %04X", opcode));
+    EMULATOR_6502_DEBUG(TEXT("Executing instruction: %02X at %04X"), opcode, m_PC);
 
     switch (opcode)
     {
     case 0xA9:
         m_A = ReadMemory(m_PC + 1);
         m_PC += 2;
-        EMULATOR_6502_DEBUG(TEXT("LDA immediate: %x", opcode));
+        EMULATOR_6502_DEBUG(TEXT("LDA immediate: %02X"), m_A);
         break;
-    case 0x00:
-        EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
-        break;
-    default:
-        EMULATOR_6502_DEBUG(TEXT("Unknown opcode: %x", opcode));
+
+    case 0x8D: {
+        uint16_t address = ReadMemory(m_PC + 1) | (ReadMemory(m_PC + 2) << 8);
+        std::cout << "Address: " << address << std::endl;
+        WriteMemory(address, m_A);
+        m_PC += 3;
+        EMULATOR_6502_DEBUG(TEXT("STA: Stored %02X at %04X"), m_A, address);
         break;
     }
 
-    EMULATOR_6502_DEBUG(TEXT("Accumulator: %x", m_A));
-    EMULATOR_6502_DEBUG(TEXT("Program counter: %x", m_PC));
+    case 0x00:
+        EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
+        break;
+
+    default:
+        EMULATOR_6502_DEBUG(TEXT("Unknown opcode: %02X"), opcode);
+        break;
+    }
+
+    EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X"), m_A, m_X, m_Y, m_SP, m_PC);
 }
 
 uint8_t CPU6502::ReadMemory(const uint16_t address) const
