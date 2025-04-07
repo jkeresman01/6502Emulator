@@ -25,8 +25,15 @@ class Emulator6502
 
   private:
     void Reset();
-    void RenderUI();
     void LoadProgramIntoMemory(const std::string &asmCode);
+
+  private:
+    void RenderUI();
+
+    void RenderMemoryLayout();
+    void RenderAsmEditor();
+    void RenderPixelDisplay();
+    void RenderProcessRegisterStatus();
 
   private:
     GLFWwindow *m_Window;

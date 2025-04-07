@@ -170,6 +170,27 @@ void Emulator6502::RenderUI()
     ImGui::End();
 }
 
+
+void Emulator6502::RenderMemoryLayout()
+{
+    // TODO
+}
+
+void Emulator6502::RenderAsmEditor()
+{
+    // TODO
+}
+
+void Emulator6502::RenderPixelDisplay()
+{
+    // TODO
+}
+
+void Emulator6502::RenderProcessRegisterStatus()
+{
+    // TODO
+}
+
 //TODO move to separate Assembler class and refactor whole thing
 void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
 {
