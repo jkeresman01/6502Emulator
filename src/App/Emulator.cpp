@@ -13,7 +13,7 @@ void Emulator6502::Init()
 {
     Reset();
     glfwInit();
-    m_Window = glfwCreateWindow(1000, 700, "6502 Emulator", NULL, NULL);
+    m_Window = glfwCreateWindow(1180, 820, "6502 Emulator", NULL, NULL);
     glfwMakeContextCurrent(m_Window);
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
@@ -26,7 +26,6 @@ void Emulator6502::Reset()
     Memory::Init();
     m_CPU.Reset();
 }
-
 
 void Emulator6502::Run()
 {
@@ -93,6 +92,46 @@ void Emulator6502::RenderUI()
     if (ImGui::Button("Reset"))
     {
         Reset();
+    }
+
+        
+    ImGui::SameLine();
+    if (ImGui::Button("Step"))
+    {
+        m_CPU.ExecuteInstruction();
+    }
+
+    const int32_t gridSize = 32;
+    const float pixelSize = 6.0f;
+
+    static const ImVec4 colors[] = {
+        ImVec4(0, 0, 0, 1),       ImVec4(1, 1, 1, 1),
+        ImVec4(1, 0, 0, 1),       ImVec4(0, 1, 0, 1),
+        ImVec4(0, 0, 1, 1),       ImVec4(1, 1, 0, 1),
+        ImVec4(1, 0, 1, 1),          ImVec4(0, 1, 1, 1),
+        ImVec4(0.5, 0.5, 0.5, 1), ImVec4(0.75, 0.75, 0.75, 1),
+        ImVec4(0.5, 0, 0, 1),     ImVec4(0, 0.5, 0, 1),
+        ImVec4(0, 0, 0.5, 1),     ImVec4(0.5, 0.5, 0, 1),
+        ImVec4(0.5, 0, 0.5, 1),   ImVec4(0, 0.5, 0.5, 1)
+    };
+
+    ImGui::Text("Pixel Display:");
+    for (int y = 0; y < gridSize; ++y)
+    {
+        for (int x = 0; x < gridSize; ++x)
+        {
+            uint16_t address = 0x0200 + (y * gridSize + x);
+            uint8_t colorIndex = Memory::Read(address) & 0x0F;
+
+            ImGui::PushStyleColor(ImGuiCol_Button, colors[colorIndex]);
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colors[colorIndex]);
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, colors[colorIndex]);
+            ImGui::Button("##", ImVec2(pixelSize, pixelSize));
+            ImGui::PopStyleColor(3);
+
+            if (x < gridSize - 1)
+                ImGui::SameLine();
+        }
     }
 
     ImGui::NextColumn();
