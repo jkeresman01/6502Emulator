@@ -23,7 +23,7 @@ void Emulator6502::Init()
 
 void Emulator6502::Reset()
 {
-    Memory::Init();
+    Memory::Reset();
     m_CPU.Reset();
 }
 
@@ -46,9 +46,7 @@ void Emulator6502::Run()
 
 void Emulator6502::Shutdown()
 {
-    m_CPU.Reset();
-    Memory::Reset();
-
+    Reset();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
