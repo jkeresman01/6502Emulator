@@ -25,6 +25,7 @@ class Emulator6502
 
   private:
     void RenderUI();
+    void LoadProgramIntoMemory(const std::string &asmCode);
 
   private:
     GLFWwindow *m_Window;
