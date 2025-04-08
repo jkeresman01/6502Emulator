@@ -8,7 +8,7 @@
 namespace emulator6502
 {
 
-const std::unordered_map<std::string, Instruction> instructionSetLookupTable = {
+static const std::unordered_map<std::string, Instruction> instructionSetLookupTable = {
     {"LDA #", {0xA9, 1}}, 
     {"LDA $", {0xAD, 2}}, 
     {"STA $", {0x8D, 2}}, 
@@ -40,10 +40,10 @@ std::vector<uint8_t> Assembler::Assemble(const std::string &asmCode)
         line.erase(0, line.find_first_not_of(" \t"));
         line.erase(line.find_last_not_of(" \t") + 1);
 
-        size_t commentPos = line.find(';');
-        if (commentPos != std::string::npos)
+        size_t commentPosition = line.find(';');
+        if (commentPosition != std::string::npos)
         {
-            line = line.substr(0, commentPos);
+            line = line.substr(0, commentPosition);
             line.erase(line.find_last_not_of(" \t") + 1);
         }
 
@@ -60,15 +60,15 @@ std::vector<uint8_t> Assembler::Assemble(const std::string &asmCode)
 
         if (auto it = instructionSetLookupTable.find(mnemonic); it != instructionSetLookupTable.end())
         {
-            const auto &instr = it->second;
-            machineCode.push_back(instr.opcode);
-            appendOperand(machineCode, operand, instr.operandSize);
+            const auto &instruction = it->second;
+            machineCode.push_back(instruction.opcode);
+            appendOperands(machineCode, operand, instruction.operandSize);
         }
     }
     return machineCode;
 }
 
-void Assembler::appendOperand(std::vector<uint8_t> &machineCode, const std::string &operand,
+void Assembler::appendOperands(std::vector<uint8_t> &machineCode, const std::string &operand,
                             uint8_t operandSize)
 {
     if (operandSize == 1)
@@ -80,11 +80,11 @@ void Assembler::appendOperand(std::vector<uint8_t> &machineCode, const std::stri
     {
         uint16_t address = static_cast<uint16_t>(std::stoi(operand, nullptr, 16));
 
-        uint8_t highByte = address & 0xFF;
-        uint8_t lowByte = (address >> 8) & 0xFF;
+        uint8_t lowByte = address & 0xFF;
+        uint8_t highByte = (address >> 8) & 0xFF;
 
-        machineCode.push_back(highByte);
         machineCode.push_back(lowByte);
+        machineCode.push_back(highByte);
     }
 }
 }
