@@ -52,15 +52,10 @@ std::vector<uint8_t> Assembler::Assemble(const std::string &asmCode)
             continue;
         }
 
-        std::cout << "Line: " << line << std::endl;
-
         size_t spacePos = line.find(' ');
 
         std::string mnemonic = (spacePos == std::string::npos) ? line : line.substr(0, spacePos + 2);
         std::string operand = (spacePos == std::string::npos) ? "" : line.substr(spacePos + 2);
-
-        std::cout << "Mnemonic: " << mnemonic << std::endl;
-        std::cout << "Operand: " << operand << std::endl;
 
 
         if (auto it = instructionSetLookupTable.find(mnemonic); it != instructionSetLookupTable.end())
