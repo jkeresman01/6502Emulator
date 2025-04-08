@@ -2,19 +2,13 @@
 
 #include <vector>
 
+#include "../Util/ColorsUtil.h"
 
 namespace emulator6502
 {
 
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
-
-static const ImVec4 colors[] = {
-    ImVec4(0, 0, 0, 1),       ImVec4(1, 1, 1, 1),          ImVec4(1, 0, 0, 1),     ImVec4(0, 1, 0, 1),
-    ImVec4(0, 0, 1, 1),       ImVec4(1, 1, 0, 1),          ImVec4(1, 0, 1, 1),     ImVec4(0, 1, 1, 1),
-    ImVec4(0.5, 0.5, 0.5, 1), ImVec4(0.75, 0.75, 0.75, 1), ImVec4(0.5, 0, 0, 1),   ImVec4(0, 0.5, 0, 1),
-    ImVec4(0, 0, 0.5, 1),     ImVec4(0.5, 0.5, 0, 1),      ImVec4(0.5, 0, 0.5, 1), ImVec4(0, 0.5, 0.5, 1)
-};
 
 void Emulator6502::Init()
 {
@@ -134,9 +128,12 @@ void Emulator6502::RenderPixelDisplay()
             uint16_t address = 0x0200 + (y * gridSize + x);
             uint8_t colorIndex = Memory::Read(address) & 0x0F;
 
-            ImGui::PushStyleColor(ImGuiCol_Button, colors[colorIndex]);
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colors[colorIndex]);
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, colors[colorIndex]);
+            const ImVec4 &color = ColorsUtil::GetColor(colorIndex);
+
+            ImGui::PushStyleColor(ImGuiCol_Button, color);
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color);
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, color);
+
             ImGui::Button("##", ImVec2(pixelSize, pixelSize));
             ImGui::PopStyleColor(3);
 
