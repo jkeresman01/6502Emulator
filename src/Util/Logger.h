@@ -38,7 +38,7 @@ class Logger
     static void log(const std::string &severity, const std::string &message, const char *file,
                     uint32_t lineNumber)
     {
-        std::ofstream logfile("/tmp/log.txt", std::ios::app);
+        std::ofstream logfile("C:\\Users\\josip\\aaaaa\\6502Emulator\log.txt", std::ios::app);
 
         if (!logfile.is_open())
         {
