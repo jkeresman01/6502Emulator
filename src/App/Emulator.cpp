@@ -9,6 +9,13 @@ namespace emulator6502
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
 
+static const ImVec4 colors[] = {
+    ImVec4(0, 0, 0, 1),       ImVec4(1, 1, 1, 1),          ImVec4(1, 0, 0, 1),     ImVec4(0, 1, 0, 1),
+    ImVec4(0, 0, 1, 1),       ImVec4(1, 1, 0, 1),          ImVec4(1, 0, 1, 1),     ImVec4(0, 1, 1, 1),
+    ImVec4(0.5, 0.5, 0.5, 1), ImVec4(0.75, 0.75, 0.75, 1), ImVec4(0.5, 0, 0, 1),   ImVec4(0, 0.5, 0, 1),
+    ImVec4(0, 0, 0.5, 1),     ImVec4(0.5, 0.5, 0, 1),      ImVec4(0.5, 0, 0.5, 1), ImVec4(0, 0.5, 0.5, 1)
+};
+
 void Emulator6502::Init()
 {
     Reset();
@@ -117,15 +124,7 @@ void Emulator6502::RenderPixelDisplay()
 {
     const uint32_t gridSize = 32;
     const float pixelSize = 6.0f;
-
-    static const ImVec4 colors[] = {
-        ImVec4(0, 0, 0, 1),          ImVec4(1, 1, 1, 1),     ImVec4(1, 0, 0, 1),
-        ImVec4(0, 1, 0, 1),          ImVec4(0, 0, 1, 1),     ImVec4(1, 1, 0, 1),
-        ImVec4(1, 0, 1, 1),          ImVec4(0, 1, 1, 1),     ImVec4(0.5, 0.5, 0.5, 1),
-        ImVec4(0.75, 0.75, 0.75, 1), ImVec4(0.5, 0, 0, 1),   ImVec4(0, 0.5, 0, 1),
-        ImVec4(0, 0, 0.5, 1),        ImVec4(0.5, 0.5, 0, 1), ImVec4(0.5, 0, 0.5, 1),
-        ImVec4(0, 0.5, 0.5, 1)};
-
+  
     ImGui::Text("Pixel Display:");
 
     for (uint32_t y = 0; y < gridSize; ++y)
@@ -142,7 +141,9 @@ void Emulator6502::RenderPixelDisplay()
             ImGui::PopStyleColor(3);
 
             if (x < gridSize - 1)
+            {
                 ImGui::SameLine();
+            }
         }
     }
 }
@@ -191,7 +192,6 @@ void Emulator6502::RenderButtons()
     }
 }
 
-//TODO move to separate Assembler class and refactor whole thing
 void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
 {
     std::vector<uint8_t> machineCode = m_Assembler->Assemble(asmCode);
@@ -200,7 +200,5 @@ void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
     {
         Memory::s_RAM[0x0800 + i] = machineCode[i];
     }
-
-    std::cout << asmCode;
 }
 } // namespace emulator6502
