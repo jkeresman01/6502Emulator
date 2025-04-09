@@ -11,6 +11,11 @@ namespace emulator6502
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
 
+Emulator6502::~Emulator6502() 
+{
+    delete m_Assembler;
+}
+
 void Emulator6502::Init()
 {
     Random::Init();
@@ -127,8 +132,8 @@ void Emulator6502::RenderPixelDisplay()
     {
         for (uint32_t x = 0; x < gridSize; ++x)
         {
-            uint16_t address = 0x0200 + (y * gridSize + x);
-            uint8_t colorIndex = Memory::Read(address) & 0x0F;
+            Word address = 0x0200 + (y * gridSize + x);
+            Byte colorIndex = Memory::Read(address) & 0x0F;
 
             const ImVec4 &color = ColorsUtil::GetColor(colorIndex);
 
@@ -156,7 +161,8 @@ void Emulator6502::RenderProcessRegisterStatus()
     ImGui::Text("Y  = 0x%02X", m_CPU.GetRegisterY());
     ImGui::Text("SP = 0x%02X", m_CPU.GetStackPointer());
     ImGui::Text("PC = 0x%04X", m_CPU.GetProgramCounter());
-    ImGui::Text("Status = 0x%02X", m_CPU.GetStatusFlags());
+
+    //TODO status flags
 }
 
 void Emulator6502::RenderButtons()
@@ -193,7 +199,7 @@ void Emulator6502::RenderButtons()
 
 void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
 {
-    std::vector<uint8_t> machineCode = m_Assembler->Assemble(asmCode);
+    std::vector<Byte> machineCode = m_Assembler->Assemble(asmCode);
     
     for (size_t i = 0; i < machineCode.size(); ++i)
     {

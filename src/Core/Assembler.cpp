@@ -29,9 +29,9 @@ static const std::unordered_map<std::string, Instruction> instructionSetLookupTa
     {"NOP", {0xEA, 0}}
 };
 
-std::vector<uint8_t> Assembler::Assemble(const std::string &asmCode)
+std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
 {
-    std::vector<uint8_t> machineCode;
+    std::vector<Byte> machineCode;
     std::stringstream ss(asmCode);
     std::string line;
 
@@ -68,20 +68,20 @@ std::vector<uint8_t> Assembler::Assemble(const std::string &asmCode)
     return machineCode;
 }
 
-void Assembler::appendOperands(std::vector<uint8_t> &machineCode, const std::string &operand,
-                            uint8_t operandSize)
+void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand,
+                            Byte operandSize)
 {
     if (operandSize == 1)
     {
-        machineCode.push_back(static_cast<uint8_t>(std::stoi(operand, nullptr, 16)));
+        machineCode.push_back(static_cast<Byte>(std::stoi(operand, nullptr, 16)));
     }
 
     if (operandSize == 2)
     {
-        uint16_t address = static_cast<uint16_t>(std::stoi(operand, nullptr, 16));
+        Word address = static_cast<Word>(std::stoi(operand, nullptr, 16));
 
-        uint8_t lowByte = address & 0xFF;
-        uint8_t highByte = (address >> 8) & 0xFF;
+        Byte lowByte = address & 0xFF;
+        Byte highByte = (address >> 8) & 0xFF;
 
         machineCode.push_back(lowByte);
         machineCode.push_back(highByte);

@@ -5,10 +5,14 @@
 
 namespace emulator6502
 {
+
+using Byte = uint8_t;
+using Word = uint16_t;
+
 struct Instruction
 {
-    uint8_t opcode;
-    uint8_t operandSize;
+    Byte opcode;
+    Byte operandSize;
 };
 
 class Assembler
@@ -16,10 +20,10 @@ class Assembler
   public:
     Assembler() = default;
 
-    std::vector<uint8_t> Assemble(const std::string &asmCode);
+    std::vector<Byte> Assemble(const std::string &asmCode);
 
   private:
-    void appendOperands(std::vector<uint8_t> &machineCode, const std::string &operand, uint8_t operandSize);
+    void appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandSize);
 };
 
 }

@@ -7,6 +7,9 @@
 namespace emulator6502
 {
 
+using Byte = uint8_t;
+using Word = uint16_t;
+
 class Memory
 {
   public:
@@ -15,10 +18,10 @@ class Memory
     static void Init();
     static void Reset();
 
-    static uint8_t Read(const uint16_t address);
-    static void Write(const uint16_t address, const uint8_t value);
+    static Byte Read(const Word address);
+    static void Write(const Word address, const Byte value);
 
-    static uint8_t s_RAM[MEMORY_64KB];
+    static Byte s_RAM[MEMORY_64KB];
 };
 
 } // namespace emulator6502

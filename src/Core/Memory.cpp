@@ -5,7 +5,8 @@
 namespace emulator6502
 {
 
-uint8_t Memory::s_RAM[MEMORY_64KB] = {0};
+
+Byte Memory::s_RAM[MEMORY_64KB] = {0};
 
 void Memory::Init()
 {
@@ -20,12 +21,12 @@ void Memory::Reset()
     }
 }
 
-uint8_t Memory::Read(uint16_t address)
+Byte Memory::Read(const Word address)
 {
     return s_RAM[address];
 }
 
-void Memory::Write(const uint16_t address, const uint8_t value)
+void Memory::Write(const Word address, const Byte value)
 {
     s_RAM[address] = value;
 }

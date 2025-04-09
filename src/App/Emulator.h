@@ -15,10 +15,15 @@
 
 namespace emulator6502
 {
+
+using Byte = uint8_t;
+using Word = uint16_t;
+
 class Emulator6502
 {
   public:
     Emulator6502() = default;
+    ~Emulator6502();
 
     void Init();
     void Run();
@@ -40,6 +45,6 @@ class Emulator6502
   private:
     GLFWwindow *m_Window;
     CPU6502 m_CPU;
-    std::unique_ptr<Assembler> m_Assembler;
+    Assembler* m_Assembler;
 };
 } // namespace emulator6502
