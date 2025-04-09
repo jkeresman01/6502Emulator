@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../Util/ColorsUtil.h"
+#include "../Util/RandomUtil.h"
 
 namespace emulator6502
 {
@@ -12,6 +13,7 @@ static char asmCode[BUFFER_SIZE] = "";
 
 void Emulator6502::Init()
 {
+    Random::Init();
     Reset();
     glfwInit();
     m_Window = glfwCreateWindow(1180, 840, "6502 Emulator", NULL, NULL);

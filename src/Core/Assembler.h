@@ -19,7 +19,7 @@ class Assembler
     std::vector<uint8_t> Assemble(const std::string &asmCode);
 
   private:
-    void appendOperand(std::vector<uint8_t> &machineCode, const std::string &operand, uint8_t operandSize);
+    void appendOperands(std::vector<uint8_t> &machineCode, const std::string &operand, uint8_t operandSize);
 };
 
 }
