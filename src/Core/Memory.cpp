@@ -5,7 +5,6 @@
 namespace emulator6502
 {
 
-
 Byte Memory::s_RAM[MEMORY_64KB] = {0};
 
 void Memory::Init()

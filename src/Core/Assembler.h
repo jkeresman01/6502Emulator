@@ -26,4 +26,4 @@ class Assembler
     void appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandSize);
 };
 
-}
+} // namespace emulator6502

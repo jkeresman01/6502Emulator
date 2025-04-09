@@ -8,10 +8,9 @@
 
 #include <iostream>
 
+#include "../Core/Assembler.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
-#include "../Core/Assembler.h"
-
 
 namespace emulator6502
 {
@@ -45,6 +44,6 @@ class Emulator6502
   private:
     GLFWwindow *m_Window;
     CPU6502 m_CPU;
-    Assembler* m_Assembler;
+    Assembler *m_Assembler;
 };
 } // namespace emulator6502

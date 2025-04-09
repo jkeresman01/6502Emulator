@@ -1,33 +1,19 @@
 #include "Assembler.h"
 
-#include <string>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <unordered_map>
 
 namespace emulator6502
 {
 
 static const std::unordered_map<std::string, Instruction> instructionSetLookupTable = {
-    {"LDA #", {0xA9, 1}}, 
-    {"LDA $", {0xAD, 2}}, 
-    {"STA $", {0x8D, 2}}, 
-    {"LDX #", {0xA2, 1}}, 
-    {"LDX $", {0xAE, 2}}, 
-    {"STX $", {0x8E, 2}},
-    {"LDY #", {0xA0, 1}}, 
-    {"LDY $", {0xAC, 2}}, 
-    {"STY $", {0x8C, 2}},
-    {"ADC #", {0x69, 1}}, 
-    {"ADC $", {0x6D, 2}},
-    {"SBC #", {0xE9, 1}},
-    {"SBC $", {0xED, 2}}, 
-    {"INX", {0xE8, 0}},  
-    {"INY", {0xC8, 0}}, 
-    {"DEX", {0xCA, 0}},  
-    {"DEY", {0x88, 0}},   
-    {"NOP", {0xEA, 0}}
-};
+    {"LDA #", {0xA9, 1}}, {"LDA $", {0xAD, 2}}, {"STA $", {0x8D, 2}}, {"LDX #", {0xA2, 1}},
+    {"LDX $", {0xAE, 2}}, {"STX $", {0x8E, 2}}, {"LDY #", {0xA0, 1}}, {"LDY $", {0xAC, 2}},
+    {"STY $", {0x8C, 2}}, {"ADC #", {0x69, 1}}, {"ADC $", {0x6D, 2}}, {"SBC #", {0xE9, 1}},
+    {"SBC $", {0xED, 2}}, {"INX", {0xE8, 0}},   {"INY", {0xC8, 0}},   {"DEX", {0xCA, 0}},
+    {"DEY", {0x88, 0}},   {"NOP", {0xEA, 0}}};
 
 std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
 {
@@ -57,7 +43,6 @@ std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
         std::string mnemonic = (spacePos == std::string::npos) ? line : line.substr(0, spacePos + 2);
         std::string operand = (spacePos == std::string::npos) ? "" : line.substr(spacePos + 2);
 
-
         if (auto it = instructionSetLookupTable.find(mnemonic); it != instructionSetLookupTable.end())
         {
             const auto &instruction = it->second;
@@ -68,8 +53,7 @@ std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
     return machineCode;
 }
 
-void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand,
-                            Byte operandSize)
+void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandSize)
 {
     if (operandSize == 1)
     {
@@ -87,4 +71,4 @@ void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string
         machineCode.push_back(highByte);
     }
 }
-}
+} // namespace emulator6502

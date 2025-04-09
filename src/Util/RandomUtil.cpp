@@ -16,5 +16,4 @@ uint32_t Random::Generate(uint32_t max)
     return s_distribution(s_randomEngine) % (max + 1);
 }
 
-}
-
+} // namespace emulator6502

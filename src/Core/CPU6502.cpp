@@ -19,7 +19,7 @@ void CPU6502::Reset()
     m_Y = 0x00;
     m_SP = 0xFD;
     m_PC = 0x0800;
-    
+
     ////////////////////            STATUS FLAGS        ////////////////////
 
     C = 0;
@@ -39,7 +39,7 @@ Byte CPU6502::FetchByte()
 Word CPU6502::FetchWord()
 {
     Word data = Memory::Read(m_PC) | (Memory::Read(m_PC + 1) << 8);
-    m_PC +=2;
+    m_PC += 2;
     return data;
 }
 
@@ -53,7 +53,7 @@ void CPU6502::WriteByte(const Word address, const Byte value)
     Memory::Write(address, value);
 }
 
-void CPU6502::Step() 
+void CPU6502::Step()
 {
     Byte opcode = FetchByte();
     DecodeAndExecute(opcode);
@@ -74,19 +74,19 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xB5:
         LDAZeroPageX();
         break;
-        
+
     case 0xAD:
         LDAAbsoulute();
-        break;        
+        break;
 
     case 0xBD:
         LDAAbsouluteX();
         break;
-        
+
     case 0xB9:
         LDAAbsouluteY();
         break;
-                
+
     case 0xA1:
         LDAAIndirectX();
         break;
@@ -129,7 +129,7 @@ void CPU6502::LDAZeroPage()
     N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAZeroPageX() 
+void CPU6502::LDAZeroPageX()
 {
     Byte ZeroPageAddr = FetchByte();
 
@@ -138,30 +138,15 @@ void CPU6502::LDAZeroPageX()
     m_A = ReadByte(ZeroPageAddr);
 }
 
-void CPU6502::LDAAbsoulute() 
-{
+void CPU6502::LDAAbsoulute() {}
 
-}
+void CPU6502::LDAAbsouluteX() {}
 
-void CPU6502::LDAAbsouluteX() 
-{
+void CPU6502::LDAAbsouluteY() {}
 
-}
+void CPU6502::LDAAIndirectX() {}
 
-void CPU6502::LDAAbsouluteY() 
-{
-
-}
-
-void CPU6502::LDAAIndirectX() 
-{
-
-}
-
-void CPU6502::LDAAIndirectY() 
-{
-
-}
+void CPU6502::LDAAIndirectY() {}
 
 void CPU6502::ExecuteSTA()
 {
@@ -173,8 +158,6 @@ void CPU6502::PrintRegisterState()
 {
     EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X"), m_A, m_X, m_Y, m_SP, m_PC);
 }
-
-
 
 std::string CPU6502::ToString() const
 {
@@ -188,7 +171,5 @@ std::string CPU6502::ToString() const
 
     return ss.str();
 }
-
-
 
 } // namespace emulator6502

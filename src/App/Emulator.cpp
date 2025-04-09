@@ -11,7 +11,7 @@ namespace emulator6502
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
 
-Emulator6502::~Emulator6502() 
+Emulator6502::~Emulator6502()
 {
     delete m_Assembler;
 }
@@ -27,7 +27,6 @@ void Emulator6502::Init()
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init();
 }
-
 
 void Emulator6502::Reset()
 {
@@ -77,16 +76,15 @@ void Emulator6502::RenderUI()
     RenderButtons();
     RenderPixelDisplay();
     RenderProcessRegisterStatus();
-    
+
     ImGui::NextColumn();
 
     RenderMemoryLayout();
-    
+
     ImGui::Columns(1);
 
     ImGui::End();
 }
-
 
 void Emulator6502::RenderAsmEditor()
 {
@@ -125,7 +123,7 @@ void Emulator6502::RenderPixelDisplay()
 {
     const uint32_t gridSize = 32;
     const float pixelSize = 6.0f;
-  
+
     ImGui::Text("Pixel Display:");
 
     for (uint32_t y = 0; y < gridSize; ++y)
@@ -162,7 +160,7 @@ void Emulator6502::RenderProcessRegisterStatus()
     ImGui::Text("SP = 0x%02X", m_CPU.GetStackPointer());
     ImGui::Text("PC = 0x%04X", m_CPU.GetProgramCounter());
 
-    //TODO status flags
+    // TODO status flags
 }
 
 void Emulator6502::RenderButtons()
@@ -200,7 +198,7 @@ void Emulator6502::RenderButtons()
 void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
 {
     std::vector<Byte> machineCode = m_Assembler->Assemble(asmCode);
-    
+
     for (size_t i = 0; i < machineCode.size(); ++i)
     {
         Memory::s_RAM[0x0800 + i] = machineCode[i];

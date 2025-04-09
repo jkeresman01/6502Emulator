@@ -50,8 +50,6 @@ class CPU6502
     void LDAAIndirectX();
     void LDAAIndirectY();
 
-
-
     ////////////////////            STA            ////////////////////
     void ExecuteSTA();
 
@@ -67,7 +65,7 @@ class CPU6502
     Byte m_SP;
 
     ////////////////////            STATUS FLAGS        ////////////////////
-   
+
     Byte C : 1;
     Byte Z : 1;
     Byte I : 1;
