@@ -136,17 +136,72 @@ void CPU6502::LDAZeroPageX()
     ZeroPageAddr += m_X;
 
     m_A = ReadByte(ZeroPageAddr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsoulute() {}
+void CPU6502::LDAAbsoulute() 
+{
+    Word address = FetchWord();
+    
+    m_A = ReadByte(address);
 
-void CPU6502::LDAAbsouluteX() {}
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
 
-void CPU6502::LDAAbsouluteY() {}
+void CPU6502::LDAAbsouluteX() 
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
 
-void CPU6502::LDAIndirectX() {}
+    m_A = ReadByte(addr);
+    
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
 
-void CPU6502::LDAIndirectY() {}
+void CPU6502::LDAAbsouluteY()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_Y;
+
+    m_A = ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::LDAIndirectX()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte((zeroPageAddr + m_X) & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + m_X + 1) & 0xFF);
+
+    Word addr = (addrHighByte << 8) | addrLowByte;
+
+    m_A = ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::LDAIndirectY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte(zeroPageAddr & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
+
+    m_A = ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
 
 void CPU6502::ExecuteSTA()
 {

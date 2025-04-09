@@ -11,11 +11,6 @@ namespace emulator6502
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
 
-Emulator6502::~Emulator6502()
-{
-    delete m_Assembler;
-}
-
 void Emulator6502::Init()
 {
     Random::Init();

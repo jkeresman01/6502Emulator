@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <memory>
 
 #include "../Core/Assembler.h"
 #include "../Core/CPU6502.h"
@@ -22,7 +23,6 @@ class Emulator6502
 {
   public:
     Emulator6502() = default;
-    ~Emulator6502();
 
     void Init();
     void Run();
@@ -44,6 +44,6 @@ class Emulator6502
   private:
     GLFWwindow *m_Window;
     CPU6502 m_CPU;
-    Assembler *m_Assembler;
+    std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
 };
 } // namespace emulator6502
