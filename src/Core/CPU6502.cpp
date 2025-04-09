@@ -88,11 +88,11 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         break;
 
     case 0xA1:
-        LDAAIndirectX();
+        LDAIndirectX();
         break;
 
     case 0xB1:
-        LDAAIndirectY();
+        LDAIndirectY();
         break;
 
     case 0x8D:
@@ -144,9 +144,9 @@ void CPU6502::LDAAbsouluteX() {}
 
 void CPU6502::LDAAbsouluteY() {}
 
-void CPU6502::LDAAIndirectX() {}
+void CPU6502::LDAIndirectX() {}
 
-void CPU6502::LDAAIndirectY() {}
+void CPU6502::LDAIndirectY() {}
 
 void CPU6502::ExecuteSTA()
 {

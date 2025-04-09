@@ -47,8 +47,8 @@ class CPU6502
     void LDAAbsoulute();
     void LDAAbsouluteX();
     void LDAAbsouluteY();
-    void LDAAIndirectX();
-    void LDAAIndirectY();
+    void LDAIndirectX();
+    void LDAIndirectY();
 
     ////////////////////            STA            ////////////////////
     void ExecuteSTA();
