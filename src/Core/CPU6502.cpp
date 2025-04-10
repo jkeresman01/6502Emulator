@@ -162,6 +162,26 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xBC:
         LDYAbsouluteX();
         break;
+                
+    case 0xC6:
+        DECZeroPage();
+        break;
+
+    case 0xD6:
+        DECZeroPageX();
+        break;
+
+    case 0xCE:
+        DECAbsoulute();
+        break;
+        
+    case 0xDE:
+        DECAbsouluteX();
+        break;
+
+    case 0xEA:
+        NOP();
+        break;
 
     case 0xB:
         EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
@@ -404,6 +424,65 @@ void CPU6502::DEY()
 
     Z = (m_Y == 0);
     N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::DECZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte value = ReadByte(zeroPageAddr);
+    value--;
+
+    WriteByte(zeroPageAddr, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::DECZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+
+    Byte value = ReadByte(zeroPageAddr);
+    value--;
+
+    WriteByte(zeroPageAddr, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::DECAbsoulute()
+{
+    Word address = FetchWord();
+
+    Byte value = ReadByte(address);
+    value--;
+
+    WriteByte(address, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::DECAbsouluteX()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    Byte value = ReadByte(addr);
+    value--;
+
+    WriteByte(addr, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::NOP() 
+{
+    //Do nothing
 }
 
 void CPU6502::ExecuteSTA()

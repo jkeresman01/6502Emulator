@@ -56,7 +56,7 @@ class CPU6502
     void LDXAbsoulute();
     void LDXAbsouluteY();
     
-    ////////////////////            LDXY(Load Y register)            ////////////////////
+    ////////////////////            LDY (Load Y register)            ////////////////////
     void LDYImmediate();
     void LDYZeroPage();
     void LDYZeroPageX();
@@ -81,6 +81,16 @@ class CPU6502
     
     ////////////////////            DEY (Decrement Y)                    ////////////////////
     void DEY();
+        
+    ////////////////////            DEC (Decrement memory by one)            ////////////////////
+    void DECZeroPage();
+    void DECZeroPageX();
+    void DECAbsoulute();
+    void DECAbsouluteX();
+
+
+    ////////////////////            NOP (No operation)                    ////////////////////
+    void NOP();
 
     ////////////////////            STA            ////////////////////
     void ExecuteSTA();
