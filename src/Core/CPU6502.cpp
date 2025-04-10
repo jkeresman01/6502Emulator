@@ -270,6 +270,26 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0x1E:
         ASLAbsoluteX();
         break;
+               
+    case 0x4A:
+        LSRAccumulator();
+        break;
+        
+    case 0x46:
+        LSRZeroPage();
+        break;
+
+    case 0x56:
+        LSRZeroPageX();
+        break;
+
+    case 0x4E:
+        LSRAbsolute();
+        break;
+
+    case 0x5E:
+        LSRAbsoluteX();
+        break;
 
     case 0xEA:
         NOP();
@@ -833,6 +853,80 @@ void CPU6502::ASLAbsoluteX()
     
     Z = (value == 0);
     N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::LSRAccumulator() 
+{
+    C = (m_A & 0b00000001) > 9;
+
+    m_A >>= 1;
+
+    Z = (m_A == 0);
+    N = 0;
+}
+
+void CPU6502::LSRZeroPage() 
+{
+    Byte zeroPageAddr = FetchByte();
+    Byte value = ReadByte(zeroPageAddr);
+
+    C = (value & 0b00000001) > 0;
+
+    value >>= 1;
+
+    WriteByte(zeroPageAddr, value);
+
+    Z = (value = 0);
+    N = 0;
+}
+
+void CPU6502::LSRZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+
+    Byte value = ReadByte(zeroPageAddr);
+
+    C = (value & 0b00000001) > 0;
+
+    value >>= 1;
+
+    WriteByte(zeroPageAddr, value);
+
+    Z = (value = 0);
+    N = 0;
+}
+
+void CPU6502::LSRAbsolute() 
+{
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+
+    C = (value & 0b00000001) > 0;
+
+    value >>= 1;
+
+    WriteByte(addr, value);
+
+    Z = (value = 0);
+    N = 0;
+}
+
+void CPU6502::LSRAbsoluteX()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    Byte value = ReadByte(addr);
+
+    C = (value & 0b00000001) > 0;
+
+    value >>= 1;
+
+    WriteByte(addr, value);
+
+    Z = (value = 0);
+    N = 0;
 }
 
 void CPU6502::PrintRegisterState()

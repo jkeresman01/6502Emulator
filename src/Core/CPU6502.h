@@ -119,13 +119,19 @@ class CPU6502
     void ANDIndirectX();
     void ANDIndirectY();
 
-    ////////////////////        ASL ( Shift Left One Bit(Memory or Accumulator) )    ////////////////////
+    ////////////////////        ASL ( Shift Left One Bit (Memory or Accumulator) )    ////////////////////
     void ASLAccumulator();
     void ASLZeroPage();
     void ASLZeroPageX();
     void ASLAbsolute();
     void ASLAbsoluteX();
 
+    ////////////////////        LSR ( Shift One Bit Right (Memory or Accumulator))   ////////////////////
+    void LSRAccumulator();
+    void LSRZeroPage();
+    void LSRZeroPageX();
+    void LSRAbsolute();
+    void LSRAbsoluteX();
 
 
   private:
