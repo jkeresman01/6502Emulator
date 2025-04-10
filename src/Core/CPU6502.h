@@ -30,7 +30,6 @@ class CPU6502
 
   private:
     void WriteByte(const Word address, const Byte value);
-    void WriteWord(const Word address, const Byte value);
 
     Byte FetchByte();
     Word FetchWord();
@@ -40,7 +39,7 @@ class CPU6502
     void DecodeAndExecute(const Byte opcode);
 
   private:
-    ////////////////////            LDA            ////////////////////
+    ////////////////////            LDA (Load accumulator)            ////////////////////
     void LDAImmediate();
     void LDAZeroPage();
     void LDAZeroPageX();
@@ -49,6 +48,39 @@ class CPU6502
     void LDAAbsouluteY();
     void LDAIndirectX();
     void LDAIndirectY();
+
+    ////////////////////            LDX (Load X register)            ////////////////////
+    void LDXImmediate();
+    void LDXZeroPage();
+    void LDXZeroPageY();
+    void LDXAbsoulute();
+    void LDXAbsouluteY();
+    
+    ////////////////////            LDXY(Load Y register)            ////////////////////
+    void LDYImmediate();
+    void LDYZeroPage();
+    void LDYZeroPageX();
+    void LDYAbsoulute();
+    void LDYAbsouluteX();
+
+
+    ////////////////////            CLC (Clear carry flag)                ////////////////////
+    void CLC();
+    
+    ////////////////////            CLD (Clear decimal mode)              ////////////////////
+    void CLD();  
+
+    ////////////////////            CLD (Clear interrupt disabled bit)    ////////////////////
+    void CLI();
+
+    ////////////////////            CLD (Clear overrflow flag)            ////////////////////
+    void CLV();
+
+    ////////////////////            DEX (Decrement X)                    ////////////////////
+    void DEX();
+    
+    ////////////////////            DEY (Decrement Y)                    ////////////////////
+    void DEY();
 
     ////////////////////            STA            ////////////////////
     void ExecuteSTA();

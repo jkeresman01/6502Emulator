@@ -99,7 +99,71 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         ExecuteSTA();
         break;
 
-    case 0x00:
+    case 0x18:
+        CLC();
+        break;
+        
+    case 0xD8:
+        CLD();
+        break; 
+
+    case 0x58:
+        CLI();
+        break;
+        
+    case 0xB8:
+        CLV();
+        break;
+
+    case 0xCA:
+        DEX();
+        break;
+        
+    case 0x88:
+        DEY();
+        break;
+
+    case 0xA2:
+        LDXImmediate();
+        break;
+        
+    case 0xA6:
+        LDXZeroPage();
+        break;
+
+    case 0xB6:
+        LDXZeroPageY();
+        break;
+
+    case 0xAE:
+        LDXAbsoulute();
+        break;
+        
+    case 0xBE:
+        LDAAbsouluteY();
+        break;
+        
+    case 0xA0:
+        LDYImmediate();
+        break;
+        
+    case 0xA4:
+        LDYZeroPage();
+        break;
+
+    case 0xB4:
+        LDYZeroPageX();
+        break;
+
+    case 0xAC:
+        LDYAbsoulute();
+        break;
+        
+    case 0xBC:
+        LDYAbsouluteX();
+        break;
+
+    case 0xB:
         EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
         break;
 
@@ -201,6 +265,145 @@ void CPU6502::LDAIndirectY()
 
     Z = (m_A == 0);
     N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::LDXImmediate()
+{
+    m_X = FetchByte();
+
+    
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::LDXZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    m_X = ReadByte(zeroPageAddr);
+
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::LDXZeroPageY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    zeroPageAddr += m_Y;
+
+    m_X = ReadByte(zeroPageAddr);
+
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::LDXAbsoulute()
+{
+    Word address = FetchWord();
+
+    m_X = ReadByte(address);
+
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::LDXAbsouluteY()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_Y;
+
+    m_X = ReadByte(addr);
+
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::LDYImmediate()
+{
+    m_Y = FetchByte();
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::LDYZeroPage() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    m_Y = ReadByte(zeroPageAddr);
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::LDYZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    zeroPageAddr += m_X;
+
+    m_Y = ReadByte(zeroPageAddr);
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::LDYAbsoulute() 
+{
+    Word address = FetchWord();
+
+    m_Y = ReadByte(address);
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::LDYAbsouluteX()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    m_Y = ReadByte(addr);
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::CLC() 
+{
+    C = 0;
+}
+
+void CPU6502::CLD() 
+{
+    D = 0;
+}
+
+void CPU6502::CLI() 
+{
+    I = 0;
+}
+
+void CPU6502::CLV() 
+{
+    V = 0;
+}
+
+void CPU6502::DEX() 
+{
+    m_X--;
+
+    Z = (m_X == 0);
+    N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::DEY() 
+{
+    m_Y--;
+
+    Z = (m_Y == 0);
+    N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::ExecuteSTA()
