@@ -55,7 +55,7 @@ class CPU6502
     void LDXZeroPageY();
     void LDXAbsoulute();
     void LDXAbsouluteY();
-    
+
     ////////////////////            LDY (Load Y register)            ////////////////////
     void LDYImmediate();
     void LDYZeroPage();
@@ -63,12 +63,11 @@ class CPU6502
     void LDYAbsoulute();
     void LDYAbsouluteX();
 
-
     ////////////////////            CLC (Clear carry flag)                ////////////////////
     void CLC();
-    
+
     ////////////////////            CLD (Clear decimal mode)              ////////////////////
-    void CLD();  
+    void CLD();
 
     ////////////////////            CLD (Clear interrupt disabled bit)    ////////////////////
     void CLI();
@@ -78,16 +77,15 @@ class CPU6502
 
     ////////////////////            DEX (Decrement X)                    ////////////////////
     void DEX();
-    
+
     ////////////////////            DEY (Decrement Y)                    ////////////////////
     void DEY();
-        
+
     ////////////////////            DEC (Decrement memory by one)            ////////////////////
     void DECZeroPage();
     void DECZeroPageX();
     void DECAbsoulute();
     void DECAbsouluteX();
-
 
     ////////////////////            NOP (No operation)                    ////////////////////
     void NOP();

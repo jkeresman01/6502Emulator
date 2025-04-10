@@ -102,15 +102,15 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0x18:
         CLC();
         break;
-        
+
     case 0xD8:
         CLD();
-        break; 
+        break;
 
     case 0x58:
         CLI();
         break;
-        
+
     case 0xB8:
         CLV();
         break;
@@ -118,7 +118,7 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xCA:
         DEX();
         break;
-        
+
     case 0x88:
         DEY();
         break;
@@ -126,7 +126,7 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xA2:
         LDXImmediate();
         break;
-        
+
     case 0xA6:
         LDXZeroPage();
         break;
@@ -138,15 +138,15 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xAE:
         LDXAbsoulute();
         break;
-        
+
     case 0xBE:
         LDAAbsouluteY();
         break;
-        
+
     case 0xA0:
         LDYImmediate();
         break;
-        
+
     case 0xA4:
         LDYZeroPage();
         break;
@@ -158,11 +158,11 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xAC:
         LDYAbsoulute();
         break;
-        
+
     case 0xBC:
         LDYAbsouluteX();
         break;
-                
+
     case 0xC6:
         DECZeroPage();
         break;
@@ -174,7 +174,7 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
     case 0xCE:
         DECAbsoulute();
         break;
-        
+
     case 0xDE:
         DECAbsouluteX();
         break;
@@ -225,23 +225,23 @@ void CPU6502::LDAZeroPageX()
     N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsoulute() 
+void CPU6502::LDAAbsoulute()
 {
     Word address = FetchWord();
-    
+
     m_A = ReadByte(address);
 
     Z = (m_A == 0);
     N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsouluteX() 
+void CPU6502::LDAAbsouluteX()
 {
     Word baseAddr = FetchWord();
     Word addr = baseAddr + m_X;
 
     m_A = ReadByte(addr);
-    
+
     Z = (m_A == 0);
     N = (m_A & 0b10000000) > 0;
 }
@@ -291,7 +291,6 @@ void CPU6502::LDXImmediate()
 {
     m_X = FetchByte();
 
-    
     Z = (m_X == 0);
     N = (m_X & 0b10000000) > 0;
 }
@@ -347,7 +346,7 @@ void CPU6502::LDYImmediate()
     N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::LDYZeroPage() 
+void CPU6502::LDYZeroPage()
 {
     Byte zeroPageAddr = FetchByte();
 
@@ -369,7 +368,7 @@ void CPU6502::LDYZeroPageX()
     N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::LDYAbsoulute() 
+void CPU6502::LDYAbsoulute()
 {
     Word address = FetchWord();
 
@@ -390,27 +389,27 @@ void CPU6502::LDYAbsouluteX()
     N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::CLC() 
+void CPU6502::CLC()
 {
     C = 0;
 }
 
-void CPU6502::CLD() 
+void CPU6502::CLD()
 {
     D = 0;
 }
 
-void CPU6502::CLI() 
+void CPU6502::CLI()
 {
     I = 0;
 }
 
-void CPU6502::CLV() 
+void CPU6502::CLV()
 {
     V = 0;
 }
 
-void CPU6502::DEX() 
+void CPU6502::DEX()
 {
     m_X--;
 
@@ -418,7 +417,7 @@ void CPU6502::DEX()
     N = (m_X & 0b10000000) > 0;
 }
 
-void CPU6502::DEY() 
+void CPU6502::DEY()
 {
     m_Y--;
 
@@ -480,9 +479,9 @@ void CPU6502::DECAbsouluteX()
     N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::NOP() 
+void CPU6502::NOP()
 {
-    //Do nothing
+    // Do nothing
 }
 
 void CPU6502::ExecuteSTA()
