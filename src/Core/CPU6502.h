@@ -145,6 +145,17 @@ class CPU6502
     void LSRAbsolute();
     void LSRAbsoluteX();
 
+    ////////////////////        ADC ( Add Memory to Accumulator with Carry )   ////////////////////
+    void ADCImmediate();
+    void ADCZeroPage();
+    void ADCZeroPageX();
+    void ADCAbsolute();
+    void ADCAbsoluteX();
+    void ADCAbsoluteY();
+    void ADCIndirectX();
+    void ADCIndirectY();
+
+    void AddWithCarry(Byte value);
 
   private:
     void PrintRegisterState();

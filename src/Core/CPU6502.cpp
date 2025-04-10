@@ -315,6 +315,38 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         LSRAbsoluteX();
         break;
 
+    case 0x69:
+        ADCImmediate();
+        break;
+
+    case 0x65:
+        ADCZeroPage();
+        break;
+        
+    case 0x75:
+        ADCZeroPageX();
+        break;
+                
+    case 0x6D:
+        ADCAbsolute();
+        break;
+
+    case 0x7D:
+        ADCAbsoluteX();
+        break;
+        
+    case 0x79:
+        ADCAbsoluteY();
+        break;
+        
+    case 0x61:
+        ADCIndirectX();
+        break;
+        
+    case 0x71:
+        ADCIndirectY();
+        break;
+
     case 0xEA:
         NOP();
         break;
@@ -1042,6 +1074,95 @@ void CPU6502::LSRAbsoluteX()
 
     Z = (value = 0);
     N = 0;
+}
+
+void CPU6502::ADCImmediate() 
+{
+    Byte value = FetchByte();
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCZeroPage() 
+{
+    Byte zeroPageAddr = FetchByte();
+    
+    Byte value = ReadByte(zeroPageAddr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCZeroPageX() 
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+    
+    Byte value = ReadByte(zeroPageAddr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCAbsolute() 
+{
+    Word addr = FetchWord();
+    
+    Byte value = ReadByte(addr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCAbsoluteX() 
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    Byte value = ReadByte(addr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCAbsoluteY() 
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_Y;
+
+    Byte value = ReadByte(addr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCIndirectX()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte((zeroPageAddr + m_X) & 0XFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + m_X + 1) & 0XFF);
+
+    Word addr = (addrHighByte << 8) | addrLowByte;
+
+    Byte value = ReadByte(addr);
+    AddWithCarry(value);
+}
+
+void CPU6502::ADCIndirectY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte(zeroPageAddr & 0XFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + 1) & 0XFF);
+
+    Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
+
+    Byte value = ReadByte(addr);
+    AddWithCarry(value);
+}
+
+void CPU6502::AddWithCarry(Byte value) 
+{
+    Word sum = m_A + value + C;
+
+    C = (sum > 0XFF);
+    V = (~(m_A ^ value) & (m_A ^ sum) & 0x80) != 0;
+
+    m_A = static_cast<Byte>(sum);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+
 }
 
 void CPU6502::PrintRegisterState()
