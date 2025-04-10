@@ -95,8 +95,32 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         LDAIndirectY();
         break;
 
+    case 0x85:
+        STAZeroPage();
+        break;
+
+    case 0x95:
+        STAZeroPageX();
+        break;
+
     case 0x8D:
-        ExecuteSTA();
+        STAAbsolute();
+        break;
+        
+    case 0x9D:
+        STAAbsoluteX();
+        break;
+                
+    case 0x99:
+        STAAbsoluteY();
+        break;
+                        
+    case 0x81:
+        STAIndirectX();
+        break;
+                                
+    case 0x91:
+        STAIndirectY();
         break;
 
     case 0x18:
@@ -484,10 +508,61 @@ void CPU6502::NOP()
     // Do nothing
 }
 
-void CPU6502::ExecuteSTA()
+void CPU6502::STAZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+    WriteByte(zeroPageAddr, m_A);
+}
+
+void CPU6502::STAZeroPageX() 
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+    WriteByte(zeroPageAddr, m_A);
+}
+
+void CPU6502::STAAbsolute()
 {
     Word storeAddr = FetchWord();
     WriteByte(storeAddr, m_A);
+}
+
+void CPU6502::STAAbsoluteX() 
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+    WriteByte(addr, m_A);
+}
+
+void CPU6502::STAAbsoluteY()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_Y;
+    WriteByte(addr, m_A);
+}
+
+void CPU6502::STAIndirectX() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte((zeroPageAddr + m_X) & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + m_X + 1) & 0xFF);
+
+    Word addr = (addrHighByte << 8) | addrLowByte;
+
+    WriteByte(addr, m_A);
+}
+
+void CPU6502::STAIndirectY() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte(zeroPageAddr & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
+
+    WriteByte(addr, m_A);
 }
 
 void CPU6502::PrintRegisterState()

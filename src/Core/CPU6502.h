@@ -81,17 +81,23 @@ class CPU6502
     ////////////////////            DEY (Decrement Y)                    ////////////////////
     void DEY();
 
-    ////////////////////            DEC (Decrement memory by one)            ////////////////////
+    ////////////////////            DEC (Decrement memory by one)        ////////////////////
     void DECZeroPage();
     void DECZeroPageX();
     void DECAbsoulute();
     void DECAbsouluteX();
 
-    ////////////////////            NOP (No operation)                    ////////////////////
+    ////////////////////            NOP (No operation)                   ////////////////////
     void NOP();
 
-    ////////////////////            STA            ////////////////////
-    void ExecuteSTA();
+    ////////////////////            STA (Store accumulator)              ////////////////////
+    void STAZeroPage();
+    void STAZeroPageX();
+    void STAAbsolute();
+    void STAAbsoluteX();
+    void STAAbsoluteY();
+    void STAIndirectX();
+    void STAIndirectY();
 
   private:
     void PrintRegisterState();
