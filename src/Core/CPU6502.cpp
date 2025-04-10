@@ -972,7 +972,7 @@ void CPU6502::ASLAbsoluteX()
 
 void CPU6502::LSRAccumulator() 
 {
-    C = (m_A & 0b00000001) > 9;
+    C = (m_A & 0b00000001) > 0;
 
     m_A >>= 1;
 
