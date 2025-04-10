@@ -119,6 +119,18 @@ class CPU6502
     void ANDIndirectX();
     void ANDIndirectY();
 
+    
+    ////////////////////            OR (OR memory with acumulator)              ////////////////////
+    void ORAImmediate();
+    void ORAZeroPage();
+    void ORAZeroPageX();
+    void ORAAbsolute();
+    void ORAAbsoluteX();
+    void ORAAbsoluteY();
+    void ORAIndirectX();
+    void ORAIndirectY();
+
+
     ////////////////////        ASL ( Shift Left One Bit (Memory or Accumulator) )    ////////////////////
     void ASLAccumulator();
     void ASLZeroPage();
@@ -154,7 +166,5 @@ class CPU6502
     Byte B : 1;
     Byte V : 1;
     Byte N : 1;
-
-    ////////////////////            STATUS FLAGS        ////////////////////
 };
 } // namespace emulator6502

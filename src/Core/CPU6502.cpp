@@ -251,12 +251,36 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         ANDAbsoluteY();
         break;
         
-    case 0x0A:
-        ASLAccumulator();
+    case 0x20:
+        ORAImmediate();
+        break;
+
+    case 0x05:
+        ORAZeroPage();
         break;
         
-    case 0x06:
-        ASLZeroPage();
+    case 0x15:
+        ORAZeroPageX();
+        break;
+
+    case 0x0D:
+        ORAAbsolute();
+        break;
+
+    case 0x1D:
+        ORAAbsoluteX();
+        break;
+
+    case 0x19:
+        ORAAbsoluteY();
+        break;
+        
+    case 0x01:
+        ORAIndirectX();
+        break;
+        
+    case 0x11:
+        ORAIndirectY();
         break;
 
     case 0x16:
@@ -776,6 +800,97 @@ void CPU6502::ANDIndirectY()
     Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
 
     m_A &= ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAImmediate() 
+{
+    m_A |= FetchByte();
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAZeroPage() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    m_A |= ReadByte(zeroPageAddr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAZeroPageX() 
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+
+    m_A |= ReadByte(zeroPageAddr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAAbsolute() 
+{
+    Word address = FetchWord();
+
+    m_A |= ReadByte(address);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAAbsoluteX() 
+{
+    Word baseAddr = FetchWord();
+    Word address = baseAddr + m_X;
+
+    m_A |= ReadByte(address);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAAbsoluteY() 
+{
+    Word baseAddr = FetchWord();
+    Word address = baseAddr + m_Y;
+
+    m_A |= ReadByte(address);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAIndirectX() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte((zeroPageAddr + m_X) & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + m_X + 1) & 0xFF);
+
+    Word address = (addrHighByte << 8) | addrLowByte;
+
+    m_A |= ReadByte(address);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ORAIndirectY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte(zeroPageAddr & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word address = ((addrHighByte << 8) | addrLowByte) + m_Y;
+
+    m_A |= ReadByte(address);
 
     Z = (m_A == 0);
     N = (m_A & 0b10000000) > 0;
