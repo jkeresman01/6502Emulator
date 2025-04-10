@@ -227,6 +227,50 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         STYAbsolute();
         break;
 
+    case 0x29:
+        ANDImmediate();
+        break;
+
+    case 0x25:
+        ANDZeroPage();
+        break;
+        
+    case 0x35:
+        ANDZeroPageX();
+        break;
+
+    case 0x2D:
+        ANDAbsolute();
+        break;
+
+    case 0x3D:
+        ANDAbsoluteX();
+        break;
+
+    case 0x39:
+        ANDAbsoluteY();
+        break;
+        
+    case 0x0A:
+        ASLAccumulator();
+        break;
+        
+    case 0x06:
+        ASLZeroPage();
+        break;
+
+    case 0x16:
+        ASLZeroPageX();
+        break;
+
+    case 0x0E:
+        ASLAbsolute();
+        break;
+
+    case 0x1E:
+        ASLAbsoluteX();
+        break;
+
     case 0xEA:
         NOP();
         break;
@@ -625,6 +669,170 @@ void CPU6502::STYAbsolute()
 {
     Word storeAddr = FetchWord();
     WriteByte(storeAddr, m_Y);
+}
+
+void CPU6502::ANDImmediate()
+{
+    m_A &= FetchByte();
+    
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDZeroPage() 
+{
+    Byte zeroPageAddr = FetchByte();
+    
+    m_A &= ReadByte(zeroPageAddr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+
+    m_A &= ReadByte(zeroPageAddr);
+    
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDAbsolute()
+{
+    Word address = FetchWord();
+    m_A &= ReadByte(address);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDAbsoluteX()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    m_A &= ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDAbsoluteY()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_Y;
+
+    m_A &= ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDIndirectX()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte((zeroPageAddr + m_X) & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + m_X + 1) & 0xFF);
+
+    Word addr = (addrHighByte << 8) | addrLowByte;
+
+    m_A &= ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ANDIndirectY() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte addrLowByte = ReadByte(zeroPageAddr & 0xFF);
+    Byte addrHighByte = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
+
+    m_A &= ReadByte(addr);
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ASLAccumulator() 
+{
+    C = (m_A & 0b10000000) > 0;
+
+    m_A <<= 1;
+
+    Z = (m_A == 0);
+    N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::ASLZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+    Byte value = ReadByte(zeroPageAddr);
+
+    C = (value & 0b10000000) > 0;
+
+    value <<= 1;
+
+    WriteByte(zeroPageAddr, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::ASLZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+
+    Byte value = ReadByte(zeroPageAddr);
+
+    C = (value & 0b10000000) > 0;
+    
+    value <<= 1;
+
+    WriteByte(zeroPageAddr, value);
+    
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::ASLAbsolute() 
+{
+    Word address = FetchWord();
+    Byte value = ReadByte(address);
+
+    C = (value & 0b10000000) > 0;
+
+    value <<= 1;
+
+    WriteByte(address, value);
+
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::ASLAbsoluteX() 
+{
+    Word baseAddr = FetchWord();
+    Word address = baseAddr + m_X;
+
+    Byte value = ReadByte(address);
+
+    C = (value & 0b10000000) > 0;
+    
+    value <<= 1;
+
+    WriteByte(address, value);
+    
+    Z = (value == 0);
+    N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::PrintRegisterState()

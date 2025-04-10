@@ -109,6 +109,25 @@ class CPU6502
     void STYZeroPageX();
     void STYAbsolute();
 
+    ////////////////////            AND (AND memory with acumulator)              ////////////////////
+    void ANDImmediate();
+    void ANDZeroPage();
+    void ANDZeroPageX();
+    void ANDAbsolute();
+    void ANDAbsoluteX();
+    void ANDAbsoluteY();
+    void ANDIndirectX();
+    void ANDIndirectY();
+
+    ////////////////////        ASL ( Shift Left One Bit(Memory or Accumulator) )    ////////////////////
+    void ASLAccumulator();
+    void ASLZeroPage();
+    void ASLZeroPageX();
+    void ASLAbsolute();
+    void ASLAbsoluteX();
+
+
+
   private:
     void PrintRegisterState();
 
