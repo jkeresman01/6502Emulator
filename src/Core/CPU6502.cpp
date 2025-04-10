@@ -203,6 +203,30 @@ void CPU6502::DecodeAndExecute(const Byte opcode)
         DECAbsouluteX();
         break;
 
+    case 0x86:
+        STXZeroPage();
+        break;
+
+    case 0x9E:
+        STAZeroPageX();
+        break;
+
+    case 0x8E:
+        STAAbsolute();
+        break;
+
+    case 0x84:
+        STYZeroPage();
+        break;
+
+    case 0x94:
+        STYZeroPageX();
+        break;
+
+    case 0x8C:
+        STYAbsolute();
+        break;
+
     case 0xEA:
         NOP();
         break;
@@ -563,6 +587,44 @@ void CPU6502::STAIndirectY()
     Word addr = ((addrHighByte << 8) | addrLowByte) + m_Y;
 
     WriteByte(addr, m_A);
+}
+
+void CPU6502::STXZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+    WriteByte(zeroPageAddr, m_X);
+}
+
+void CPU6502::STXZeroPageY()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_Y;
+    WriteByte(zeroPageAddr, m_X);
+}
+
+void CPU6502::STXAbsolute()
+{
+    Word storeAddr = FetchWord();
+    WriteByte(storeAddr, m_X);
+}
+
+void CPU6502::STYZeroPage()
+{
+    Byte zeroPageAddr = FetchByte();
+    WriteByte(zeroPageAddr, m_Y);
+}
+
+void CPU6502::STYZeroPageX()
+{
+    Byte zeroPageAddr = FetchByte();
+    zeroPageAddr += m_X;
+    WriteByte(zeroPageAddr, m_Y);
+}
+
+void CPU6502::STYAbsolute()
+{
+    Word storeAddr = FetchWord();
+    WriteByte(storeAddr, m_Y);
 }
 
 void CPU6502::PrintRegisterState()

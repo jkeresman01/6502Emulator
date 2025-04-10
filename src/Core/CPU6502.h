@@ -99,6 +99,16 @@ class CPU6502
     void STAIndirectX();
     void STAIndirectY();
 
+    ////////////////////            STX (Store X register)              ////////////////////
+    void STXZeroPage();
+    void STXZeroPageY();
+    void STXAbsolute();
+
+    ////////////////////            STY (Store Y register)              ////////////////////
+    void STYZeroPage();
+    void STYZeroPageX();
+    void STYAbsolute();
+
   private:
     void PrintRegisterState();
 
