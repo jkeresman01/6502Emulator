@@ -1155,7 +1155,7 @@ void CPU6502::AddWithCarry(Byte value)
 {
     Word sum = m_A + value + C;
 
-    C = (sum > 0XFF);
+    C = (sum > 0xFF);
     V = (~(m_A ^ value) & (m_A ^ sum) & 0x80) != 0;
 
     m_A = static_cast<Byte>(sum);
