@@ -1059,27 +1059,27 @@ void CPU6502::SBCIndirectX()
 
     Byte lowByteAddr = ReadByte(zeroPageAddr);
     Byte hightByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
-    
+
     Word addr = (hightByteAddr << 8) | lowByteAddr;
 
     Byte value = ReadByte(addr);
     SubtractWithBorrow(value);
 }
 
-void CPU6502::SBCIndirectY() 
+void CPU6502::SBCIndirectY()
 {
     Byte zeroPageAddr = FetchByte();
 
     Byte lowByteAddr = ReadByte(zeroPageAddr);
     Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
-    
+
     Word addr = ((highByteAddr << 8) | lowByteAddr) + m_Y;
 
     Byte value = ReadByte(addr);
     SubtractWithBorrow(value);
 }
 
-void CPU6502::SubtractWithBorrow(const Byte value) 
+void CPU6502::SubtractWithBorrow(const Byte value)
 {
     Word result = m_A + (~value) + StatusFlags.C;
 
@@ -1100,7 +1100,7 @@ void CPU6502::TAX()
     StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
-void CPU6502::TAY() 
+void CPU6502::TAY()
 {
     m_Y = m_A;
 
@@ -1108,7 +1108,7 @@ void CPU6502::TAY()
     StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::TXA() 
+void CPU6502::TXA()
 {
     m_A = m_X;
 
@@ -1124,7 +1124,7 @@ void CPU6502::TYA()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::EORImmediate() 
+void CPU6502::EORImmediate()
 {
     Byte value = FetchByte();
     ExclusiveOR(value);
@@ -1133,7 +1133,7 @@ void CPU6502::EORImmediate()
 void CPU6502::EORZeroPage()
 {
     Byte addr = FetchByte();
-    
+
     Byte value = ReadByte(addr);
     ExclusiveOR(value);
 }
@@ -1154,7 +1154,7 @@ void CPU6502::EORAbsolute()
     ExclusiveOR(value);
 }
 
-void CPU6502::EORAbsoluteX() 
+void CPU6502::EORAbsoluteX()
 {
     Word addr = FetchWord() + m_X;
 
@@ -1162,7 +1162,7 @@ void CPU6502::EORAbsoluteX()
     ExclusiveOR(value);
 }
 
-void CPU6502::EORAbsoluteY() 
+void CPU6502::EORAbsoluteY()
 {
     Word addr = FetchWord() + m_Y;
 
@@ -1196,14 +1196,13 @@ void CPU6502::EORIndirectY()
     ExclusiveOR(value);
 }
 
-void CPU6502::ExclusiveOR(const Byte value) 
+void CPU6502::ExclusiveOR(const Byte value)
 {
     m_A ^= value;
 
     StatusFlags.Z = (m_A == 0);
     StatusFlags.N = (m_A & 0x80) != 0;
 }
-
 
 void CPU6502::CMPImmediate()
 {
@@ -1227,7 +1226,7 @@ void CPU6502::CMPZeroPageX()
     Compare(m_A, value);
 }
 
-void CPU6502::CMPAbsolute() 
+void CPU6502::CMPAbsolute()
 {
     Word addr = FetchWord();
 
@@ -1286,7 +1285,6 @@ void CPU6502::Compare(const Byte registerValue, const Byte value)
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-
 void CPU6502::INCZeroPage()
 {
     Byte addr = FetchByte();
@@ -1299,7 +1297,7 @@ void CPU6502::INCZeroPage()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::INCZeroPageX() 
+void CPU6502::INCZeroPageX()
 {
     Byte addr = (FetchByte() + m_X) & 0xFF;
     Byte value = ReadByte(addr);
@@ -1311,7 +1309,7 @@ void CPU6502::INCZeroPageX()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::INCAbsolute() 
+void CPU6502::INCAbsolute()
 {
     Word addr = FetchWord();
     Byte value = ReadByte(addr);
@@ -1323,7 +1321,7 @@ void CPU6502::INCAbsolute()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::INCAbsoluteX() 
+void CPU6502::INCAbsoluteX()
 {
     Word addr = FetchWord() + m_X;
     Byte value = ReadByte(addr);
@@ -1334,7 +1332,6 @@ void CPU6502::INCAbsoluteX()
     StatusFlags.Z = (value == 0);
     StatusFlags.N = (value & 0b10000000) > 0;
 }
-
 
 void CPU6502::InvalidOpcode()
 {

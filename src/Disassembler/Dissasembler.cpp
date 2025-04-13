@@ -1,8 +1,8 @@
 #include "Dissasembler.h"
 
 #include <iomanip>
-#include <string>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 namespace emulator6502
@@ -14,7 +14,6 @@ static const std::unordered_map<Byte, DisassembledInstruction> disassemblyTable 
     {0x8C, {"STY $", 2}}, {0x69, {"ADC #", 1}}, {0x6D, {"ADC $", 2}}, {0xE9, {"SBC #", 1}},
     {0xED, {"SBC $", 2}}, {0xE8, {"INX", 0}},   {0xC8, {"INY", 0}},   {0xCA, {"DEX", 0}},
     {0x88, {"DEY", 0}},   {0xEA, {"NOP", 0}},   {0x00, {"BRK", 0}}};
-
 
 std::vector<std::string> Dissasembler::Disassmble(const std::vector<Byte> &machineCode)
 {
