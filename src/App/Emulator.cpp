@@ -83,66 +83,17 @@ void Emulator6502::RenderUI()
 
 void Emulator6502::RenderAsmEditor()
 {
-    ImGui::Text("Assembly Editor:");
-    ImGui::Separator();
-    ImGui::InputTextMultiline("##Editor", asmCode, sizeof(asmCode), ImVec2(-FLT_MIN, 300));
+
 }
 
 void Emulator6502::RenderMemoryLayout()
 {
-    ImGui::Text("Memory Viewer:");
-    ImGui::Separator();
-
-    ImGui::BeginChild("Memory", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-
-    for (uint32_t i = 0; i < MEMORY_64KB; i += 16)
-    {
-        char address[16];
-        sprintf(address, "%04X: ", i);
-        ImGui::TextUnformatted(address);
-        ImGui::SameLine();
-
-        for (uint32_t j = 0; j < 16; ++j)
-        {
-            ImGui::SameLine();
-            char byteText[4];
-            sprintf(byteText, "%02X", Memory::s_RAM[i + j]);
-            ImGui::TextUnformatted(byteText);
-        }
-    }
-
-    ImGui::EndChild();
+   
 }
 
 void Emulator6502::RenderPixelDisplay()
 {
-    const uint32_t gridSize = 32;
-    const float pixelSize = 6.0f;
-
-    ImGui::Text("Pixel Display:");
-
-    for (uint32_t y = 0; y < gridSize; ++y)
-    {
-        for (uint32_t x = 0; x < gridSize; ++x)
-        {
-            Word address = 0x0200 + (y * gridSize + x);
-            Byte colorIndex = Memory::Read(address) & 0x0F;
-
-            const ImVec4 &color = ColorsUtil::GetColor(colorIndex);
-
-            ImGui::PushStyleColor(ImGuiCol_Button, color);
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color);
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, color);
-
-            ImGui::Button("##", ImVec2(pixelSize, pixelSize));
-            ImGui::PopStyleColor(3);
-
-            if (x < gridSize - 1)
-            {
-                ImGui::SameLine();
-            }
-        }
-    }
+   
 }
 
 void Emulator6502::RenderProcessorsRegisterStatus()

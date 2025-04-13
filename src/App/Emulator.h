@@ -9,7 +9,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../Core/Assembler.h"
+#include "../Assembler/Assembler.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
 
