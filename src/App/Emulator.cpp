@@ -68,6 +68,8 @@ void Emulator6502::Render()
     ImGui::Columns(1);
 
     ImGui::End();
+
+    RenderDissasemblyPopup();
 }
 
 void Emulator6502::RenderProcessorsRegisterStatus()
@@ -83,6 +85,30 @@ void Emulator6502::RenderProcessorsRegisterStatus()
     // TODO status flags
 }
 
+void Emulator6502::RenderDissasemblyPopup()
+{
+    if (m_ShowDisassemblyPopup)
+    {
+        ImGui::OpenPopup("Disassembly");
+        m_ShowDisassemblyPopup = false;
+    }
+
+    if (ImGui::BeginPopupModal("Disassembly", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        for (const auto &line : m_Dissasembly)
+        {
+            ImGui::Text("%s", line.c_str());
+        }
+
+        if (ImGui::Button("Close"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+}
+
 void Emulator6502::RenderButtons()
 {
     if (ImGui::Button("Assemble"))
@@ -94,7 +120,7 @@ void Emulator6502::RenderButtons()
     ImGui::SameLine();
     if (ImGui::Button("Disassemble"))
     {
-        // TODO: Implement disassembler
+        //OpenDissasemblyPopup();
     }
 
     ImGui::SameLine();
@@ -116,6 +142,15 @@ void Emulator6502::RenderButtons()
     }
 }
 
+void Emulator6502::OpenDissasemblyPopup()
+{
+    const std::vector<Byte> &machineCode = ReadProgramFromMemory();
+    m_Dissasembly = m_Disssembler->Disassmble(machineCode);
+    m_ShowDisassemblyPopup = true;
+
+    RenderDissasemblyPopup();
+}
+
 void Emulator6502::LoadProgramIntoMemory()
 {
     const std::string &asmCode = m_AsmEditor->GetText();
@@ -126,6 +161,45 @@ void Emulator6502::LoadProgramIntoMemory()
     {
         Memory::s_RAM[0x0800 + i] = machineCode[i];
     }
+}
+
+std::vector<Byte> Emulator6502::ReadProgramFromMemory()
+{
+    std::vector<Byte> machineCode;
+
+    size_t programCounter = 0x0800;
+    const uint8_t lookaheadWindow = 3;
+    bool isEndOfProgramReached = false;
+
+    while (programCounter < MEMORY_64KB && !isEndOfProgramReached)
+    {
+        bool isThirdConsecutiveZero = true;
+
+        if (programCounter + lookaheadWindow <= MEMORY_64KB)
+        {
+            for (size_t i = 0; i < lookaheadWindow; ++i)
+            {
+                if (Memory::Read(programCounter + i) != 0x00)
+                {
+                    isThirdConsecutiveZero = false;
+                    break;
+                }
+            }
+
+            if (isThirdConsecutiveZero)
+            {
+                isEndOfProgramReached = true;
+                break;
+            }
+        }
+
+        Byte byte = Memory::Read(programCounter);
+
+        machineCode.push_back(byte);
+        programCounter++;
+    }
+
+    return machineCode;
 }
 
 void Emulator6502::Shutdown()

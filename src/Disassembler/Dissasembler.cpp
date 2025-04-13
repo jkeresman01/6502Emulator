@@ -15,7 +15,7 @@ static const std::unordered_map<Byte, DisassembledInstruction> disassemblyTable 
     {0xED, {"SBC $", 2}}, {0xE8, {"INX", 0}},   {0xC8, {"INY", 0}},   {0xCA, {"DEX", 0}},
     {0x88, {"DEY", 0}},   {0xEA, {"NOP", 0}},   {0x00, {"BRK", 0}}};
 
-std::vector<std::string> Dissasembler::Disassmble(const std::vector<Byte> &machineCode)
+std::vector<std::string> Disassembler::Disassmble(const std::vector<Byte> &machineCode)
 {
     std::vector<std::string> assembly;
     size_t programCounter = 0;
@@ -47,7 +47,7 @@ std::vector<std::string> Dissasembler::Disassmble(const std::vector<Byte> &machi
 
     return assembly;
 }
-void Dissasembler::appendOperands(std::stringstream &ss, const std::vector<Byte> &machineCode,
+void Disassembler::appendOperands(std::stringstream &ss, const std::vector<Byte> &machineCode,
                                   std::size_t &programCounter, Byte operandSize)
 {
     if (operandSize == 1 && (programCounter + 1 < machineCode.size()))

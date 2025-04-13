@@ -15,10 +15,10 @@ struct DisassembledInstruction
     Byte operandSize;
 };
 
-class Dissasembler
+class Disassembler
 {
   public:
-    Dissasembler() = default;
+    Disassembler() = default;
 
     std::vector<std::string> Disassmble(const std::vector<Byte> &machineCode);
 
