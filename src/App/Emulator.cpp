@@ -121,7 +121,7 @@ void Emulator6502::RenderButtons()
     ImGui::SameLine();
     if (ImGui::Button("Disassemble"))
     {
-        //OpenDissasemblyPopup();
+        // OpenDissasemblyPopup();
     }
 
     ImGui::SameLine();

@@ -4,27 +4,28 @@
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <vector>
-#include <string>
 #include <memory>
+#include <string>
+#include <vector>
 
-#include "../Core/Memory.h"
 #include "../Assembler/Assembler.h"
+#include "../Core/Memory.h"
 
 namespace emulator6502
 {
-	class ProgramUtil
-	{
-      public:
-        //////////////////////////////////////////////////////////////
-        ///
-        /// @brief Deleted default constructor to prevent instantiation.
-        ///        Utility class.
-        ///
-        //////////////////////////////////////////////////////////////
-        ProgramUtil() = delete;
+class ProgramUtil
+{
+  public:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Deleted default constructor to prevent instantiation.
+    ///        Utility class.
+    ///
+    //////////////////////////////////////////////////////////////
+    ProgramUtil() = delete;
 
-        static void LoadProgramIntoMemory(const std::string &asmCode, const std::unique_ptr<Assembler> &assembler);
-        static std::vector<Byte> ReadProgramFromMemory();
-	};
-}
+    static void LoadProgramIntoMemory(const std::string &asmCode,
+                                      const std::unique_ptr<Assembler> &assembler);
+    static std::vector<Byte> ReadProgramFromMemory();
+};
+} // namespace emulator6502

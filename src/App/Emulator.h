@@ -10,12 +10,12 @@
 #include <memory>
 
 #include "../Assembler/Assembler.h"
-#include "../Disassembler/Dissasembler.h"
 #include "../Components/Editor/Editor.h"
 #include "../Components/MemoryLayout/MemoryLayout.h"
 #include "../Components/PixelDisplay/PixelDisplay.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
+#include "../Disassembler/Dissasembler.h"
 
 namespace emulator6502
 {
