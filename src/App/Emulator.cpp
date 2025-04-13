@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../Util/ColorsUtil.h"
+#include "../Util/ProgramUtil.h"
 #include "../Util/RandomUtil.h"
 
 namespace emulator6502
@@ -144,7 +145,7 @@ void Emulator6502::RenderButtons()
 
 void Emulator6502::OpenDissasemblyPopup()
 {
-    const std::vector<Byte> &machineCode = ReadProgramFromMemory();
+    const std::vector<Byte> &machineCode = ProgramUtil::ReadProgramFromMemory();
     m_Dissasembly = m_Disssembler->Disassmble(machineCode);
     m_ShowDisassemblyPopup = true;
 
@@ -154,52 +155,7 @@ void Emulator6502::OpenDissasemblyPopup()
 void Emulator6502::LoadProgramIntoMemory()
 {
     const std::string &asmCode = m_AsmEditor->GetText();
-
-    std::vector<Byte> machineCode = m_Assembler->Assemble(asmCode);
-
-    for (size_t i = 0; i < machineCode.size(); ++i)
-    {
-        Memory::s_RAM[0x0800 + i] = machineCode[i];
-    }
-}
-
-std::vector<Byte> Emulator6502::ReadProgramFromMemory()
-{
-    std::vector<Byte> machineCode;
-
-    size_t programCounter = 0x0800;
-    const uint8_t lookaheadWindow = 3;
-    bool isEndOfProgramReached = false;
-
-    while (programCounter < MEMORY_64KB && !isEndOfProgramReached)
-    {
-        bool isThirdConsecutiveZero = true;
-
-        if (programCounter + lookaheadWindow <= MEMORY_64KB)
-        {
-            for (size_t i = 0; i < lookaheadWindow; ++i)
-            {
-                if (Memory::Read(programCounter + i) != 0x00)
-                {
-                    isThirdConsecutiveZero = false;
-                    break;
-                }
-            }
-
-            if (isThirdConsecutiveZero)
-            {
-                isEndOfProgramReached = true;
-                break;
-            }
-        }
-
-        Byte byte = Memory::Read(programCounter);
-
-        machineCode.push_back(byte);
-        programCounter++;
-    }
-
-    return machineCode;
+    ProgramUtil::LoadProgramIntoMemory(asmCode, m_Assembler);
 }
 
 void Emulator6502::Shutdown()
