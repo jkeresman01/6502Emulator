@@ -70,7 +70,7 @@ void Emulator6502::RenderUI()
     RenderAsmEditor();
     RenderButtons();
     RenderPixelDisplay();
-    RenderProcessRegisterStatus();
+    RenderProcessorsRegisterStatus();
 
     ImGui::NextColumn();
 
@@ -145,7 +145,7 @@ void Emulator6502::RenderPixelDisplay()
     }
 }
 
-void Emulator6502::RenderProcessRegisterStatus()
+void Emulator6502::RenderProcessorsRegisterStatus()
 {
     ImGui::Text("CPU Registers:");
 

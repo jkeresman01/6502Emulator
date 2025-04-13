@@ -39,7 +39,7 @@ class Emulator6502
     void RenderAsmEditor();
     void RenderPixelDisplay();
     void RenderButtons();
-    void RenderProcessRegisterStatus();
+    void RenderProcessorsRegisterStatus();
 
   private:
     GLFWwindow *m_Window;
