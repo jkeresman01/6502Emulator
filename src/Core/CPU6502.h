@@ -171,7 +171,7 @@ class CPU6502
 
     void AddWithCarry(const Byte value);
 
-    ////////////////////  SBC (Subtract with Carry)  ////////////////////
+    ////////////////////  SBC (Subtract with Borrow)  ////////////////////
     void SBCImmediate();
     void SBCZeroPage();
     void SBCZeroPageX();
@@ -180,6 +180,8 @@ class CPU6502
     void SBCAbsoluteY();
     void SBCIndirectX();
     void SBCIndirectY();
+
+    void SubtractWithBorrow(const Byte value);
 
     ////////////////////  Register Transfers  ////////////////////
     void TAX();

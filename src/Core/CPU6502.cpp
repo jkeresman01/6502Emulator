@@ -1007,21 +1007,90 @@ void CPU6502::AddWithCarry(const Byte value)
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::SBCImmediate() {}
+void CPU6502::SBCImmediate()
+{
+    Byte value = FetchByte();
+    SubtractWithBorrow(value);
+}
 
-void CPU6502::SBCZeroPage() {}
+void CPU6502::SBCZeroPage()
+{
+    Byte addr = FetchByte();
 
-void CPU6502::SBCZeroPageX() {}
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
 
-void CPU6502::SBCAbsolute() {}
+void CPU6502::SBCZeroPageX()
+{
+    Byte addr = (FetchByte() + m_X) & 0xFF;
 
-void CPU6502::SBCAbsoluteX() {}
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
 
-void CPU6502::SBCAbsoluteY() {}
+void CPU6502::SBCAbsolute()
+{
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
 
-void CPU6502::SBCIndirectX() {}
+    SubtractWithBorrow(value);
+}
 
-void CPU6502::SBCIndirectY() {}
+void CPU6502::SBCAbsoluteX()
+{
+    Word addr = FetchWord() + m_X;
+
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
+
+void CPU6502::SBCAbsoluteY()
+{
+    Word addr = FetchWord() + m_Y;
+
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
+
+void CPU6502::SBCIndirectX()
+{
+    Byte zeroPageAddr = (FetchByte() + m_X) & 0xFF;
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte hightByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+    
+    Word addr = (hightByteAddr << 8) | lowByteAddr;
+
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
+
+void CPU6502::SBCIndirectY() 
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+    
+    Word addr = ((highByteAddr << 8) | lowByteAddr) + m_Y;
+
+    Byte value = ReadByte(addr);
+    SubtractWithBorrow(value);
+}
+
+void CPU6502::SubtractWithBorrow(const Byte value) 
+{
+    Word result = m_A + (~value) + StatusFlags.C;
+
+    StatusFlags.C = (result > 0xFF);
+    StatusFlags.V = ((m_A ^ value) & (m_A ^ result) & 0x80) != 0;
+
+    m_A = static_cast<Byte>(result);
+
+    StatusFlags.Z = (m_A == 0);
+    StatusFlags.N = (m_A & 0x80) != 0;
+}
 
 void CPU6502::TAX()
 {
