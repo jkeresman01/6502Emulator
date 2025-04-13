@@ -13,14 +13,14 @@ using Word = uint16_t;
 
 struct Flags
 {
-      Byte C_Carry : 1;
-      Byte Z_Zero : 1;
-      Byte I_Interrupt : 1;
-      Byte D_Decimal : 1;
-      Byte B_Break : 1;
-      Byte __Ignored : 1;
-      Byte V_Overflow : 1;
-      Byte N_Negative : 1;
+      Byte C : 1;
+      Byte Z : 1;
+      Byte I : 1;
+      Byte D : 1;
+      Byte B : 1;
+      Byte _ : 1;
+      Byte V : 1;
+      Byte N : 1;
 };
 
 class CPU6502
