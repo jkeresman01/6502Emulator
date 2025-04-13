@@ -129,17 +129,15 @@ void Emulator6502::LoadProgramIntoMemory()
 
 void Emulator6502::Shutdown()
 {
-    Reset();
+    m_AsmEditor->Destroy();
+    m_PixelDisplay->Destroy();
+    m_MemoryLayout->Destroy();
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
     glfwDestroyWindow(m_Window);
     glfwTerminate();
-
-    m_AsmEditor->Destroy();
-    m_PixelDisplay->Destroy();
-    m_MemoryLayout->Destroy();
 }
 
 void Emulator6502::Reset()
