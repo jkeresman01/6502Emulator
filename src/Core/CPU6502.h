@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <array>
+#include <cstdint>
 
 #include "../Util/Logger.h"
 
@@ -10,7 +10,6 @@ namespace emulator6502
 
 using Byte = uint8_t;
 using Word = uint16_t;
-
 
 struct Flags
 {
@@ -26,7 +25,7 @@ struct Flags
 
 class CPU6502
 {
-  using Instruction = void (CPU6502::*)();
+    using Instruction = void (CPU6502::*)();
 
   public:
     CPU6502() = default;

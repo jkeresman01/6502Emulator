@@ -44,7 +44,6 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xAC] = &CPU6502::LDYAbsolute;
     m_InstructionSetDispatchTable[0xBC] = &CPU6502::LDYAbsoluteX;
 
-
     m_InstructionSetDispatchTable[0x69] = &CPU6502::ADCImmediate;
     m_InstructionSetDispatchTable[0x65] = &CPU6502::ADCZeroPage;
     m_InstructionSetDispatchTable[0x75] = &CPU6502::ADCZeroPageX;
@@ -80,7 +79,6 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x19] = &CPU6502::ORAAbsoluteY;
     m_InstructionSetDispatchTable[0x01] = &CPU6502::ORAIndirectX;
     m_InstructionSetDispatchTable[0x11] = &CPU6502::ORAIndirectY;
-
 
     m_InstructionSetDispatchTable[0xAA] = &CPU6502::TAX;
     m_InstructionSetDispatchTable[0xA8] = &CPU6502::TAY;
@@ -131,7 +129,6 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x00] = &CPU6502::BRK;
 }
 
-
 void CPU6502::Reset()
 {
     ////////////////////             REGISTERS            ////////////////////
@@ -171,11 +168,9 @@ Byte CPU6502::ReadByte(const Word address)
     return Memory::Read(address);
 }
 
-
 void CPU6502::WriteByte(const Word address, const Byte value)
 {
     Memory::Write(address, value);
-
 }
 
 void CPU6502::Step()
@@ -1076,7 +1071,7 @@ void CPU6502::INCAbsolute() {}
 
 void CPU6502::INCAbsoluteX() {}
 
-void CPU6502::InvalidOpcode() 
+void CPU6502::InvalidOpcode()
 {
     EMULATOR_6502_ERROR(TEXT("Invalid opcode: 0x{:02X} at PC: 0x{:04X}", ReadByte(m_PC), m_PC));
 }
