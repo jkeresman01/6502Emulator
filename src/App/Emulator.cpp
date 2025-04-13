@@ -15,14 +15,14 @@ void Emulator6502::Init()
 {
     Random::Init();
     Reset();
-    
+
     glfwInit();
     m_Window = glfwCreateWindow(1180, 840, "6502 Emulator", NULL, NULL);
     glfwMakeContextCurrent(m_Window);
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init();
-    
+
     m_AsmEditor->Init();
     m_MemoryLayout->Init();
     m_PixelDisplay->Init();
@@ -141,7 +141,6 @@ void Emulator6502::Shutdown()
     m_PixelDisplay->Destroy();
     m_MemoryLayout->Destroy();
 }
-
 
 void Emulator6502::Reset()
 {

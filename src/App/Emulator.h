@@ -10,11 +10,11 @@
 #include <memory>
 
 #include "../Assembler/Assembler.h"
+#include "../Components/Editor/Editor.h"
+#include "../Components/MemoryLayout/MemoryLayout.h"
+#include "../Components/PixelDisplay/PixelDisplay.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
-#include "../Components/MemoryLayout/MemoryLayout.h"
-#include "../Components/Editor/Editor.h"
-#include "../Components/PixelDisplay/PixelDisplay.h"
 
 namespace emulator6502
 {
@@ -31,7 +31,7 @@ class Emulator6502
     void Run();
     void Shutdown();
 
-  private: 
+  private:
     void Reset();
     void LoadProgramIntoMemory();
 
