@@ -199,6 +199,8 @@ class CPU6502
     void EORIndirectX();
     void EORIndirectY();
 
+    void ExclusiveOR(const Byte value);
+
     ////////////////////  CMP (Compare Accumulator)  ////////////////////
     void CMPImmediate();
     void CMPZeroPage();

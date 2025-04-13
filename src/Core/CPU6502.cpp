@@ -1124,21 +1124,86 @@ void CPU6502::TYA()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::EORImmediate() {}
+void CPU6502::EORImmediate() 
+{
+    Byte value = FetchByte();
+    ExclusiveOR(value);
+}
 
-void CPU6502::EORZeroPage() {}
+void CPU6502::EORZeroPage()
+{
+    Byte addr = FetchByte();
+    
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
 
-void CPU6502::EORZeroPageX() {}
+void CPU6502::EORZeroPageX()
+{
+    Byte addr = (FetchByte() + m_X) & 0xFF;
 
-void CPU6502::EORAbsolute() {}
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
 
-void CPU6502::EORAbsoluteX() {}
+void CPU6502::EORAbsolute()
+{
+    Word addr = FetchWord();
 
-void CPU6502::EORAbsoluteY() {}
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
 
-void CPU6502::EORIndirectX() {}
+void CPU6502::EORAbsoluteX() 
+{
+    Word addr = FetchWord() + m_X;
 
-void CPU6502::EORIndirectY() {}
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
+
+void CPU6502::EORAbsoluteY() 
+{
+    Word addr = FetchWord() + m_Y;
+
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
+
+void CPU6502::EORIndirectX()
+{
+    Byte zeroPageAddr = (FetchByte() + m_X) & 0xFF;
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = (highByteAddr << 8) | lowByteAddr;
+
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
+
+void CPU6502::EORIndirectY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = ((highByteAddr << 8) | lowByteAddr) + m_Y;
+
+    Byte value = ReadByte(addr);
+    ExclusiveOR(value);
+}
+
+void CPU6502::ExclusiveOR(const Byte value) 
+{
+    m_A ^= value;
+
+    StatusFlags.Z = (m_A == 0);
+    StatusFlags.N = (m_A & 0x80) != 0;
+}
+
 
 void CPU6502::CMPImmediate() {}
 
@@ -1156,6 +1221,7 @@ void CPU6502::CMPIndirectX() {}
 
 void CPU6502::CMPIndirectY() {}
 
+
 void CPU6502::INCZeroPage() {}
 
 void CPU6502::INCZeroPageX() {}
@@ -1163,6 +1229,7 @@ void CPU6502::INCZeroPageX() {}
 void CPU6502::INCAbsolute() {}
 
 void CPU6502::INCAbsoluteX() {}
+
 
 void CPU6502::InvalidOpcode()
 {
