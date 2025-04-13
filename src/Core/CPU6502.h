@@ -10,6 +10,19 @@ namespace emulator6502
 using Byte = uint8_t;
 using Word = uint16_t;
 
+
+struct Flags
+{
+      Byte C_Carry : 1;
+      Byte Z_Zero : 1;
+      Byte I_Interrupt : 1;
+      Byte D_Decimal : 1;
+      Byte B_Break : 1;
+      Byte __Ignored : 1;
+      Byte V_Overflow : 1;
+      Byte N_Negative : 1;
+};
+
 class CPU6502
 {
   public:
@@ -25,6 +38,7 @@ class CPU6502
     Byte GetRegisterY() const { return m_Y; };
     Word GetProgramCounter() const { return m_PC; };
     Byte GetStackPointer() const { return m_SP; };
+    Byte GetStatusFlags() const { return m_StatusRegisterFlags; };
 
     std::string ToString() const;
 
@@ -155,7 +169,7 @@ class CPU6502
     void ADCIndirectX();
     void ADCIndirectY();
 
-    void AddWithCarry(Byte value);
+    void AddWithCarry(const Byte value);
 
   private:
     void PrintRegisterState();
@@ -169,13 +183,11 @@ class CPU6502
     Byte m_SP;
 
     ////////////////////            STATUS FLAGS        ////////////////////
+    union 
+    {
+        Byte m_StatusRegisterFlags;
+        Flags StatusFlags;
+    };
 
-    Byte C : 1;
-    Byte Z : 1;
-    Byte I : 1;
-    Byte D : 1;
-    Byte B : 1;
-    Byte V : 1;
-    Byte N : 1;
 };
 } // namespace emulator6502
