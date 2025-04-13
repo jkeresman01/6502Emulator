@@ -10,17 +10,16 @@ namespace emulator6502
 using Byte = uint8_t;
 using Word = uint16_t;
 
-
 struct Flags
 {
-      Byte C : 1;
-      Byte Z : 1;
-      Byte I : 1;
-      Byte D : 1;
-      Byte B : 1;
-      Byte _ : 1;
-      Byte V : 1;
-      Byte N : 1;
+    Byte C : 1;
+    Byte Z : 1;
+    Byte I : 1;
+    Byte D : 1;
+    Byte B : 1;
+    Byte _ : 1;
+    Byte V : 1;
+    Byte N : 1;
 };
 
 class CPU6502
@@ -133,7 +132,6 @@ class CPU6502
     void ANDIndirectX();
     void ANDIndirectY();
 
-    
     ////////////////////            OR (OR memory with acumulator)              ////////////////////
     void ORAImmediate();
     void ORAZeroPage();
@@ -143,7 +141,6 @@ class CPU6502
     void ORAAbsoluteY();
     void ORAIndirectX();
     void ORAIndirectY();
-
 
     ////////////////////        ASL ( Shift Left One Bit (Memory or Accumulator) )    ////////////////////
     void ASLAccumulator();
@@ -183,11 +180,9 @@ class CPU6502
     Byte m_SP;
 
     ////////////////////            STATUS FLAGS        ////////////////////
-    union 
-    {
+    union {
         Byte m_StatusRegisterFlags;
         Flags StatusFlags;
     };
-
 };
 } // namespace emulator6502

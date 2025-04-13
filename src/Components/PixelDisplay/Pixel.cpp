@@ -1,15 +1,14 @@
 #include "Pixel.h"
 
-
 namespace emulator6502
 {
 
-void Pixel::Init() noexcept 
+void Pixel::Init() noexcept
 {
     // Do nothing
 }
 
-void Pixel::Render() noexcept 
+void Pixel::Render() noexcept
 {
     ImGui::PushStyleColor(ImGuiCol_Button, m_Color);
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_Color);
@@ -19,7 +18,7 @@ void Pixel::Render() noexcept
     ImGui::PopStyleColor(3);
 }
 
-void Pixel::Destroy() noexcept 
+void Pixel::Destroy() noexcept
 {
     // Do nothing
 }

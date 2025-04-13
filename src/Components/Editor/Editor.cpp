@@ -1,4 +1,4 @@
- #include "Editor.h"
+#include "Editor.h"
 
 #include <cstdint>
 
@@ -24,7 +24,7 @@ void Editor::Render() noexcept
 
 void Editor::Destroy() noexcept
 {
-    //Do nothing
+    // Do nothing
 }
 
 std::string Editor::GetText() const

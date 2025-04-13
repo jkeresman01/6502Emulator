@@ -21,6 +21,5 @@ class PixelDisplay : public AbstractComponent
   private:
     static const uint32_t GRID_SIZE = 32;
     static const Word START_ADDR = 0x0200;
-    
 };
 } // namespace emulator6502

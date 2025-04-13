@@ -12,7 +12,7 @@ void MemoryLayout::Init() noexcept
     // Do nothing
 }
 
-void MemoryLayout::Render() noexcept 
+void MemoryLayout::Render() noexcept
 {
     ImGui::Text("Memory Viewer:");
     ImGui::Separator();
@@ -38,7 +38,7 @@ void MemoryLayout::Render() noexcept
     ImGui::EndChild();
 }
 
-void MemoryLayout::Destroy() noexcept 
+void MemoryLayout::Destroy() noexcept
 {
     // Do nothing
 }

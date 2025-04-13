@@ -81,20 +81,11 @@ void Emulator6502::RenderUI()
     ImGui::End();
 }
 
-void Emulator6502::RenderAsmEditor()
-{
+void Emulator6502::RenderAsmEditor() {}
 
-}
+void Emulator6502::RenderMemoryLayout() {}
 
-void Emulator6502::RenderMemoryLayout()
-{
-   
-}
-
-void Emulator6502::RenderPixelDisplay()
-{
-   
-}
+void Emulator6502::RenderPixelDisplay() {}
 
 void Emulator6502::RenderProcessorsRegisterStatus()
 {

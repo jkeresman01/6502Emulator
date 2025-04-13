@@ -15,7 +15,7 @@ void PixelDisplay::Init() noexcept
     // Do nothing
 }
 
-void PixelDisplay::Render() noexcept 
+void PixelDisplay::Render() noexcept
 {
 
     ImGui::Text("Pixel Display:");
@@ -28,7 +28,7 @@ void PixelDisplay::Render() noexcept
             Byte colorIndex = Memory::Read(address) & 0x0F;
 
             const ImVec4 &color = ColorsUtil::GetColor(colorIndex);
-            
+
             Pixel pixel;
             pixel.SetColor(color);
             pixel.Render();
@@ -39,7 +39,6 @@ void PixelDisplay::Render() noexcept
             }
         }
     }
-
 }
 
 void PixelDisplay::Destroy() noexcept
