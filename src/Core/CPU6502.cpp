@@ -1283,17 +1283,57 @@ void CPU6502::Compare(const Byte registerValue, const Byte value)
 
     StatusFlags.C = (registerValue >= value);
     StatusFlags.Z = (result == 0);
-    StatusFlags.N = (result & 0x80) != 0;
+    StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 
-void CPU6502::INCZeroPage() {}
+void CPU6502::INCZeroPage()
+{
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+    value++;
 
-void CPU6502::INCZeroPageX() {}
+    WriteByte(addr, value);
 
-void CPU6502::INCAbsolute() {}
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
 
-void CPU6502::INCAbsoluteX() {}
+void CPU6502::INCZeroPageX() 
+{
+    Byte addr = (FetchByte() + m_X) & 0xFF;
+    Byte value = ReadByte(addr);
+    value++;
+
+    WriteByte(addr, value);
+
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::INCAbsolute() 
+{
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
+    value++;
+
+    WriteByte(addr, value);
+
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::INCAbsoluteX() 
+{
+    Word addr = FetchWord() + m_X;
+    Byte value = ReadByte(addr);
+    value++;
+
+    WriteByte(addr, value);
+
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
 
 
 void CPU6502::InvalidOpcode()
