@@ -18,7 +18,7 @@ add_library(imgui STATIC
     ${EXTERNAL_DIR}/imgui/imgui_widgets.cpp
     ${EXTERNAL_DIR}/imgui/backends/imgui_impl_glfw.cpp
     ${EXTERNAL_DIR}/imgui/backends/imgui_impl_opengl3.cpp
-  "src/Assembler/Assembler.h" "src/Assembler/Assembler.cpp" "src/Util/ColorUtils.cpp" "src/Util/RandomUtil.h" "src/Util/RandomUtil.cpp" "src/Components/AbstractComponent.h" "src/Components/Editor.h" "src/Components/MemoryLayout.cpp" "src/Components/PixelDisplay/Pixel.h" "src/Components/PixelDisplay/Pixel.cpp" "src/Components/PixelDisplay/PixelDisplay.h" "src/Components/PixelDisplay/PixelDisplay.cpp")
+)
 
 target_include_directories(imgui PUBLIC
     ${EXTERNAL_DIR}/imgui
@@ -33,7 +33,18 @@ file(GLOB_RECURSE PROJECT_SOURCES
     ${SRC_DIR}/*.h
 )
 
-add_executable(6502Emulator ${PROJECT_SOURCES}  "src/Assembler/Assembler.h" "src/Assembler/Assembler.cpp" "src/Util/ColorUtils.cpp" "src/Util/RandomUtil.h" "src/Util/RandomUtil.cpp" "src/Components/AbstractComponent.h" "src/Components/Editor.h" "src/Components/MemoryLayout.cpp" "src/Components/PixelDisplay/Pixel.h" "src/Components/PixelDisplay/Pixel.cpp" "src/Components/PixelDisplay/PixelDisplay.h" "src/Components/PixelDisplay/PixelDisplay.cpp")
+add_executable(6502Emulator ${PROJECT_SOURCES} 
+    "src/Assembler/Assembler.h"
+    "src/Assembler/Assembler.cpp"
+    "src/Util/ColorUtils.cpp"
+    "src/Util/RandomUtil.h"
+    "src/Util/RandomUtil.cpp"
+    "src/Components/AbstractComponent.h"
+    "src/Components/PixelDisplay/Pixel.h"
+    "src/Components/PixelDisplay/Pixel.cpp"
+    "src/Components/PixelDisplay/PixelDisplay.h"
+    "src/Components/PixelDisplay/PixelDisplay.cpp"
+)
 
 target_include_directories(6502Emulator PRIVATE ${SRC_DIR})
 target_include_directories(6502Emulator PRIVATE ${EXTERNAL_DIR}/imgui)

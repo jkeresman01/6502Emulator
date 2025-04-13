@@ -15,18 +15,17 @@ void Emulator6502::Init()
 {
     Random::Init();
     Reset();
+    
     glfwInit();
     m_Window = glfwCreateWindow(1180, 840, "6502 Emulator", NULL, NULL);
     glfwMakeContextCurrent(m_Window);
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init();
-}
-
-void Emulator6502::Reset()
-{
-    Memory::Reset();
-    m_CPU.Reset();
+    
+    m_AsmEditor->Init();
+    m_MemoryLayout->Init();
+    m_PixelDisplay->Init();
 }
 
 void Emulator6502::Run()
@@ -38,7 +37,7 @@ void Emulator6502::Run()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        RenderUI();
+        Render();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -46,17 +45,7 @@ void Emulator6502::Run()
     }
 }
 
-void Emulator6502::Shutdown()
-{
-    Reset();
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    glfwDestroyWindow(m_Window);
-    glfwTerminate();
-}
-
-void Emulator6502::RenderUI()
+void Emulator6502::Render()
 {
     ImGui::Begin("6502 Emulator");
 
@@ -67,25 +56,18 @@ void Emulator6502::RenderUI()
 
     ImGui::Columns(2, "MainColumns", true);
 
-    RenderAsmEditor();
+    m_AsmEditor->Render();
     RenderButtons();
-    RenderPixelDisplay();
+
+    m_PixelDisplay->Render();
     RenderProcessorsRegisterStatus();
 
     ImGui::NextColumn();
-
-    RenderMemoryLayout();
-
+    m_MemoryLayout->Render();
     ImGui::Columns(1);
 
     ImGui::End();
 }
-
-void Emulator6502::RenderAsmEditor() {}
-
-void Emulator6502::RenderMemoryLayout() {}
-
-void Emulator6502::RenderPixelDisplay() {}
 
 void Emulator6502::RenderProcessorsRegisterStatus()
 {
@@ -105,7 +87,7 @@ void Emulator6502::RenderButtons()
     if (ImGui::Button("Assemble"))
     {
         Reset();
-        LoadProgramIntoMemory(asmCode);
+        LoadProgramIntoMemory();
     }
 
     ImGui::SameLine();
@@ -133,8 +115,10 @@ void Emulator6502::RenderButtons()
     }
 }
 
-void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
+void Emulator6502::LoadProgramIntoMemory()
 {
+    const std::string &asmCode = m_AsmEditor->GetText();
+
     std::vector<Byte> machineCode = m_Assembler->Assemble(asmCode);
 
     for (size_t i = 0; i < machineCode.size(); ++i)
@@ -142,4 +126,27 @@ void Emulator6502::LoadProgramIntoMemory(const std::string &asmCode)
         Memory::s_RAM[0x0800 + i] = machineCode[i];
     }
 }
+
+void Emulator6502::Shutdown()
+{
+    Reset();
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwDestroyWindow(m_Window);
+    glfwTerminate();
+
+    m_AsmEditor->Destroy();
+    m_PixelDisplay->Destroy();
+    m_MemoryLayout->Destroy();
+}
+
+
+void Emulator6502::Reset()
+{
+    Memory::Reset();
+    m_CPU.Reset();
+}
+
 } // namespace emulator6502

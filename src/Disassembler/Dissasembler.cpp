@@ -1,9 +1,13 @@
-#include "Dissasembler"
+#include "Dissasembler.h"
 
-namespace emualtor6502
+#include <vector>
+#include <string>
+
+namespace emulator6502
 {
-std::vector<std::string> Dissasmbler::Dissasmble(const std::vector<Byte> &machineCode)
+std::vector<std::string> Dissasembler::Disassmble(const std::vector<Byte> &machineCode)
 {
-    // TODO
+    //TODO
+    return std::vector<std::string>();
 }
-} // namespace emualtor6502
+} // namespace emulator6502

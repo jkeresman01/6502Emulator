@@ -12,6 +12,9 @@
 #include "../Assembler/Assembler.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
+#include "../Components/MemoryLayout/MemoryLayout.h"
+#include "../Components/Editor/Editor.h"
+#include "../Components/PixelDisplay/PixelDisplay.h"
 
 namespace emulator6502
 {
@@ -28,22 +31,23 @@ class Emulator6502
     void Run();
     void Shutdown();
 
-  private:
+  private: 
     void Reset();
-    void LoadProgramIntoMemory(const std::string &asmCode);
+    void LoadProgramIntoMemory();
 
   private:
-    void RenderUI();
+    void Render();
 
-    void RenderMemoryLayout();
-    void RenderAsmEditor();
-    void RenderPixelDisplay();
     void RenderButtons();
     void RenderProcessorsRegisterStatus();
 
   private:
     GLFWwindow *m_Window;
     CPU6502 m_CPU;
+
     std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
+    std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
+    std::unique_ptr<PixelDisplay> m_PixelDisplay = std::make_unique<PixelDisplay>();
+    std::unique_ptr<MemoryLayout> m_MemoryLayout = std::make_unique<MemoryLayout>();
 };
 } // namespace emulator6502

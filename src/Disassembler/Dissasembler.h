@@ -1,12 +1,18 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 namespace emulator6502
 {
-class Dissasembler
-{
-  public:
-    Dissasembler() = default;
+	class Dissasembler
+	{
+		using Byte = uint8_t;
+		using Word = uint16_t;
 
-    std::vector<std::string> Dissasmble(const std::vector<Byte> &machineCode);
-};
-} // namespace emulator6502
+      public:
+        Dissasembler() = default;
+
+        std::vector<std::string> Disassmble(const std::vector<Byte> &machineCode);
+	};
+}
