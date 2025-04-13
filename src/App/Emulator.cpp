@@ -162,6 +162,7 @@ void Emulator6502::RenderButtons()
 {
     if (ImGui::Button("Assemble"))
     {
+        Reset();
         LoadProgramIntoMemory(asmCode);
     }
 
