@@ -55,8 +55,6 @@ class CPU6502
 
     Byte ReadByte(const Word address);
 
-    void DecodeAndExecute(const Byte opcode);
-
   private:
     ////////////////////            LDA (Load accumulator)            ////////////////////
     void LDAImmediate();
@@ -103,8 +101,8 @@ class CPU6502
     ////////////////////            DEC (Decrement memory by one)        ////////////////////
     void DECZeroPage();
     void DECZeroPageX();
-    void DECAbsoulute();
-    void DECAbsouluteX();
+    void DECAbsolute();
+    void DECAbsoluteX();
 
     ////////////////////            NOP (No operation)                   ////////////////////
     void NOP();
@@ -216,12 +214,6 @@ class CPU6502
     void INCAbsolute();
     void INCAbsoluteX();
 
-    ////////////////////  DEC (Decrement Memory)  ////////////////////
-    void DECZeroPage();
-    void DECZeroPageX();
-    void DECAbsolute();
-    void DECAbsoluteX();
-
     ////////////////////  Branch Instructions  ////////////////////
     void BNE();
     void BEQ();
@@ -233,7 +225,6 @@ class CPU6502
     void BCS();
 
     ////////////////////  Control Flow  ////////////////////
-    void NOP();
     void RTI();
     void RTS();
     void JSR();

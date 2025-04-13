@@ -444,9 +444,32 @@ void CPU6502::DECZeroPageX()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::DECAbsolute() {}
+void CPU6502::DECAbsolute()
+{
+    Word address = FetchWord();
 
-void CPU6502::DECAbsoluteX() {}
+    Byte value = ReadByte(address);
+    value--;
+
+    WriteByte(address, value);
+
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
+
+void CPU6502::DECAbsoluteX()
+{
+    Word baseAddr = FetchWord();
+    Word addr = baseAddr + m_X;
+
+    Byte value = ReadByte(addr);
+    value--;
+
+    WriteByte(addr, value);
+
+    StatusFlags.Z = (value == 0);
+    StatusFlags.N = (value & 0b10000000) > 0;
+}
 
 void CPU6502::BNE() {}
 
@@ -463,33 +486,6 @@ void CPU6502::BVS() {}
 void CPU6502::BCC() {}
 
 void CPU6502::BCS() {}
-
-void CPU6502::DECAbsoulute()
-{
-    Word address = FetchWord();
-
-    Byte value = ReadByte(address);
-    value--;
-
-    WriteByte(address, value);
-
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
-}
-
-void CPU6502::DECAbsouluteX()
-{
-    Word baseAddr = FetchWord();
-    Word addr = baseAddr + m_X;
-
-    Byte value = ReadByte(addr);
-    value--;
-
-    WriteByte(addr, value);
-
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
-}
 
 void CPU6502::NOP()
 {
