@@ -211,6 +211,8 @@ class CPU6502
     void CMPIndirectX();
     void CMPIndirectY();
 
+    void Compare(const Byte registerValue, const Byte value);
+
     ////////////////////  INC (Increment Memory)  ////////////////////
     void INCZeroPage();
     void INCZeroPageX();

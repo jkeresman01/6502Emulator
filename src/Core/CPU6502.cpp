@@ -1205,21 +1205,86 @@ void CPU6502::ExclusiveOR(const Byte value)
 }
 
 
-void CPU6502::CMPImmediate() {}
+void CPU6502::CMPImmediate()
+{
+    Byte value = FetchByte();
+    Compare(m_A, value);
+}
 
-void CPU6502::CMPZeroPage() {}
+void CPU6502::CMPZeroPage()
+{
+    Byte addr = FetchByte();
 
-void CPU6502::CMPZeroPageX() {}
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
 
-void CPU6502::CMPAbsolute() {}
+void CPU6502::CMPZeroPageX()
+{
+    Byte addr = (FetchByte() + m_X) & 0xFF;
 
-void CPU6502::CMPAbsoluteX() {}
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
 
-void CPU6502::CMPAbsoluteY() {}
+void CPU6502::CMPAbsolute() 
+{
+    Word addr = FetchWord();
 
-void CPU6502::CMPIndirectX() {}
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
 
-void CPU6502::CMPIndirectY() {}
+void CPU6502::CMPAbsoluteX()
+{
+    Word addr = FetchWord() + m_X;
+
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
+
+void CPU6502::CMPAbsoluteY()
+{
+    Word addr = FetchWord() + m_Y;
+
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
+
+void CPU6502::CMPIndirectX()
+{
+    Byte zeroPageAddr = (FetchByte() + m_X) & 0xFF;
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = (highByteAddr << 8) | lowByteAddr;
+
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
+
+void CPU6502::CMPIndirectY()
+{
+    Byte zeroPageAddr = FetchByte();
+
+    Byte lowByteAddr = ReadByte(zeroPageAddr);
+    Byte highByteAddr = ReadByte((zeroPageAddr + 1) & 0xFF);
+
+    Word addr = ((highByteAddr << 8) | lowByteAddr) + m_Y;
+
+    Byte value = ReadByte(addr);
+    Compare(m_A, value);
+}
+
+void CPU6502::Compare(const Byte registerValue, const Byte value)
+{
+    Byte result = registerValue - value;
+
+    StatusFlags.C = (registerValue >= value);
+    StatusFlags.Z = (result == 0);
+    StatusFlags.N = (result & 0x80) != 0;
+}
 
 
 void CPU6502::INCZeroPage() {}
