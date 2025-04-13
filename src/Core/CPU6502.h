@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <array>
 
 #include "../Util/Logger.h"
 
@@ -9,6 +10,7 @@ namespace emulator6502
 
 using Byte = uint8_t;
 using Word = uint16_t;
+
 
 struct Flags
 {
@@ -24,6 +26,8 @@ struct Flags
 
 class CPU6502
 {
+  using Instruction = void (CPU6502::*)();
+
   public:
     CPU6502() = default;
 
@@ -42,6 +46,8 @@ class CPU6502
     std::string ToString() const;
 
   private:
+    void InitDispatchTable();
+
     void WriteByte(const Word address, const Byte value);
 
     Byte FetchByte();
@@ -56,9 +62,9 @@ class CPU6502
     void LDAImmediate();
     void LDAZeroPage();
     void LDAZeroPageX();
-    void LDAAbsoulute();
-    void LDAAbsouluteX();
-    void LDAAbsouluteY();
+    void LDAAbsolute();
+    void LDAAbsoluteX();
+    void LDAAbsoluteY();
     void LDAIndirectX();
     void LDAIndirectY();
 
@@ -66,15 +72,15 @@ class CPU6502
     void LDXImmediate();
     void LDXZeroPage();
     void LDXZeroPageY();
-    void LDXAbsoulute();
-    void LDXAbsouluteY();
+    void LDXAbsolute();
+    void LDXAbsoluteY();
 
     ////////////////////            LDY (Load Y register)            ////////////////////
     void LDYImmediate();
     void LDYZeroPage();
     void LDYZeroPageX();
-    void LDYAbsoulute();
-    void LDYAbsouluteX();
+    void LDYAbsolute();
+    void LDYAbsoluteX();
 
     ////////////////////            CLC (Clear carry flag)                ////////////////////
     void CLC();
@@ -168,6 +174,74 @@ class CPU6502
 
     void AddWithCarry(const Byte value);
 
+    ////////////////////  SBC (Subtract with Carry)  ////////////////////
+    void SBCImmediate();
+    void SBCZeroPage();
+    void SBCZeroPageX();
+    void SBCAbsolute();
+    void SBCAbsoluteX();
+    void SBCAbsoluteY();
+    void SBCIndirectX();
+    void SBCIndirectY();
+
+    ////////////////////  Register Transfers  ////////////////////
+    void TAX();
+    void TAY();
+    void TXA();
+    void TYA();
+
+    ////////////////////  EOR (Exclusive OR)  ////////////////////
+    void EORImmediate();
+    void EORZeroPage();
+    void EORZeroPageX();
+    void EORAbsolute();
+    void EORAbsoluteX();
+    void EORAbsoluteY();
+    void EORIndirectX();
+    void EORIndirectY();
+
+    ////////////////////  CMP (Compare Accumulator)  ////////////////////
+    void CMPImmediate();
+    void CMPZeroPage();
+    void CMPZeroPageX();
+    void CMPAbsolute();
+    void CMPAbsoluteX();
+    void CMPAbsoluteY();
+    void CMPIndirectX();
+    void CMPIndirectY();
+
+    ////////////////////  INC (Increment Memory)  ////////////////////
+    void INCZeroPage();
+    void INCZeroPageX();
+    void INCAbsolute();
+    void INCAbsoluteX();
+
+    ////////////////////  DEC (Decrement Memory)  ////////////////////
+    void DECZeroPage();
+    void DECZeroPageX();
+    void DECAbsolute();
+    void DECAbsoluteX();
+
+    ////////////////////  Branch Instructions  ////////////////////
+    void BNE();
+    void BEQ();
+    void BPL();
+    void BMI();
+    void BVC();
+    void BVS();
+    void BCC();
+    void BCS();
+
+    ////////////////////  Control Flow  ////////////////////
+    void NOP();
+    void RTI();
+    void RTS();
+    void JSR();
+    void BRK();
+
+    ////////////////////        Invalid opcode         ////////////////////
+    void InvalidOpcode();
+
   private:
     void PrintRegisterState();
 
@@ -184,5 +258,8 @@ class CPU6502
         Byte m_StatusRegisterFlags;
         Flags StatusFlags;
     };
+
+    ////////////////////            DISPATCH TABLE        ////////////////////
+    std::array<Instruction, 256> m_InstructionSetDispatchTable;
 };
 } // namespace emulator6502

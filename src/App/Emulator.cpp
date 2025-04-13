@@ -23,6 +23,7 @@ void Emulator6502::Init()
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init();
 
+    m_CPU.Init();
     m_AsmEditor->Init();
     m_MemoryLayout->Init();
     m_PixelDisplay->Init();

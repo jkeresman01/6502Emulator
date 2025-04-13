@@ -7,8 +7,130 @@ namespace emulator6502
 
 void CPU6502::Init()
 {
+    InitDispatchTable();
     Reset();
 }
+
+void CPU6502::InitDispatchTable()
+{
+    m_InstructionSetDispatchTable.fill(&CPU6502::InvalidOpcode);
+
+    m_InstructionSetDispatchTable[0xA9] = &CPU6502::LDAImmediate;
+    m_InstructionSetDispatchTable[0xA5] = &CPU6502::LDAZeroPage;
+    m_InstructionSetDispatchTable[0xB5] = &CPU6502::LDAZeroPageX;
+    m_InstructionSetDispatchTable[0xAD] = &CPU6502::LDAAbsolute;
+    m_InstructionSetDispatchTable[0xBD] = &CPU6502::LDAAbsoluteX;
+    m_InstructionSetDispatchTable[0xB9] = &CPU6502::LDAAbsoluteY;
+    m_InstructionSetDispatchTable[0xA1] = &CPU6502::LDAIndirectX;
+    m_InstructionSetDispatchTable[0xB1] = &CPU6502::LDAIndirectY;
+
+    m_InstructionSetDispatchTable[0x85] = &CPU6502::STAZeroPage;
+    m_InstructionSetDispatchTable[0x95] = &CPU6502::STAZeroPageX;
+    m_InstructionSetDispatchTable[0x8D] = &CPU6502::STAAbsolute;
+    m_InstructionSetDispatchTable[0x9D] = &CPU6502::STAAbsoluteX;
+    m_InstructionSetDispatchTable[0x99] = &CPU6502::STAAbsoluteY;
+    m_InstructionSetDispatchTable[0x81] = &CPU6502::STAIndirectX;
+    m_InstructionSetDispatchTable[0x91] = &CPU6502::STAIndirectY;
+
+    m_InstructionSetDispatchTable[0xA2] = &CPU6502::LDXImmediate;
+    m_InstructionSetDispatchTable[0xA6] = &CPU6502::LDXZeroPage;
+    m_InstructionSetDispatchTable[0xB6] = &CPU6502::LDXZeroPageY;
+    m_InstructionSetDispatchTable[0xAE] = &CPU6502::LDXAbsolute;
+    m_InstructionSetDispatchTable[0xBE] = &CPU6502::LDXAbsoluteY;
+
+    m_InstructionSetDispatchTable[0xA0] = &CPU6502::LDYImmediate;
+    m_InstructionSetDispatchTable[0xA4] = &CPU6502::LDYZeroPage;
+    m_InstructionSetDispatchTable[0xB4] = &CPU6502::LDYZeroPageX;
+    m_InstructionSetDispatchTable[0xAC] = &CPU6502::LDYAbsolute;
+    m_InstructionSetDispatchTable[0xBC] = &CPU6502::LDYAbsoluteX;
+
+
+    m_InstructionSetDispatchTable[0x69] = &CPU6502::ADCImmediate;
+    m_InstructionSetDispatchTable[0x65] = &CPU6502::ADCZeroPage;
+    m_InstructionSetDispatchTable[0x75] = &CPU6502::ADCZeroPageX;
+    m_InstructionSetDispatchTable[0x6D] = &CPU6502::ADCAbsolute;
+    m_InstructionSetDispatchTable[0x7D] = &CPU6502::ADCAbsoluteX;
+    m_InstructionSetDispatchTable[0x79] = &CPU6502::ADCAbsoluteY;
+    m_InstructionSetDispatchTable[0x61] = &CPU6502::ADCIndirectX;
+    m_InstructionSetDispatchTable[0x71] = &CPU6502::ADCIndirectY;
+
+    m_InstructionSetDispatchTable[0xE9] = &CPU6502::SBCImmediate;
+    m_InstructionSetDispatchTable[0xE5] = &CPU6502::SBCZeroPage;
+    m_InstructionSetDispatchTable[0xF5] = &CPU6502::SBCZeroPageX;
+    m_InstructionSetDispatchTable[0xED] = &CPU6502::SBCAbsolute;
+    m_InstructionSetDispatchTable[0xFD] = &CPU6502::SBCAbsoluteX;
+    m_InstructionSetDispatchTable[0xF9] = &CPU6502::SBCAbsoluteY;
+    m_InstructionSetDispatchTable[0xE1] = &CPU6502::SBCIndirectX;
+    m_InstructionSetDispatchTable[0xF1] = &CPU6502::SBCIndirectY;
+
+    m_InstructionSetDispatchTable[0x29] = &CPU6502::ANDImmediate;
+    m_InstructionSetDispatchTable[0x25] = &CPU6502::ANDZeroPage;
+    m_InstructionSetDispatchTable[0x35] = &CPU6502::ANDZeroPageX;
+    m_InstructionSetDispatchTable[0x2D] = &CPU6502::ANDAbsolute;
+    m_InstructionSetDispatchTable[0x3D] = &CPU6502::ANDAbsoluteX;
+    m_InstructionSetDispatchTable[0x39] = &CPU6502::ANDAbsoluteY;
+    m_InstructionSetDispatchTable[0x21] = &CPU6502::ANDIndirectX;
+    m_InstructionSetDispatchTable[0x31] = &CPU6502::ANDIndirectY;
+
+    m_InstructionSetDispatchTable[0x09] = &CPU6502::ORAImmediate;
+    m_InstructionSetDispatchTable[0x05] = &CPU6502::ORAZeroPage;
+    m_InstructionSetDispatchTable[0x15] = &CPU6502::ORAZeroPageX;
+    m_InstructionSetDispatchTable[0x0D] = &CPU6502::ORAAbsolute;
+    m_InstructionSetDispatchTable[0x1D] = &CPU6502::ORAAbsoluteX;
+    m_InstructionSetDispatchTable[0x19] = &CPU6502::ORAAbsoluteY;
+    m_InstructionSetDispatchTable[0x01] = &CPU6502::ORAIndirectX;
+    m_InstructionSetDispatchTable[0x11] = &CPU6502::ORAIndirectY;
+
+
+    m_InstructionSetDispatchTable[0xAA] = &CPU6502::TAX;
+    m_InstructionSetDispatchTable[0xA8] = &CPU6502::TAY;
+    m_InstructionSetDispatchTable[0x8A] = &CPU6502::TXA;
+    m_InstructionSetDispatchTable[0x98] = &CPU6502::TYA;
+
+    m_InstructionSetDispatchTable[0x49] = &CPU6502::EORImmediate;
+    m_InstructionSetDispatchTable[0x45] = &CPU6502::EORZeroPage;
+    m_InstructionSetDispatchTable[0x55] = &CPU6502::EORZeroPageX;
+    m_InstructionSetDispatchTable[0x4D] = &CPU6502::EORAbsolute;
+    m_InstructionSetDispatchTable[0x5D] = &CPU6502::EORAbsoluteX;
+    m_InstructionSetDispatchTable[0x59] = &CPU6502::EORAbsoluteY;
+    m_InstructionSetDispatchTable[0x41] = &CPU6502::EORIndirectX;
+    m_InstructionSetDispatchTable[0x51] = &CPU6502::EORIndirectY;
+
+    m_InstructionSetDispatchTable[0xC9] = &CPU6502::CMPImmediate;
+    m_InstructionSetDispatchTable[0xC5] = &CPU6502::CMPZeroPage;
+    m_InstructionSetDispatchTable[0xD5] = &CPU6502::CMPZeroPageX;
+    m_InstructionSetDispatchTable[0xCD] = &CPU6502::CMPAbsolute;
+    m_InstructionSetDispatchTable[0xDD] = &CPU6502::CMPAbsoluteX;
+    m_InstructionSetDispatchTable[0xD9] = &CPU6502::CMPAbsoluteY;
+    m_InstructionSetDispatchTable[0xC1] = &CPU6502::CMPIndirectX;
+    m_InstructionSetDispatchTable[0xD1] = &CPU6502::CMPIndirectY;
+
+    m_InstructionSetDispatchTable[0xE6] = &CPU6502::INCZeroPage;
+    m_InstructionSetDispatchTable[0xF6] = &CPU6502::INCZeroPageX;
+    m_InstructionSetDispatchTable[0xEE] = &CPU6502::INCAbsolute;
+    m_InstructionSetDispatchTable[0xFE] = &CPU6502::INCAbsoluteX;
+
+    m_InstructionSetDispatchTable[0xC6] = &CPU6502::DECZeroPage;
+    m_InstructionSetDispatchTable[0xD6] = &CPU6502::DECZeroPageX;
+    m_InstructionSetDispatchTable[0xCE] = &CPU6502::DECAbsolute;
+    m_InstructionSetDispatchTable[0xDE] = &CPU6502::DECAbsoluteX;
+
+    m_InstructionSetDispatchTable[0xD0] = &CPU6502::BNE;
+    m_InstructionSetDispatchTable[0xF0] = &CPU6502::BEQ;
+    m_InstructionSetDispatchTable[0x10] = &CPU6502::BPL;
+    m_InstructionSetDispatchTable[0x30] = &CPU6502::BMI;
+    m_InstructionSetDispatchTable[0x50] = &CPU6502::BVC;
+    m_InstructionSetDispatchTable[0x70] = &CPU6502::BVS;
+    m_InstructionSetDispatchTable[0x90] = &CPU6502::BCC;
+    m_InstructionSetDispatchTable[0xB0] = &CPU6502::BCS;
+
+    m_InstructionSetDispatchTable[0xEA] = &CPU6502::NOP;
+    m_InstructionSetDispatchTable[0x40] = &CPU6502::RTI;
+    m_InstructionSetDispatchTable[0x60] = &CPU6502::RTS;
+    m_InstructionSetDispatchTable[0x20] = &CPU6502::JSR;
+    m_InstructionSetDispatchTable[0x00] = &CPU6502::BRK;
+}
+
 
 void CPU6502::Reset()
 {
@@ -24,6 +146,7 @@ void CPU6502::Reset()
 
     StatusFlags.C = 0;
     StatusFlags.Z = 0;
+    StatusFlags._ = 0;
     StatusFlags.I = 0;
     StatusFlags.D = 0;
     StatusFlags.B = 0;
@@ -48,319 +171,20 @@ Byte CPU6502::ReadByte(const Word address)
     return Memory::Read(address);
 }
 
+
 void CPU6502::WriteByte(const Word address, const Byte value)
 {
     Memory::Write(address, value);
+
 }
 
 void CPU6502::Step()
 {
     Byte opcode = FetchByte();
-    DecodeAndExecute(opcode);
-}
 
-void CPU6502::DecodeAndExecute(const Byte opcode)
-{
-    switch (opcode)
-    {
-    case 0xA9:
-        LDAImmediate();
-        break;
+    Instruction instuction = m_InstructionSetDispatchTable[opcode];
 
-    case 0xA5:
-        LDAZeroPage();
-        break;
-
-    case 0xB5:
-        LDAZeroPageX();
-        break;
-
-    case 0xAD:
-        LDAAbsoulute();
-        break;
-
-    case 0xBD:
-        LDAAbsouluteX();
-        break;
-
-    case 0xB9:
-        LDAAbsouluteY();
-        break;
-
-    case 0xA1:
-        LDAIndirectX();
-        break;
-
-    case 0xB1:
-        LDAIndirectY();
-        break;
-
-    case 0x85:
-        STAZeroPage();
-        break;
-
-    case 0x95:
-        STAZeroPageX();
-        break;
-
-    case 0x8D:
-        STAAbsolute();
-        break;
-
-    case 0x9D:
-        STAAbsoluteX();
-        break;
-
-    case 0x99:
-        STAAbsoluteY();
-        break;
-
-    case 0x81:
-        STAIndirectX();
-        break;
-
-    case 0x91:
-        STAIndirectY();
-        break;
-
-    case 0x18:
-        CLC();
-        break;
-
-    case 0xD8:
-        CLD();
-        break;
-
-    case 0x58:
-        CLI();
-        break;
-
-    case 0xB8:
-        CLV();
-        break;
-
-    case 0xCA:
-        DEX();
-        break;
-
-    case 0x88:
-        DEY();
-        break;
-
-    case 0xA2:
-        LDXImmediate();
-        break;
-
-    case 0xA6:
-        LDXZeroPage();
-        break;
-
-    case 0xB6:
-        LDXZeroPageY();
-        break;
-
-    case 0xAE:
-        LDXAbsoulute();
-        break;
-
-    case 0xBE:
-        LDAAbsouluteY();
-        break;
-
-    case 0xA0:
-        LDYImmediate();
-        break;
-
-    case 0xA4:
-        LDYZeroPage();
-        break;
-
-    case 0xB4:
-        LDYZeroPageX();
-        break;
-
-    case 0xAC:
-        LDYAbsoulute();
-        break;
-
-    case 0xBC:
-        LDYAbsouluteX();
-        break;
-
-    case 0xC6:
-        DECZeroPage();
-        break;
-
-    case 0xD6:
-        DECZeroPageX();
-        break;
-
-    case 0xCE:
-        DECAbsoulute();
-        break;
-
-    case 0xDE:
-        DECAbsouluteX();
-        break;
-
-    case 0x86:
-        STXZeroPage();
-        break;
-
-    case 0x9E:
-        STAZeroPageX();
-        break;
-
-    case 0x8E:
-        STAAbsolute();
-        break;
-
-    case 0x84:
-        STYZeroPage();
-        break;
-
-    case 0x94:
-        STYZeroPageX();
-        break;
-
-    case 0x8C:
-        STYAbsolute();
-        break;
-
-    case 0x29:
-        ANDImmediate();
-        break;
-
-    case 0x25:
-        ANDZeroPage();
-        break;
-
-    case 0x35:
-        ANDZeroPageX();
-        break;
-
-    case 0x2D:
-        ANDAbsolute();
-        break;
-
-    case 0x3D:
-        ANDAbsoluteX();
-        break;
-
-    case 0x39:
-        ANDAbsoluteY();
-        break;
-
-    case 0x20:
-        ORAImmediate();
-        break;
-
-    case 0x05:
-        ORAZeroPage();
-        break;
-
-    case 0x15:
-        ORAZeroPageX();
-        break;
-
-    case 0x0D:
-        ORAAbsolute();
-        break;
-
-    case 0x1D:
-        ORAAbsoluteX();
-        break;
-
-    case 0x19:
-        ORAAbsoluteY();
-        break;
-
-    case 0x01:
-        ORAIndirectX();
-        break;
-
-    case 0x11:
-        ORAIndirectY();
-        break;
-
-    case 0x16:
-        ASLZeroPageX();
-        break;
-
-    case 0x0E:
-        ASLAbsolute();
-        break;
-
-    case 0x1E:
-        ASLAbsoluteX();
-        break;
-
-    case 0x4A:
-        LSRAccumulator();
-        break;
-
-    case 0x46:
-        LSRZeroPage();
-        break;
-
-    case 0x56:
-        LSRZeroPageX();
-        break;
-
-    case 0x4E:
-        LSRAbsolute();
-        break;
-
-    case 0x5E:
-        LSRAbsoluteX();
-        break;
-
-    case 0x69:
-        ADCImmediate();
-        break;
-
-    case 0x65:
-        ADCZeroPage();
-        break;
-
-    case 0x75:
-        ADCZeroPageX();
-        break;
-
-    case 0x6D:
-        ADCAbsolute();
-        break;
-
-    case 0x7D:
-        ADCAbsoluteX();
-        break;
-
-    case 0x79:
-        ADCAbsoluteY();
-        break;
-
-    case 0x61:
-        ADCIndirectX();
-        break;
-
-    case 0x71:
-        ADCIndirectY();
-        break;
-
-    case 0xEA:
-        NOP();
-        break;
-
-    case 0xB:
-        EMULATOR_6502_DEBUG("CPU Break (BRK) encountered");
-        break;
-
-    default:
-        EMULATOR_6502_DEBUG(TEXT("UnknowFlags.N_Negative opcode: %02X"), opcode);
-        break;
-    }
-
-    PrintRegisterState();
+    (this->*instuction)();
 }
 
 void CPU6502::LDAImmediate()
@@ -393,7 +217,7 @@ void CPU6502::LDAZeroPageX()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsoulute()
+void CPU6502::LDAAbsolute()
 {
     Word address = FetchWord();
 
@@ -403,7 +227,7 @@ void CPU6502::LDAAbsoulute()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsouluteX()
+void CPU6502::LDAAbsoluteX()
 {
     Word baseAddr = FetchWord();
     Word addr = baseAddr + m_X;
@@ -414,7 +238,7 @@ void CPU6502::LDAAbsouluteX()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::LDAAbsouluteY()
+void CPU6502::LDAAbsoluteY()
 {
     Word baseAddr = FetchWord();
     Word addr = baseAddr + m_Y;
@@ -485,7 +309,7 @@ void CPU6502::LDXZeroPageY()
     StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
-void CPU6502::LDXAbsoulute()
+void CPU6502::LDXAbsolute()
 {
     Word address = FetchWord();
 
@@ -495,7 +319,7 @@ void CPU6502::LDXAbsoulute()
     StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
-void CPU6502::LDXAbsouluteY()
+void CPU6502::LDXAbsoluteY()
 {
     Word baseAddr = FetchWord();
     Word addr = baseAddr + m_Y;
@@ -536,7 +360,7 @@ void CPU6502::LDYZeroPageX()
     StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::LDYAbsoulute()
+void CPU6502::LDYAbsolute()
 {
     Word address = FetchWord();
 
@@ -546,7 +370,7 @@ void CPU6502::LDYAbsoulute()
     StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
-void CPU6502::LDYAbsouluteX()
+void CPU6502::LDYAbsoluteX()
 {
     Word baseAddr = FetchWord();
     Word addr = baseAddr + m_X;
@@ -620,6 +444,26 @@ void CPU6502::DECZeroPageX()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
+void CPU6502::DECAbsolute() {}
+
+void CPU6502::DECAbsoluteX() {}
+
+void CPU6502::BNE() {}
+
+void CPU6502::BEQ() {}
+
+void CPU6502::BPL() {}
+
+void CPU6502::BMI() {}
+
+void CPU6502::BVC() {}
+
+void CPU6502::BVS() {}
+
+void CPU6502::BCC() {}
+
+void CPU6502::BCS() {}
+
 void CPU6502::DECAbsoulute()
 {
     Word address = FetchWord();
@@ -651,6 +495,14 @@ void CPU6502::NOP()
 {
     // Do nothing
 }
+
+void CPU6502::RTI() {}
+
+void CPU6502::RTS() {}
+
+void CPU6502::JSR() {}
+
+void CPU6502::BRK() {}
 
 void CPU6502::STAZeroPage()
 {
@@ -1162,6 +1014,75 @@ void CPU6502::AddWithCarry(const Byte value)
 
     StatusFlags.Z = (m_A == 0);
     StatusFlags.N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::SBCImmediate() {}
+
+void CPU6502::SBCZeroPage() {}
+
+void CPU6502::SBCZeroPageX() {}
+
+void CPU6502::SBCAbsolute() {}
+
+void CPU6502::SBCAbsoluteX() {}
+
+void CPU6502::SBCAbsoluteY() {}
+
+void CPU6502::SBCIndirectX() {}
+
+void CPU6502::SBCIndirectY() {}
+
+void CPU6502::TAX() {}
+
+void CPU6502::TAY() {}
+
+void CPU6502::TXA() {}
+
+void CPU6502::TYA() {}
+
+void CPU6502::EORImmediate() {}
+
+void CPU6502::EORZeroPage() {}
+
+void CPU6502::EORZeroPageX() {}
+
+void CPU6502::EORAbsolute() {}
+
+void CPU6502::EORAbsoluteX() {}
+
+void CPU6502::EORAbsoluteY() {}
+
+void CPU6502::EORIndirectX() {}
+
+void CPU6502::EORIndirectY() {}
+
+void CPU6502::CMPImmediate() {}
+
+void CPU6502::CMPZeroPage() {}
+
+void CPU6502::CMPZeroPageX() {}
+
+void CPU6502::CMPAbsolute() {}
+
+void CPU6502::CMPAbsoluteX() {}
+
+void CPU6502::CMPAbsoluteY() {}
+
+void CPU6502::CMPIndirectX() {}
+
+void CPU6502::CMPIndirectY() {}
+
+void CPU6502::INCZeroPage() {}
+
+void CPU6502::INCZeroPageX() {}
+
+void CPU6502::INCAbsolute() {}
+
+void CPU6502::INCAbsoluteX() {}
+
+void CPU6502::InvalidOpcode() 
+{
+    EMULATOR_6502_ERROR(TEXT("Invalid opcode: 0x{:02X} at PC: 0x{:04X}", ReadByte(m_PC), m_PC));
 }
 
 void CPU6502::PrintRegisterState()
