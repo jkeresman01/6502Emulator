@@ -1023,13 +1023,37 @@ void CPU6502::SBCIndirectX() {}
 
 void CPU6502::SBCIndirectY() {}
 
-void CPU6502::TAX() {}
+void CPU6502::TAX()
+{
+    m_X = m_A;
 
-void CPU6502::TAY() {}
+    StatusFlags.Z = (m_X == 0);
+    StatusFlags.N = (m_X & 0b10000000) > 0;
+}
 
-void CPU6502::TXA() {}
+void CPU6502::TAY() 
+{
+    m_Y = m_A;
 
-void CPU6502::TYA() {}
+    StatusFlags.Z = (m_Y == 0);
+    StatusFlags.N = (m_Y & 0b10000000) > 0;
+}
+
+void CPU6502::TXA() 
+{
+    m_A = m_X;
+
+    StatusFlags.Z = (m_A == 0);
+    StatusFlags.N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::TYA()
+{
+    m_A = m_Y;
+
+    StatusFlags.Z = (m_A == 0);
+    StatusFlags.N = (m_A & 0b10000000) > 0;
+}
 
 void CPU6502::EORImmediate() {}
 
