@@ -86,30 +86,6 @@ void Emulator6502::RenderProcessorsRegisterStatus()
     // TODO status flags
 }
 
-void Emulator6502::RenderDissasemblyPopup()
-{
-    if (m_ShowDisassemblyPopup)
-    {
-        ImGui::OpenPopup("Disassembly");
-        m_ShowDisassemblyPopup = false;
-    }
-
-    if (ImGui::BeginPopupModal("Disassembly", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        for (const auto &line : m_Dissasembly)
-        {
-            ImGui::Text("%s", line.c_str());
-        }
-
-        if (ImGui::Button("Close"))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-
-        ImGui::EndPopup();
-    }
-}
-
 void Emulator6502::RenderButtons()
 {
     if (ImGui::Button("Assemble"))
@@ -143,13 +119,35 @@ void Emulator6502::RenderButtons()
     }
 }
 
+void Emulator6502::RenderDissasemblyPopup()
+{
+    if (m_ShowDisassemblyPopup)
+    {
+        ImGui::OpenPopup("Disassembly");
+        m_ShowDisassemblyPopup = false;
+    }
+
+    if (ImGui::BeginPopupModal("Disassembly", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        for (const auto &line : m_Dissasembly)
+        {
+            ImGui::Text("%s", line.c_str());
+        }
+
+        if (ImGui::Button("Close"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+}
+
 void Emulator6502::OpenDissasemblyPopup()
 {
     const std::vector<Byte> &machineCode = ProgramUtil::ReadProgramFromMemory();
     m_Dissasembly = m_Disssembler->Disassmble(machineCode);
     m_ShowDisassemblyPopup = true;
-
-    RenderDissasemblyPopup();
 }
 
 void Emulator6502::LoadProgramIntoMemory()
