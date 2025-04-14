@@ -123,6 +123,7 @@ void Emulator6502::RenderControlButtonsWindow()
         Reset();
     }
 
+    ImGui::SameLine();
     if (ImGui::Button("Step"))
     {
         m_CPU->Step();
