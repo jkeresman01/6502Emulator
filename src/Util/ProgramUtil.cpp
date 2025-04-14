@@ -9,7 +9,7 @@ void ProgramUtil::LoadProgramIntoMemory(const std::string &asmCode,
 
     for (size_t i = 0; i < machineCode.size(); ++i)
     {
-        Memory::s_RAM[0x0800 + i] = machineCode[i];
+        Memory::s_RAM[0x8000 + i] = machineCode[i];
     }
 }
 
@@ -17,7 +17,7 @@ std::vector<Byte> ProgramUtil::ReadProgramFromMemory()
 {
     std::vector<Byte> machineCode;
 
-    size_t programCounter = 0x0800;
+    size_t programCounter = 0x8000;
     const uint8_t lookaheadWindow = 3;
     bool isEndOfProgramReached = false;
 

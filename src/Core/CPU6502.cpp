@@ -137,7 +137,7 @@ void CPU6502::Reset()
     m_X = 0x00;
     m_Y = 0x00;
     m_SP = 0xFD;
-    m_PC = 0x0800;
+    m_PC = 0x8000;
 
     ////////////////////            STATUS FLAGS        ////////////////////
 
