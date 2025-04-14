@@ -54,6 +54,12 @@ class CPU6502
 
     Byte ReadByte(const Word address);
 
+    Byte PopByte();
+    void PushByte(const Byte value);
+    
+    Word PopWord();
+    void PushWord(const Word value);
+
   private:
     ////////////////////            LDA (Load accumulator)            ////////////////////
     void LDAImmediate();
@@ -188,6 +194,8 @@ class CPU6502
     void TAY();
     void TXA();
     void TYA();
+    void TSX();
+    void TXS();
 
     ////////////////////  EOR (Exclusive OR)  ////////////////////
     void EORImmediate();
@@ -234,6 +242,46 @@ class CPU6502
     void RTS();
     void JSR();
     void BRK();
+
+    ////////////////////  Flag Set Instructions  ////////////////////
+    void SEC();
+    void SED();
+    void SEI();
+
+    ////////////////////  Stack Instructions  ////////////////////
+    void PHA();
+    void PHP();
+    void PLA();
+    void PLP();
+
+    ////////////////////  Compare Instructions  ////////////////////
+    void CPXImmediate();
+    void CPXZeroPage();
+    void CPXAbsolute();
+
+    void CPYImmediate();
+    void CPYZeroPage();
+    void CPYAbsolute();
+
+    ////////////////////  Bitwise / Rotate / Test Instructions  ////////////////////
+    void ROLAccumulator();
+    void ROLZeroPage();
+    void ROLZeroPageX();
+    void ROLAbsolute();
+    void ROLAbsoluteX();
+
+    void RORAccumulator();
+    void RORZeroPage();
+    void RORZeroPageX();
+    void RORAbsolute();
+    void RORAbsoluteX();
+
+    void BITZeroPage();
+    void BITAbsolute();
+
+    ////////////////////  Unconditional Jump  ////////////////////
+    void JMPAbsolute();
+    void JMPIndirect();
 
     ////////////////////        Invalid opcode         ////////////////////
     void InvalidOpcode();
