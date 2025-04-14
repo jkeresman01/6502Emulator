@@ -466,21 +466,85 @@ void CPU6502::DECAbsoluteX()
     StatusFlags.N = (value & 0b10000000) > 0;
 }
 
-void CPU6502::BNE() {}
+void CPU6502::BNE()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
 
-void CPU6502::BEQ() {}
+    if (!StatusFlags.Z)
+    {
+        m_PC += offset;
+    }
+}
 
-void CPU6502::BPL() {}
+void CPU6502::BEQ()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
 
-void CPU6502::BMI() {}
+    if (StatusFlags.Z)
+    {
+        m_PC += offset;
+    }
+}
 
-void CPU6502::BVC() {}
+void CPU6502::BPL()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
 
-void CPU6502::BVS() {}
+    if (!StatusFlags.N)
+    {
+        m_PC += offset;
+    }
+}
 
-void CPU6502::BCC() {}
+void CPU6502::BMI()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
 
-void CPU6502::BCS() {}
+    if (StatusFlags.N)
+    {
+        m_PC += offset;
+    }
+}
+
+void CPU6502::BVC() 
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
+
+    if (!StatusFlags.V)
+    {
+        m_PC += offset;
+    }
+}
+
+void CPU6502::BVS()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
+
+    if (StatusFlags.V)
+    {
+        m_PC += offset;
+    }
+}
+
+void CPU6502::BCC()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
+
+    if (!StatusFlags.C)
+    {
+        m_PC += offset;
+    }
+}
+
+void CPU6502::BCS()
+{
+    int8_t offset = static_cast<int8_t>(FetchByte());
+
+    if (StatusFlags.C)
+    {
+        m_PC += offset;
+    }
+}
 
 void CPU6502::NOP()
 {
