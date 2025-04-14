@@ -649,7 +649,7 @@ void CPU6502::BRK()
     PushByte((m_PC >> 8) & 0xFF);
     PushByte(m_PC & 0xFF);
 
-    PushByte(m_StatusRegisterFlags | 0x10); 
+    PushByte(m_StatusRegisterFlags | 0x10);
 
     StatusFlags.I = 1;
 
@@ -799,7 +799,7 @@ void CPU6502::BITAbsolute()
 
 void CPU6502::JMPAbsolute()
 {
-    //TODO
+    // TODO
 }
 
 void CPU6502::JMPIndirect()
@@ -1436,7 +1436,7 @@ void CPU6502::TYA()
     StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
-void CPU6502::TSX() 
+void CPU6502::TSX()
 {
     m_X = m_SP;
 
@@ -1444,7 +1444,7 @@ void CPU6502::TSX()
     StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
-void CPU6502::TXS() 
+void CPU6502::TXS()
 {
     m_SP = m_X;
 }

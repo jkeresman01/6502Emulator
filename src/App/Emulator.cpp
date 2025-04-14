@@ -41,7 +41,6 @@ void Emulator6502::InitWindow()
     m_Window = glfwCreateWindow(mode->width, mode->height, "6502 Emulator", NULL, NULL);
 }
 
-
 void Emulator6502::Run()
 {
     while (!glfwWindowShouldClose(m_Window))

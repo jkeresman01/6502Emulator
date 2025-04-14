@@ -56,7 +56,7 @@ class CPU6502
 
     Byte PopByte();
     void PushByte(const Byte value);
-    
+
     Word PopWord();
     void PushWord(const Word value);
 
