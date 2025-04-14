@@ -1,6 +1,14 @@
-﻿# 🧠 6502 Emulator Memory Map
+﻿<div align="center">
 
-This is custom 6502 emulator. 
+  <h1>🧠 6502 emulator. </h1>
+  <h6> ---> This is custom 6502 emulator. <--- </h6>
+
+![C++](https://img.shields.io/badge/C++-blue?style=for-the-badge&logo=c%2B%2B)
+![Work In Progress](https://img.shields.io/badge/Work%20In%20Progress-orange?style=for-the-badge)
+
+</div>
+
+## 6502 Emulator Memory Map
 
 ---
 
@@ -33,7 +41,88 @@ This is custom 6502 emulator.
 
 ---
 
-## 📌 Notes
+
+## 📦 CPU Registers
+
+| Name | Full Name        | Size    | Description                         |
+|------|------------------|---------|-------------------------------------|
+| PC   | Program Counter  | 16-bit  | Points to the next instruction      |
+| AC   | Accumulator      | 8-bit   | Used for arithmetic and logic ops   |
+| X    | X Register       | 8-bit   | General-purpose / indexing          |
+| Y    | Y Register       | 8-bit   | General-purpose / indexing          |
+| SR   | Status Register  | 8-bit   | Processor flags: `N V - B D I Z C`  |
+| SP   | Stack Pointer    | 8-bit   | Stack offset from `$0100` base      |
+
+
+## 📦 Instruction set
+
+Not all instructions are implemented in current stage
+
+| Mnemonic | Description |
+|----------|------------|
+| **ADC**  | Add with carry |
+| **AND**  | And (with accumulator) |
+| **ASL**  | Arithmetic shift left |
+| **BCC**  | Branch on carry clear |
+| **BCS**  | Branch on carry set |
+| **BEQ**  | Branch on equal (zero set) |
+| **BIT**  | Bit test |
+| **BMI**  | Branch on minus (negative set) |
+| **BNE**  | Branch on not equal (zero clear) |
+| **BPL**  | Branch on plus (negative clear) |
+| **BRK**  | Break / interrupt |
+| **BVC**  | Branch on overflow clear |
+| **BVS**  | Branch on overflow set |
+| **CLC**  | Clear carry |
+| **CLD**  | Clear decimal |
+| **CLI**  | Clear interrupt disable |
+| **CLV**  | Clear overflow |
+| **CMP**  | Compare (with accumulator) |
+| **CPX**  | Compare with X |
+| **CPY**  | Compare with Y |
+| **DEC**  | Decrement |
+| **DEX**  | Decrement X |
+| **DEY**  | Decrement Y |
+| **EOR**  | Exclusive OR (with accumulator) |
+| **INC**  | Increment |
+| **INX**  | Increment X |
+| **INY**  | Increment Y |
+| **JMP**  | Jump                          |
+| **JSR**  | Jump subroutine               |
+| **LDA**  | Load accumulator              |
+| **LDX**  | Load X                        |
+| **LDY**  | Load Y                        |
+| **LSR**  | Logical shift right           |
+| **NOP**  | No operation                  |
+| **ORA**  | OR with accumulator           |
+| **PHA**  | Push accumulator              |
+| **PHP**  | Push processor status (SR)    |
+| **PLA**  | Pull accumulator              |
+| **PLP**  | Pull processor status (SR)    |
+| **ROL**  | Rotate left                   |
+| **ROR**  | Rotate right                  |
+| **RTI**  | Return from interrupt         |
+| **RTS**  | Return from subroutine        |
+| **SBC**  | Subtract with carry           |
+| **SEC**  | Set carry                     |
+| **SED**  | Set decimal                   |
+| **SEI**  | Set interrupt disable         |
+| **STA**  | Store accumulator             |
+| **STX**  | Store X                       |
+| **STY**  | Store Y                       |
+| **TAX**  | Transfer accumulator to X     |
+| **TAY**  | Transfer accumulator to Y     |
+| **TSX**  | Transfer stack pointer to X   |
+| **TXA**  | Transfer X to accumulator     |
+| **TXS**  | Transfer X to stack pointer   |
+| **TYA**  | Transfer Y to accumulator     |
+
+## 📦 Addressing modes
+
+//TODO
+
+
+## 📌 General Notes
 
 - **Stack** grows downward from `$01FF` to `$0100`.
 - **Pixel display** memory is read by the graphics renderer.
