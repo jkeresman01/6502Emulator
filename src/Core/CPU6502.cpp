@@ -104,6 +104,12 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xD9] = &CPU6502::CMPAbsoluteY;
     m_InstructionSetDispatchTable[0xC1] = &CPU6502::CMPIndirectX;
     m_InstructionSetDispatchTable[0xD1] = &CPU6502::CMPIndirectY;
+    m_InstructionSetDispatchTable[0xE0] = &CPU6502::CPXImmediate;
+    m_InstructionSetDispatchTable[0xE4] = &CPU6502::CPXZeroPage;
+    m_InstructionSetDispatchTable[0xEC] = &CPU6502::CPXAbsolute;
+    m_InstructionSetDispatchTable[0xC0] = &CPU6502::CPYImmediate;
+    m_InstructionSetDispatchTable[0xC4] = &CPU6502::CPYZeroPage;
+    m_InstructionSetDispatchTable[0xCC] = &CPU6502::CPYAbsolute;
 
     m_InstructionSetDispatchTable[0xE6] = &CPU6502::INCZeroPage;
     m_InstructionSetDispatchTable[0xF6] = &CPU6502::INCZeroPageX;
