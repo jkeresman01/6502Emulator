@@ -36,7 +36,12 @@ class Emulator6502
     void Shutdown();
 
   private:
+    void InitComponents();
+    void InitWindow();
+
     void Reset();
+
+    void DestroyComponents();
 
     void LoadProgramIntoMemory();
 

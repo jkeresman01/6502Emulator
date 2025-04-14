@@ -10,36 +10,37 @@
 namespace emulator6502
 {
 
-constexpr int64_t BUFFER_SIZE = 8192;
-static char asmCode[BUFFER_SIZE] = "";
-
 void Emulator6502::Init()
 {
+    InitComponents();
+    Reset();
+    glfwInit();
+    InitWindow();
+    glfwMakeContextCurrent(m_Window);
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
+    ImGui_ImplOpenGL3_Init();
+}
+
+void Emulator6502::InitComponents()
+{
     Random::Init();
-
     m_CPU->Init();
-
     m_AsmEditor->Init();
     m_MemoryLayout->Init();
     m_PixelDisplay->Init();
     m_HEXDisplay->Init();
     m_LEDs->Init();
     m_SwitchPanel->Init();
+}
 
-    Reset();
-
-    glfwInit();
-
+void Emulator6502::InitWindow()
+{
     GLFWmonitor *primary = glfwGetPrimaryMonitor();
     const GLFWvidmode *mode = glfwGetVideoMode(primary);
     m_Window = glfwCreateWindow(mode->width, mode->height, "6502 Emulator", NULL, NULL);
-
-    glfwMakeContextCurrent(m_Window);
-    ImGui::CreateContext();
-
-    ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
-    ImGui_ImplOpenGL3_Init();
 }
+
 
 void Emulator6502::Run()
 {
@@ -49,14 +50,10 @@ void Emulator6502::Run()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
         Render();
-
         ImGui::Render();
-
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(m_Window);
     }
@@ -66,8 +63,8 @@ void Emulator6502::Render()
 {
     RenderComponents();
     RenderCPUStatusWindow();
-    RenderControlButtonsWindow();
     RenderDissasemblyPopup();
+    RenderControlButtonsWindow();
 }
 
 void Emulator6502::RenderCPUStatusWindow()
@@ -171,18 +168,22 @@ void Emulator6502::LoadProgramIntoMemory()
 
 void Emulator6502::Shutdown()
 {
+    DestroyComponents();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwDestroyWindow(m_Window);
+    glfwTerminate();
+}
+
+void Emulator6502::DestroyComponents()
+{
     m_AsmEditor->Destroy();
     m_PixelDisplay->Destroy();
     m_MemoryLayout->Destroy();
     m_HEXDisplay->Destroy();
     m_LEDs->Destroy();
     m_SwitchPanel->Destroy();
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    glfwDestroyWindow(m_Window);
-    glfwTerminate();
 }
 
 void Emulator6502::Reset()
