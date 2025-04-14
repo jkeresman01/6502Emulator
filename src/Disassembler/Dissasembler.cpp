@@ -53,14 +53,14 @@ void Disassembler::appendOperands(std::stringstream &ss, const std::vector<Byte>
     if (operandSize == 1 && (programCounter + 1 < machineCode.size()))
     {
         Byte operand = machineCode[programCounter + 1];
-        ss << "$" << std::hex << std::setw(2) << std::setfill('0') << static_cast<int32_t>(operand);
+        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int32_t>(operand);
         programCounter += 2;
     }
     else if (operandSize == 2 && (programCounter + 2 < machineCode.size()))
     {
         Word address = static_cast<Word>(machineCode[programCounter + 1]) |
                        (static_cast<Word>(machineCode[programCounter + 2]) << 8);
-        ss << "$" << std::hex << std::setw(4) << std::setfill('0') << static_cast<int32_t>(address);
+        ss << std::hex << std::setw(4) << std::setfill('0') << static_cast<int32_t>(address);
         programCounter += 3;
     }
     else
