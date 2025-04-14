@@ -5,7 +5,7 @@
 namespace emulator6502
 {
 
-static const bool SEGMENTS[16][7] = {
+static constexpr bool SEGMENTS[16][7] = {
     {1, 1, 1, 1, 1, 1, 0}, // 0
     {0, 1, 1, 0, 0, 0, 0}, // 1
     {1, 1, 0, 1, 1, 0, 1}, // 2
@@ -48,11 +48,6 @@ void HEXDisplay::Render() noexcept
 
     ImGui::Dummy(ImVec2(NUM_DIGITS * (size + spacing), size + 30));
     ImGui::End();
-}
-
-void HEXDisplay::Destroy() noexcept
-{
-    // Do nothing for now
 }
 
 void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, const float size,
@@ -111,6 +106,11 @@ void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, 
     {
         drawList->AddConvexPolyFilled(segments[i], 4, segs[i] ? onColor : offColor);
     }
+}
+
+void HEXDisplay::Destroy() noexcept
+{
+    // Do nothing for now
 }
 
 } // namespace emulator6502
