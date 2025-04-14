@@ -506,7 +506,7 @@ void CPU6502::BMI()
     }
 }
 
-void CPU6502::BVC() 
+void CPU6502::BVC()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 

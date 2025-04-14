@@ -1,7 +1,7 @@
 #include "Emulator.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "../Util/ColorsUtil.h"
 #include "../Util/ProgramUtil.h"
@@ -16,7 +16,7 @@ static char asmCode[BUFFER_SIZE] = "";
 void Emulator6502::Init()
 {
     Random::Init();
-    
+
     m_CPU->Init();
 
     m_AsmEditor->Init();
@@ -85,7 +85,7 @@ void Emulator6502::RenderCPUStatusWindow()
     ImGui::End();
 }
 
-void Emulator6502::RenderComponents() 
+void Emulator6502::RenderComponents()
 {
     m_AsmEditor->Render();
     m_PixelDisplay->Render();

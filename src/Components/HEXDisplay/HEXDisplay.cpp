@@ -6,27 +6,27 @@ namespace emulator6502
 {
 
 static const bool SEGMENTS[16][7] = {
-    {1, 1, 1, 1, 1, 1, 0},  // 0
-    {0, 1, 1, 0, 0, 0, 0},  // 1
-    {1, 1, 0, 1, 1, 0, 1},  // 2
-    {1, 1, 1, 1, 0, 0, 1},  // 3
-    {0, 1, 1, 0, 0, 1, 1},  // 4
-    {1, 0, 1, 1, 0, 1, 1},  // 5
-    {1, 0, 1, 1, 1, 1, 1},  // 6
-    {1, 1, 1, 0, 0, 0, 0},  // 7
-    {1, 1, 1, 1, 1, 1, 1},  // 8
-    {1, 1, 1, 1, 0, 1, 1},  // 9
-    {1, 1, 1, 0, 1, 1, 1},  // A
-    {0, 0, 1, 1, 1, 1, 1},  // B
-    {1, 0, 0, 1, 1, 1, 0},  // C
-    {0, 1, 1, 1, 1, 0, 1},  // D
-    {1, 0, 0, 1, 1, 1, 1},  // E
-    {1, 0, 0, 0, 1, 1, 1}   // F
+    {1, 1, 1, 1, 1, 1, 0}, // 0
+    {0, 1, 1, 0, 0, 0, 0}, // 1
+    {1, 1, 0, 1, 1, 0, 1}, // 2
+    {1, 1, 1, 1, 0, 0, 1}, // 3
+    {0, 1, 1, 0, 0, 1, 1}, // 4
+    {1, 0, 1, 1, 0, 1, 1}, // 5
+    {1, 0, 1, 1, 1, 1, 1}, // 6
+    {1, 1, 1, 0, 0, 0, 0}, // 7
+    {1, 1, 1, 1, 1, 1, 1}, // 8
+    {1, 1, 1, 1, 0, 1, 1}, // 9
+    {1, 1, 1, 0, 1, 1, 1}, // A
+    {0, 0, 1, 1, 1, 1, 1}, // B
+    {1, 0, 0, 1, 1, 1, 0}, // C
+    {0, 1, 1, 1, 1, 0, 1}, // D
+    {1, 0, 0, 1, 1, 1, 1}, // E
+    {1, 0, 0, 0, 1, 1, 1}  // F
 };
 
-void HEXDisplay::Init() noexcept 
+void HEXDisplay::Init() noexcept
 {
-    //Do nothing for now
+    // Do nothing for now
 }
 
 void HEXDisplay::Render() noexcept
@@ -50,13 +50,13 @@ void HEXDisplay::Render() noexcept
     ImGui::End();
 }
 
-
-void HEXDisplay::Destroy() noexcept 
+void HEXDisplay::Destroy() noexcept
 {
-    //Do nothing for now
+    // Do nothing for now
 }
 
-void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, const float size,const uint8_t value) 
+void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, const float size,
+                                       const uint8_t value)
 {
     const float segmentLength = size;
     const float segmentThickness = size * 0.2f;
@@ -66,38 +66,44 @@ void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, 
 
     const bool *segs = SEGMENTS[value & 0x0F];
 
-    ImVec2 a[] = {ImVec2(pos.x + segmentThickness, pos.y), ImVec2(pos.x + segmentLength - segmentThickness, pos.y),
+    ImVec2 a[] = {ImVec2(pos.x + segmentThickness, pos.y),
+                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y),
                   ImVec2(pos.x + segmentLength - segmentThickness * 2, pos.y + segmentThickness),
                   ImVec2(pos.x + segmentThickness * 2, pos.y + segmentThickness)};
 
-    ImVec2 b[] = {ImVec2(pos.x + segmentLength, pos.y + segmentThickness),
-                  ImVec2(pos.x + segmentLength, pos.y + segmentLength / 2 - segmentThickness),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2 - segmentThickness * 2),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentThickness * 2)};
+    ImVec2 b[] = {
+        ImVec2(pos.x + segmentLength, pos.y + segmentThickness),
+        ImVec2(pos.x + segmentLength, pos.y + segmentLength / 2 - segmentThickness),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2 - segmentThickness * 2),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentThickness * 2)};
 
-    ImVec2 c[] = {ImVec2(pos.x + segmentLength, pos.y + segmentLength / 2 + segmentThickness),
-                  ImVec2(pos.x + segmentLength, pos.y + segmentLength - segmentThickness),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength - segmentThickness * 2),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2 + segmentThickness * 2)};
+    ImVec2 c[] = {
+        ImVec2(pos.x + segmentLength, pos.y + segmentLength / 2 + segmentThickness),
+        ImVec2(pos.x + segmentLength, pos.y + segmentLength - segmentThickness),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength - segmentThickness * 2),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2 + segmentThickness * 2)};
 
-    ImVec2 d[] = {ImVec2(pos.x + segmentThickness, pos.y + segmentLength),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength),
-                  ImVec2(pos.x + segmentLength - segmentThickness * 2, pos.y + segmentLength - segmentThickness),
-                  ImVec2(pos.x + segmentThickness * 2, pos.y + segmentLength - segmentThickness)};
+    ImVec2 d[] = {
+        ImVec2(pos.x + segmentThickness, pos.y + segmentLength),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength),
+        ImVec2(pos.x + segmentLength - segmentThickness * 2, pos.y + segmentLength - segmentThickness),
+        ImVec2(pos.x + segmentThickness * 2, pos.y + segmentLength - segmentThickness)};
 
     ImVec2 e[] = {ImVec2(pos.x, pos.y + segmentLength / 2 + segmentThickness),
                   ImVec2(pos.x, pos.y + segmentLength - segmentThickness),
                   ImVec2(pos.x + segmentThickness, pos.y + segmentLength - segmentThickness * 2),
                   ImVec2(pos.x + segmentThickness, pos.y + segmentLength / 2 + segmentThickness * 2)};
 
-    ImVec2 f[] = {ImVec2(pos.x, pos.y + segmentThickness), ImVec2(pos.x, pos.y + segmentLength / 2 - segmentThickness),
+    ImVec2 f[] = {ImVec2(pos.x, pos.y + segmentThickness),
+                  ImVec2(pos.x, pos.y + segmentLength / 2 - segmentThickness),
                   ImVec2(pos.x + segmentThickness, pos.y + segmentLength / 2 - segmentThickness * 2),
                   ImVec2(pos.x + segmentThickness, pos.y + segmentThickness * 2)};
 
-    ImVec2 g[] = {ImVec2(pos.x + segmentThickness, pos.y + segmentLength / 2),
-                  ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2),
-                  ImVec2(pos.x + segmentLength - segmentThickness * 2, pos.y + segmentLength / 2 + segmentThickness),
-                  ImVec2(pos.x + segmentThickness * 2, pos.y + segmentLength / 2 + segmentThickness)};
+    ImVec2 g[] = {
+        ImVec2(pos.x + segmentThickness, pos.y + segmentLength / 2),
+        ImVec2(pos.x + segmentLength - segmentThickness, pos.y + segmentLength / 2),
+        ImVec2(pos.x + segmentLength - segmentThickness * 2, pos.y + segmentLength / 2 + segmentThickness),
+        ImVec2(pos.x + segmentThickness * 2, pos.y + segmentLength / 2 + segmentThickness)};
 
     ImVec2 *segments[7] = {a, b, c, d, e, f, g};
 

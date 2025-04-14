@@ -11,11 +11,11 @@
 
 #include "../Assembler/Assembler.h"
 #include "../Components/Editor/Editor.h"
-#include "../Components/MemoryLayout/MemoryLayout.h"
 #include "../Components/HEXDisplay/HEXDisplay.h"
 #include "../Components/LEDs/LEDs.h"
-#include "../Components/SwitchPanel/SwitchPanel.h"
+#include "../Components/MemoryLayout/MemoryLayout.h"
 #include "../Components/PixelDisplay/PixelDisplay.h"
+#include "../Components/SwitchPanel/SwitchPanel.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
 #include "../Disassembler/Dissasembler.h"
@@ -42,7 +42,6 @@ class Emulator6502
 
   private:
     void Render();
-
 
     void RenderComponents();
     void RenderControlButtonsWindow();

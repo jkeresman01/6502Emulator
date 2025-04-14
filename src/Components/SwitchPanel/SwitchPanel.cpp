@@ -9,7 +9,7 @@ namespace emulator6502
 {
 void SwitchPanel::Init()
 {
-	//Do nothing for now
+    // Do nothing for now
 }
 
 void SwitchPanel::Render()

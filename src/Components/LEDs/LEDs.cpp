@@ -9,11 +9,8 @@
 namespace emulator6502
 {
 
-void LEDs::Init() noexcept 
-{
-
-}
-void LEDs::Render() noexcept 
+void LEDs::Init() noexcept {}
+void LEDs::Render() noexcept
 {
     ImGui::Begin("LED Display");
 
@@ -36,9 +33,6 @@ void LEDs::Render() noexcept
     ImGui::End();
 }
 
-void LEDs::Destroy() noexcept 
-{
-
-}
+void LEDs::Destroy() noexcept {}
 
 } // namespace emulator6502
