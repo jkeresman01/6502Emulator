@@ -144,6 +144,24 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x08] = &CPU6502::PHP;
     m_InstructionSetDispatchTable[0x68] = &CPU6502::PLA;
     m_InstructionSetDispatchTable[0x28] = &CPU6502::PLP;
+
+    m_InstructionSetDispatchTable[0x24] = &CPU6502::BITZeroPage;
+    m_InstructionSetDispatchTable[0x2C] = &CPU6502::BITAbsolute;
+
+    m_InstructionSetDispatchTable[0x2A] = &CPU6502::ROLAccumulator;
+    m_InstructionSetDispatchTable[0x26] = &CPU6502::ROLZeroPage;
+    m_InstructionSetDispatchTable[0x36] = &CPU6502::ROLZeroPageX;
+    m_InstructionSetDispatchTable[0x2E] = &CPU6502::ROLAbsolute;
+    m_InstructionSetDispatchTable[0x3E] = &CPU6502::ROLAbsoluteX;
+
+    m_InstructionSetDispatchTable[0x6A] = &CPU6502::RORAccumulator;
+    m_InstructionSetDispatchTable[0x66] = &CPU6502::RORZeroPage;
+    m_InstructionSetDispatchTable[0x76] = &CPU6502::RORZeroPageX;
+    m_InstructionSetDispatchTable[0x6E] = &CPU6502::RORAbsolute;
+    m_InstructionSetDispatchTable[0x7E] = &CPU6502::RORAbsoluteX;
+
+    m_InstructionSetDispatchTable[0x4C] = &CPU6502::JMPAbsolute;
+    m_InstructionSetDispatchTable[0x6C] = &CPU6502::JMPIndirect;
 }
 
 void CPU6502::Reset()
@@ -717,6 +735,76 @@ void CPU6502::CPYAbsolute()
     Word addr = FetchWord();
     Byte value = ReadByte(addr);
     Compare(m_Y, value);
+}
+
+void CPU6502::ROLAccumulator()
+{
+    // TODO
+}
+
+void CPU6502::ROLZeroPage()
+{
+    // TODO
+}
+
+void CPU6502::ROLZeroPageX()
+{
+    // TODO
+}
+
+void CPU6502::ROLAbsolute()
+{
+    // TODO
+}
+
+void CPU6502::ROLAbsoluteX()
+{
+    // TODO
+}
+
+void CPU6502::RORAccumulator()
+{
+    // TODO
+}
+
+void CPU6502::RORZeroPage()
+{
+    // TODO
+}
+
+void CPU6502::RORZeroPageX()
+{
+    // TODO
+}
+
+void CPU6502::RORAbsolute()
+{
+    // TODO
+}
+
+void CPU6502::RORAbsoluteX()
+{
+    // TODO
+}
+
+void CPU6502::BITZeroPage()
+{
+    // TODO
+}
+
+void CPU6502::BITAbsolute()
+{
+    // TODO
+}
+
+void CPU6502::JMPAbsolute()
+{
+    //TODO
+}
+
+void CPU6502::JMPIndirect()
+{
+    // TODO
 }
 
 void CPU6502::STAZeroPage()
