@@ -168,6 +168,32 @@ Byte CPU6502::ReadByte(const Word address)
     return Memory::Read(address);
 }
 
+Byte CPU6502::PopByte()
+{
+    m_SP++;
+    return Memory::Read(0x0100 + m_SP);
+}
+
+void CPU6502::PushByte(const Byte value)
+{
+    Memory::Write(0x0100 + m_SP, value);
+    m_SP--;
+}
+
+Word CPU6502::PopWord()
+{
+    Byte lowByte = PopByte();
+    Byte highByte = PopByte();
+
+    return (highByte << 8) | lowByte;
+}
+
+void CPU6502::PushWord(const Word value)
+{
+    PushByte((value >> 8) & 0xFF);
+    PushByte(value & 0xFF);
+}
+
 void CPU6502::WriteByte(const Word address, const Byte value)
 {
     Memory::Write(address, value);
@@ -551,13 +577,52 @@ void CPU6502::NOP()
     // Do nothing
 }
 
-void CPU6502::RTI() {}
+void CPU6502::RTI()
+{
+    m_StatusRegisterFlags = PopByte();
 
-void CPU6502::RTS() {}
+    Byte pcLowByte = PopByte();
+    Byte pcHighByte = PopByte();
 
-void CPU6502::JSR() {}
+    m_PC = (pcHighByte << 8) | pcLowByte;
+}
 
-void CPU6502::BRK() {}
+void CPU6502::RTS()
+{
+    Byte pcLowByte = PopByte();
+    Byte pcHighByte = PopByte();
+
+    m_PC = ((pcHighByte << 8) | pcLowByte) + 1;
+}
+
+void CPU6502::JSR()
+{
+    Word addr = FetchWord();
+
+    Word returnAddr = m_PC - 1;
+
+    PushByte((returnAddr >> 8) & 0xFF);
+    PushByte(returnAddr & 0xFF);
+
+    m_PC = addr;
+}
+
+void CPU6502::BRK()
+{
+    m_PC++;
+
+    PushByte((m_PC >> 8) & 0xFF);
+    PushByte(m_PC & 0xFF);
+
+    PushByte(m_StatusRegisterFlags | 0x10); 
+
+    StatusFlags.I = 1;
+
+    Byte lowByte = Memory::Read(0xFFFE);
+    Byte highByte = Memory::Read(0xFFFF);
+
+    m_PC = (highByte << 8) | lowByte;
+}
 
 void CPU6502::STAZeroPage()
 {
