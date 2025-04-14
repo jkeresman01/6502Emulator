@@ -84,6 +84,8 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xA8] = &CPU6502::TAY;
     m_InstructionSetDispatchTable[0x8A] = &CPU6502::TXA;
     m_InstructionSetDispatchTable[0x98] = &CPU6502::TYA;
+    m_InstructionSetDispatchTable[0xBA] = &CPU6502::TSX;
+    m_InstructionSetDispatchTable[0x9A] = &CPU6502::TXS;
 
     m_InstructionSetDispatchTable[0x49] = &CPU6502::EORImmediate;
     m_InstructionSetDispatchTable[0x45] = &CPU6502::EORZeroPage;
@@ -1251,6 +1253,19 @@ void CPU6502::TYA()
 
     StatusFlags.Z = (m_A == 0);
     StatusFlags.N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::TSX() 
+{
+    m_X = m_SP;
+
+    StatusFlags.Z = (m_X == 0);
+    StatusFlags.N = (m_X & 0b10000000) > 0;
+}
+
+void CPU6502::TXS() 
+{
+    m_SP = m_X;
 }
 
 void CPU6502::EORImmediate()
