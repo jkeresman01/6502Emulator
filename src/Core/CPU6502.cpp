@@ -673,6 +673,46 @@ void CPU6502::PLP()
     m_StatusRegisterFlags = PopByte();
 }
 
+void CPU6502::CPXImmediate()
+{
+    Byte value = FetchByte();
+    Compare(m_X, value);
+}
+
+void CPU6502::CPXZeroPage()
+{
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+    Compare(m_X, value);
+}
+
+void CPU6502::CPXAbsolute()
+{
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
+    Compare(m_X, value);
+}
+
+void CPU6502::CPYImmediate()
+{
+    Byte value = FetchByte();
+    Compare(m_Y, value);
+}
+
+void CPU6502::CPYZeroPage()
+{
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+    Compare(m_Y, value);
+}
+
+void CPU6502::CPYAbsolute()
+{
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
+    Compare(m_Y, value);
+}
+
 void CPU6502::STAZeroPage()
 {
     Byte zeroPageAddr = FetchByte();
