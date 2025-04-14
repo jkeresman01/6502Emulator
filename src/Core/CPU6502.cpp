@@ -129,6 +129,15 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x60] = &CPU6502::RTS;
     m_InstructionSetDispatchTable[0x20] = &CPU6502::JSR;
     m_InstructionSetDispatchTable[0x00] = &CPU6502::BRK;
+
+    m_InstructionSetDispatchTable[0x38] = &CPU6502::SEC;
+    m_InstructionSetDispatchTable[0xF8] = &CPU6502::SED;
+    m_InstructionSetDispatchTable[0x78] = &CPU6502::SEI;
+
+    m_InstructionSetDispatchTable[0x48] = &CPU6502::PHA;
+    m_InstructionSetDispatchTable[0x08] = &CPU6502::PHP;
+    m_InstructionSetDispatchTable[0x68] = &CPU6502::PLA;
+    m_InstructionSetDispatchTable[0x28] = &CPU6502::PLP;
 }
 
 void CPU6502::Reset()
@@ -624,6 +633,44 @@ void CPU6502::BRK()
     Byte highByte = Memory::Read(0xFFFF);
 
     m_PC = (highByte << 8) | lowByte;
+}
+
+void CPU6502::SEC()
+{
+    StatusFlags.C = 1;
+}
+
+void CPU6502::SED()
+{
+    StatusFlags.D = 1;
+}
+
+void CPU6502::SEI()
+{
+    StatusFlags.I = 1;
+}
+
+void CPU6502::PHA()
+{
+    PushByte(m_A);
+}
+
+void CPU6502::PHP()
+{
+    PushByte(m_StatusRegisterFlags | 0x30);
+}
+
+void CPU6502::PLA()
+{
+    m_A = PopByte();
+
+    StatusFlags.Z = (m_A == 0);
+    StatusFlags.N = (m_A & 0b10000000) > 0;
+}
+
+void CPU6502::PLP()
+{
+    m_StatusRegisterFlags = PopByte();
 }
 
 void CPU6502::STAZeroPage()
