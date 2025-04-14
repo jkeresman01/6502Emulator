@@ -12,6 +12,9 @@
 #include "../Assembler/Assembler.h"
 #include "../Components/Editor/Editor.h"
 #include "../Components/MemoryLayout/MemoryLayout.h"
+#include "../Components/HEXDisplay/HEXDisplay.h"
+#include "../Components/LEDs/LEDs.h"
+#include "../Components/SwitchPanel/SwitchPanel.h"
 #include "../Components/PixelDisplay/PixelDisplay.h"
 #include "../Core/CPU6502.h"
 #include "../Core/Memory.h"
@@ -36,21 +39,21 @@ class Emulator6502
     void Reset();
 
     void LoadProgramIntoMemory();
-    std::vector<Byte> ReadProgramFromMemory();
 
   private:
     void Render();
 
-    void RenderButtons();
-    void RenderProcessorsRegisterStatus();
 
+    void RenderComponents();
+    void RenderControlButtonsWindow();
+    void RenderCPUStatusWindow();
     void RenderDissasemblyPopup();
 
     void OpenDissasemblyPopup();
 
   private:
     GLFWwindow *m_Window;
-    CPU6502 m_CPU;
+    std::unique_ptr<CPU6502> m_CPU = std::make_unique<CPU6502>();
 
     std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
     std::unique_ptr<Disassembler> m_Disssembler = std::make_unique<Disassembler>();
@@ -58,6 +61,9 @@ class Emulator6502
     std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
     std::unique_ptr<PixelDisplay> m_PixelDisplay = std::make_unique<PixelDisplay>();
     std::unique_ptr<MemoryLayout> m_MemoryLayout = std::make_unique<MemoryLayout>();
+    std::unique_ptr<HEXDisplay> m_HEXDisplay = std::make_unique<HEXDisplay>();
+    std::unique_ptr<LEDs> m_LEDs = std::make_unique<LEDs>();
+    std::unique_ptr<SwitchPanel> m_SwitchPanel = std::make_unique<SwitchPanel>();
 
     std::vector<std::string> m_Dissasembly;
     bool m_ShowDisassemblyPopup = false;

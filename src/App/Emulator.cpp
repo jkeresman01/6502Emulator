@@ -1,6 +1,7 @@
 #include "Emulator.h"
 
 #include <vector>
+#include <string>
 
 #include "../Util/ColorsUtil.h"
 #include "../Util/ProgramUtil.h"
@@ -15,19 +16,29 @@ static char asmCode[BUFFER_SIZE] = "";
 void Emulator6502::Init()
 {
     Random::Init();
-    Reset();
+    
+    m_CPU->Init();
 
-    glfwInit();
-    m_Window = glfwCreateWindow(1180, 840, "6502 Emulator", NULL, NULL);
-    glfwMakeContextCurrent(m_Window);
-    ImGui::CreateContext();
-    ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
-    ImGui_ImplOpenGL3_Init();
-
-    m_CPU.Init();
     m_AsmEditor->Init();
     m_MemoryLayout->Init();
     m_PixelDisplay->Init();
+    m_HEXDisplay->Init();
+    m_LEDs->Init();
+    m_SwitchPanel->Init();
+
+    Reset();
+
+    glfwInit();
+
+    GLFWmonitor *primary = glfwGetPrimaryMonitor();
+    const GLFWvidmode *mode = glfwGetVideoMode(primary);
+    m_Window = glfwCreateWindow(mode->width, mode->height, "6502 Emulator", NULL, NULL);
+
+    glfwMakeContextCurrent(m_Window);
+    ImGui::CreateContext();
+
+    ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
+    ImGui_ImplOpenGL3_Init();
 }
 
 void Emulator6502::Run()
@@ -39,9 +50,13 @@ void Emulator6502::Run()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         Render();
 
         ImGui::Render();
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(m_Window);
     }
@@ -49,45 +64,41 @@ void Emulator6502::Run()
 
 void Emulator6502::Render()
 {
-    ImGui::Begin("6502 Emulator");
-
-    int width, height;
-    glfwGetWindowSize(m_Window, &width, &height);
-
-    ImGui::SetWindowSize(ImVec2((float)width, (float)height));
-
-    ImGui::Columns(2, "MainColumns", true);
-
-    m_AsmEditor->Render();
-    RenderButtons();
-
-    m_PixelDisplay->Render();
-    RenderProcessorsRegisterStatus();
-
-    ImGui::NextColumn();
-    m_MemoryLayout->Render();
-    ImGui::Columns(1);
-
-    ImGui::End();
-
+    RenderComponents();
+    RenderCPUStatusWindow();
+    RenderControlButtonsWindow();
     RenderDissasemblyPopup();
 }
 
-void Emulator6502::RenderProcessorsRegisterStatus()
+void Emulator6502::RenderCPUStatusWindow()
 {
-    ImGui::Text("CPU Registers:");
+    ImGui::Begin("CPU Registers");
 
-    ImGui::Text("A  = 0x%02X", m_CPU.GetAccumulator());
-    ImGui::Text("X  = 0x%02X", m_CPU.GetRegisterX());
-    ImGui::Text("Y  = 0x%02X", m_CPU.GetRegisterY());
-    ImGui::Text("SP = 0x%02X", m_CPU.GetStackPointer());
-    ImGui::Text("PC = 0x%04X", m_CPU.GetProgramCounter());
+    ImGui::Text("A  = 0x%02X", m_CPU->GetAccumulator());
+    ImGui::Text("X  = 0x%02X", m_CPU->GetRegisterX());
+    ImGui::Text("Y  = 0x%02X", m_CPU->GetRegisterY());
+    ImGui::Text("SP = 0x%02X", m_CPU->GetStackPointer());
+    ImGui::Text("PC = 0x%04X", m_CPU->GetProgramCounter());
 
-    // TODO status flags
+    // TODO: Add status flags
+
+    ImGui::End();
 }
 
-void Emulator6502::RenderButtons()
+void Emulator6502::RenderComponents() 
 {
+    m_AsmEditor->Render();
+    m_PixelDisplay->Render();
+    m_MemoryLayout->Render();
+    m_HEXDisplay->Render();
+    m_LEDs->Render();
+    m_SwitchPanel->Render();
+}
+
+void Emulator6502::RenderControlButtonsWindow()
+{
+    ImGui::Begin("Controls");
+
     if (ImGui::Button("Assemble"))
     {
         Reset();
@@ -97,13 +108,13 @@ void Emulator6502::RenderButtons()
     ImGui::SameLine();
     if (ImGui::Button("Disassemble"))
     {
-        // OpenDissasemblyPopup();
+        OpenDissasemblyPopup();
     }
 
     ImGui::SameLine();
     if (ImGui::Button("Run"))
     {
-        // TODO: Implement execution
+        // TODO: Execution
     }
 
     ImGui::SameLine();
@@ -112,11 +123,12 @@ void Emulator6502::RenderButtons()
         Reset();
     }
 
-    ImGui::SameLine();
     if (ImGui::Button("Step"))
     {
-        m_CPU.Step();
+        m_CPU->Step();
     }
+
+    ImGui::End();
 }
 
 void Emulator6502::RenderDissasemblyPopup()
@@ -161,6 +173,9 @@ void Emulator6502::Shutdown()
     m_AsmEditor->Destroy();
     m_PixelDisplay->Destroy();
     m_MemoryLayout->Destroy();
+    m_HEXDisplay->Destroy();
+    m_LEDs->Destroy();
+    m_SwitchPanel->Destroy();
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -172,7 +187,7 @@ void Emulator6502::Shutdown()
 void Emulator6502::Reset()
 {
     Memory::Reset();
-    m_CPU.Reset();
+    m_CPU->Reset();
 }
 
 } // namespace emulator6502
