@@ -17,9 +17,9 @@ void Editor::Init() noexcept
 
 void Editor::Render() noexcept
 {
-    ImGui::Text("Assembly Editor:");
-    ImGui::Separator();
-    ImGui::InputTextMultiline("##Editor", asmCode, sizeof(asmCode), ImVec2(-FLT_MIN, 300));
+    ImGui::Begin("Assembly Editor");
+    ImGui::InputTextMultiline("##Editor", asmCode, sizeof(asmCode), ImVec2(-FLT_MIN, 850));
+    ImGui::End();
 }
 
 void Editor::Destroy() noexcept

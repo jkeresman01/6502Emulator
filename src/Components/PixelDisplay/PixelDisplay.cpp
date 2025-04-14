@@ -17,8 +17,7 @@ void PixelDisplay::Init() noexcept
 
 void PixelDisplay::Render() noexcept
 {
-
-    ImGui::Text("Pixel Display:");
+    ImGui::Begin("Pixel Display");
 
     for (uint32_t y = 0; y < GRID_SIZE; ++y)
     {
@@ -39,6 +38,8 @@ void PixelDisplay::Render() noexcept
             }
         }
     }
+
+    ImGui::End();
 }
 
 void PixelDisplay::Destroy() noexcept

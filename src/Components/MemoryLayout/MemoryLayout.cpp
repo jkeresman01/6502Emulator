@@ -14,8 +14,7 @@ void MemoryLayout::Init() noexcept
 
 void MemoryLayout::Render() noexcept
 {
-    ImGui::Text("Memory Viewer:");
-    ImGui::Separator();
+    ImGui::Begin("Memory Viewer");
 
     ImGui::BeginChild("Memory", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
@@ -36,6 +35,7 @@ void MemoryLayout::Render() noexcept
     }
 
     ImGui::EndChild();
+    ImGui::End();
 }
 
 void MemoryLayout::Destroy() noexcept
