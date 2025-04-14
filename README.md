@@ -118,14 +118,34 @@ Not all instructions are implemented in current stage
 | **TXS**  | Transfer X to stack pointer   |
 | **TYA**  | Transfer Y to accumulator     |
 
-## 📦 Addressing modes
+## 📦 Number Notation
 
-//TODO
+| Notation   | Example    | Meaning                        |
+|------------|------------|--------------------------------|
+| `$`        | `$20`      | Hexadecimal (base 16)          |
+| `%`        | `%10101010`| Binary (base 2)                |
+| `#`        | `#$20`     | Immediate value (literal byte) |
+| Decimal    | `42`       | Interpreted as decimal         |
+| `'A'`      | `'A'`      | ASCII character → byte value   |
 
+---
 
-## 📌 General Notes
+## 📦 6502 Addressing Modes (with Examples)
 
-- **Stack** grows downward from `$01FF` to `$0100`.
-- **Pixel display** memory is read by the graphics renderer.
-- **Switches and LEDs** are user-controlled I/O for interactivity and testing.
-- Memory beyond `$0608` is currently unassigned but reserved for expansion.
+| Mode                | Syntax         | Example         | Description                                                 |
+|---------------------|----------------|------------------|-------------------------------------------------------------|
+| **Immediate**        | `#value`       | `LDA #$01`       | Load literal value directly                                 |
+| **Zero Page**        | `addr`         | `LDA $10`        | Load from zero page address (`$0000–$00FF`)                 |
+| **Zero Page,X**      | `addr,X`       | `LDA $10,X`      | Zero page address + X register                              |
+| **Zero Page,Y**      | `addr,Y`       | `LDX $10,Y`      | Zero page address + Y register                              |
+| **Absolute**         | `addr`         | `LDA $1234`      | Load from 16-bit address                                    |
+| **Absolute,X**       | `addr,X`       | `LDA $1234,X`    | Absolute address offset by X                                |
+| **Absolute,Y**       | `addr,Y`       | `LDA $1234,Y`    | Absolute address offset by Y                                |
+| **Indirect**         | `(addr)`       | `JMP ($1234)`    | Jump to address stored at address (used only with `JMP`)    |
+| **Indexed Indirect** | `(addr,X)`     | `LDA ($20,X)`    | Add X to zero page address, then load from resulting address |
+| **Indirect Indexed** | `(addr),Y`     | `LDA ($20),Y`    | Read address from zero page, then add Y offset              |
+| **Accumulator**      | (implicit)     | `ASL`            | Operates directly on accumulator (A)                        |
+| **Implied**          | (no operand)   | `CLC`            | Instruction has no operand                                  |
+| **Relative**         | (label/offset) | `BEQ label`      | Used with branches (offset from PC)                         |
+
+---
