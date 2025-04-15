@@ -40,7 +40,7 @@ class CPU6502
     Byte GetRegisterY() const { return m_Y; };
     Word GetProgramCounter() const { return m_PC; };
     Byte GetStackPointer() const { return m_SP; };
-    Byte GetStatusFlags() const { return m_StatusRegisterFlags; };
+    Flags GetStatusFlags() const { return m_StatusFlags; };
 
     std::string ToString() const;
 
