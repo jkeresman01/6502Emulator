@@ -739,27 +739,77 @@ void CPU6502::CPYAbsolute()
 
 void CPU6502::ROLAccumulator()
 {
-    // TODO
+    Byte carryIn = m_StatusFlags.C;
+    m_StatusFlags.C = (m_A & 0x80) >> 7;
+
+    m_A = (m_A << 1) | carryIn;
+
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0x80) != 0;
 }
 
 void CPU6502::ROLZeroPage()
 {
-    // TODO
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+
+    Byte carryIn = m_StatusFlags.C;
+    m_StatusFlags.C = (value & 0x80) >> 7;
+
+    value = (value << 1) | carryIn;
+
+    WriteByte(addr, value);
+
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::ROLZeroPageX()
 {
-    // TODO
+    Byte addr = (FetchByte() + m_X) & 0xFF;
+    Byte value = ReadByte(addr);
+
+    Byte carryIn = m_StatusFlags.C;
+    m_StatusFlags.C = (value & 0x80) >> 7;
+
+    value = (value << 1) | carryIn;
+
+    WriteByte(addr, value);
+
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::ROLAbsolute()
 {
-    // TODO
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
+
+    Byte carryIn = m_StatusFlags.C;
+    m_StatusFlags.C = (value & 0x80) >> 7;
+
+    value = (value << 1) | carryIn;
+
+    WriteByte(addr, value);
+
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::ROLAbsoluteX()
 {
-    // TODO
+    Word addr = FetchWord() + m_X;
+    Byte value = ReadByte(addr);
+
+    Byte carryIn = m_StatusFlags.C;
+    m_StatusFlags.C = (value & 0x80) >> 7;
+
+    value = (value << 1) | carryIn;
+
+    WriteByte(addr, value);
+
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::RORAccumulator()
