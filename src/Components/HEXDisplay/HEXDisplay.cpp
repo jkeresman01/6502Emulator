@@ -34,6 +34,7 @@ void HEXDisplay::Init() noexcept
 void HEXDisplay::Render() noexcept
 {
     ImGui::Begin("HEX Display");
+    ImGui::Text("$0602 - $0605");
 
     ImDrawList *draw = ImGui::GetWindowDrawList();
     ImVec2 start = ImGui::GetCursorScreenPos();

@@ -14,7 +14,9 @@ static constexpr uint8_t LEDS_NO = 16;
 void LEDs::Init() noexcept {}
 void LEDs::Render() noexcept
 {
-    ImGui::Begin("LED Display");
+    ImGui::Begin("LEDs");
+
+    ImGui::Text("$0600 - $0601");
 
     uint16_t ledBits = Memory::Read(0x0600) | (Memory::Read(0x0601) << 8);
 

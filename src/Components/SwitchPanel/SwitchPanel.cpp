@@ -15,6 +15,7 @@ void SwitchPanel::Init()
 void SwitchPanel::Render()
 {
     ImGui::Begin("Switches");
+    ImGui::Text("$0606 - $0608");
 
     Word &switchBits = *(Word *)&Memory::s_RAM[0x0606];
 

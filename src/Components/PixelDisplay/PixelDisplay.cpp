@@ -19,6 +19,8 @@ void PixelDisplay::Render() noexcept
 {
     ImGui::Begin("Pixel Display");
 
+    ImGui::Text("$0200 - $05FF");
+
     for (uint32_t y = 0; y < GRID_SIZE; ++y)
     {
         for (uint32_t x = 0; x < GRID_SIZE; ++x)
