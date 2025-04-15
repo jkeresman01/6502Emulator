@@ -176,14 +176,14 @@ void CPU6502::Reset()
 
     ////////////////////            STATUS FLAGS        ////////////////////
 
-    StatusFlags.C = 0;
-    StatusFlags.Z = 0;
-    StatusFlags._ = 0;
-    StatusFlags.I = 0;
-    StatusFlags.D = 0;
-    StatusFlags.B = 0;
-    StatusFlags.V = 0;
-    StatusFlags.N = 0;
+    m_StatusFlags.C = 0;
+    m_StatusFlags.Z = 0;
+    m_StatusFlags._ = 0;
+    m_StatusFlags.I = 0;
+    m_StatusFlags.D = 0;
+    m_StatusFlags.B = 0;
+    m_StatusFlags.V = 0;
+    m_StatusFlags.N = 0;
 }
 
 Byte CPU6502::FetchByte()
@@ -247,8 +247,8 @@ void CPU6502::LDAImmediate()
 {
     m_A = FetchByte();
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAZeroPage()
@@ -257,8 +257,8 @@ void CPU6502::LDAZeroPage()
 
     m_A = ReadByte(ZeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAZeroPageX()
@@ -269,8 +269,8 @@ void CPU6502::LDAZeroPageX()
 
     m_A = ReadByte(ZeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAAbsolute()
@@ -279,8 +279,8 @@ void CPU6502::LDAAbsolute()
 
     m_A = ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAAbsoluteX()
@@ -290,8 +290,8 @@ void CPU6502::LDAAbsoluteX()
 
     m_A = ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAAbsoluteY()
@@ -301,8 +301,8 @@ void CPU6502::LDAAbsoluteY()
 
     m_A = ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAIndirectX()
@@ -316,8 +316,8 @@ void CPU6502::LDAIndirectX()
 
     m_A = ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDAIndirectY()
@@ -331,16 +331,16 @@ void CPU6502::LDAIndirectY()
 
     m_A = ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::LDXImmediate()
 {
     m_X = FetchByte();
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::LDXZeroPage()
@@ -349,8 +349,8 @@ void CPU6502::LDXZeroPage()
 
     m_X = ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::LDXZeroPageY()
@@ -361,8 +361,8 @@ void CPU6502::LDXZeroPageY()
 
     m_X = ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::LDXAbsolute()
@@ -371,8 +371,8 @@ void CPU6502::LDXAbsolute()
 
     m_X = ReadByte(address);
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::LDXAbsoluteY()
@@ -382,16 +382,16 @@ void CPU6502::LDXAbsoluteY()
 
     m_X = ReadByte(addr);
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::LDYImmediate()
 {
     m_Y = FetchByte();
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::LDYZeroPage()
@@ -400,8 +400,8 @@ void CPU6502::LDYZeroPage()
 
     m_Y = ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::LDYZeroPageX()
@@ -412,8 +412,8 @@ void CPU6502::LDYZeroPageX()
 
     m_Y = ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::LDYAbsolute()
@@ -422,8 +422,8 @@ void CPU6502::LDYAbsolute()
 
     m_Y = ReadByte(address);
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::LDYAbsoluteX()
@@ -433,44 +433,44 @@ void CPU6502::LDYAbsoluteX()
 
     m_Y = ReadByte(addr);
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::CLC()
 {
-    StatusFlags.C = 0;
+    m_StatusFlags.C = 0;
 }
 
 void CPU6502::CLD()
 {
-    StatusFlags.D = 0;
+    m_StatusFlags.D = 0;
 }
 
 void CPU6502::CLI()
 {
-    StatusFlags.I = 0;
+    m_StatusFlags.I = 0;
 }
 
 void CPU6502::CLV()
 {
-    StatusFlags.V = 0;
+    m_StatusFlags.V = 0;
 }
 
 void CPU6502::DEX()
 {
     m_X--;
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::DEY()
 {
     m_Y--;
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::DECZeroPage()
@@ -482,8 +482,8 @@ void CPU6502::DECZeroPage()
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::DECZeroPageX()
@@ -496,8 +496,8 @@ void CPU6502::DECZeroPageX()
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::DECAbsolute()
@@ -509,8 +509,8 @@ void CPU6502::DECAbsolute()
 
     WriteByte(address, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::DECAbsoluteX()
@@ -523,15 +523,15 @@ void CPU6502::DECAbsoluteX()
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::BNE()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (!StatusFlags.Z)
+    if (!m_StatusFlags.Z)
     {
         m_PC += offset;
     }
@@ -541,7 +541,7 @@ void CPU6502::BEQ()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (StatusFlags.Z)
+    if (m_StatusFlags.Z)
     {
         m_PC += offset;
     }
@@ -551,7 +551,7 @@ void CPU6502::BPL()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (!StatusFlags.N)
+    if (!m_StatusFlags.N)
     {
         m_PC += offset;
     }
@@ -561,7 +561,7 @@ void CPU6502::BMI()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (StatusFlags.N)
+    if (m_StatusFlags.N)
     {
         m_PC += offset;
     }
@@ -571,7 +571,7 @@ void CPU6502::BVC()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (!StatusFlags.V)
+    if (!m_StatusFlags.V)
     {
         m_PC += offset;
     }
@@ -581,7 +581,7 @@ void CPU6502::BVS()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (StatusFlags.V)
+    if (m_StatusFlags.V)
     {
         m_PC += offset;
     }
@@ -591,7 +591,7 @@ void CPU6502::BCC()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (!StatusFlags.C)
+    if (!m_StatusFlags.C)
     {
         m_PC += offset;
     }
@@ -601,7 +601,7 @@ void CPU6502::BCS()
 {
     int8_t offset = static_cast<int8_t>(FetchByte());
 
-    if (StatusFlags.C)
+    if (m_StatusFlags.C)
     {
         m_PC += offset;
     }
@@ -651,7 +651,7 @@ void CPU6502::BRK()
 
     PushByte(m_StatusRegisterFlags | 0x10);
 
-    StatusFlags.I = 1;
+    m_StatusFlags.I = 1;
 
     Byte lowByte = Memory::Read(0xFFFE);
     Byte highByte = Memory::Read(0xFFFF);
@@ -661,17 +661,17 @@ void CPU6502::BRK()
 
 void CPU6502::SEC()
 {
-    StatusFlags.C = 1;
+    m_StatusFlags.C = 1;
 }
 
 void CPU6502::SED()
 {
-    StatusFlags.D = 1;
+    m_StatusFlags.D = 1;
 }
 
 void CPU6502::SEI()
 {
-    StatusFlags.I = 1;
+    m_StatusFlags.I = 1;
 }
 
 void CPU6502::PHA()
@@ -688,8 +688,8 @@ void CPU6502::PLA()
 {
     m_A = PopByte();
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::PLP()
@@ -906,8 +906,8 @@ void CPU6502::ANDImmediate()
 {
     m_A &= FetchByte();
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDZeroPage()
@@ -916,8 +916,8 @@ void CPU6502::ANDZeroPage()
 
     m_A &= ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDZeroPageX()
@@ -927,8 +927,8 @@ void CPU6502::ANDZeroPageX()
 
     m_A &= ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDAbsolute()
@@ -936,8 +936,8 @@ void CPU6502::ANDAbsolute()
     Word address = FetchWord();
     m_A &= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDAbsoluteX()
@@ -947,8 +947,8 @@ void CPU6502::ANDAbsoluteX()
 
     m_A &= ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDAbsoluteY()
@@ -958,8 +958,8 @@ void CPU6502::ANDAbsoluteY()
 
     m_A &= ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDIndirectX()
@@ -973,8 +973,8 @@ void CPU6502::ANDIndirectX()
 
     m_A &= ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ANDIndirectY()
@@ -988,16 +988,16 @@ void CPU6502::ANDIndirectY()
 
     m_A &= ReadByte(addr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAImmediate()
 {
     m_A |= FetchByte();
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAZeroPage()
@@ -1006,8 +1006,8 @@ void CPU6502::ORAZeroPage()
 
     m_A |= ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAZeroPageX()
@@ -1017,8 +1017,8 @@ void CPU6502::ORAZeroPageX()
 
     m_A |= ReadByte(zeroPageAddr);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAAbsolute()
@@ -1027,8 +1027,8 @@ void CPU6502::ORAAbsolute()
 
     m_A |= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAAbsoluteX()
@@ -1038,8 +1038,8 @@ void CPU6502::ORAAbsoluteX()
 
     m_A |= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAAbsoluteY()
@@ -1049,8 +1049,8 @@ void CPU6502::ORAAbsoluteY()
 
     m_A |= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAIndirectX()
@@ -1064,8 +1064,8 @@ void CPU6502::ORAIndirectX()
 
     m_A |= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ORAIndirectY()
@@ -1079,18 +1079,18 @@ void CPU6502::ORAIndirectY()
 
     m_A |= ReadByte(address);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ASLAccumulator()
 {
-    StatusFlags.C = (m_A & 0b10000000) > 0;
+    m_StatusFlags.C = (m_A & 0b10000000) > 0;
 
     m_A <<= 1;
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::ASLZeroPage()
@@ -1098,14 +1098,14 @@ void CPU6502::ASLZeroPage()
     Byte zeroPageAddr = FetchByte();
     Byte value = ReadByte(zeroPageAddr);
 
-    StatusFlags.C = (value & 0b10000000) > 0;
+    m_StatusFlags.C = (value & 0b10000000) > 0;
 
     value <<= 1;
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::ASLZeroPageX()
@@ -1115,14 +1115,14 @@ void CPU6502::ASLZeroPageX()
 
     Byte value = ReadByte(zeroPageAddr);
 
-    StatusFlags.C = (value & 0b10000000) > 0;
+    m_StatusFlags.C = (value & 0b10000000) > 0;
 
     value <<= 1;
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::ASLAbsolute()
@@ -1130,14 +1130,14 @@ void CPU6502::ASLAbsolute()
     Word address = FetchWord();
     Byte value = ReadByte(address);
 
-    StatusFlags.C = (value & 0b10000000) > 0;
+    m_StatusFlags.C = (value & 0b10000000) > 0;
 
     value <<= 1;
 
     WriteByte(address, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::ASLAbsoluteX()
@@ -1147,24 +1147,24 @@ void CPU6502::ASLAbsoluteX()
 
     Byte value = ReadByte(address);
 
-    StatusFlags.C = (value & 0b10000000) > 0;
+    m_StatusFlags.C = (value & 0b10000000) > 0;
 
     value <<= 1;
 
     WriteByte(address, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::LSRAccumulator()
 {
-    StatusFlags.C = (m_A & 0b00000001) > 0;
+    m_StatusFlags.C = (m_A & 0b00000001) > 0;
 
     m_A >>= 1;
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = 0;
 }
 
 void CPU6502::LSRZeroPage()
@@ -1172,14 +1172,14 @@ void CPU6502::LSRZeroPage()
     Byte zeroPageAddr = FetchByte();
     Byte value = ReadByte(zeroPageAddr);
 
-    StatusFlags.C = (value & 0b00000001) > 0;
+    m_StatusFlags.C = (value & 0b00000001) > 0;
 
     value >>= 1;
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value = 0);
-    StatusFlags.N = 0;
+    m_StatusFlags.Z = (value = 0);
+    m_StatusFlags.N = 0;
 }
 
 void CPU6502::LSRZeroPageX()
@@ -1189,14 +1189,14 @@ void CPU6502::LSRZeroPageX()
 
     Byte value = ReadByte(zeroPageAddr);
 
-    StatusFlags.C = (value & 0b00000001) > 0;
+    m_StatusFlags.C = (value & 0b00000001) > 0;
 
     value >>= 1;
 
     WriteByte(zeroPageAddr, value);
 
-    StatusFlags.Z = (value = 0);
-    StatusFlags.N = 0;
+    m_StatusFlags.Z = (value = 0);
+    m_StatusFlags.N = 0;
 }
 
 void CPU6502::LSRAbsolute()
@@ -1204,14 +1204,14 @@ void CPU6502::LSRAbsolute()
     Byte addr = FetchByte();
     Byte value = ReadByte(addr);
 
-    StatusFlags.C = (value & 0b00000001) > 0;
+    m_StatusFlags.C = (value & 0b00000001) > 0;
 
     value >>= 1;
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value = 0);
-    StatusFlags.N = 0;
+    m_StatusFlags.Z = (value = 0);
+    m_StatusFlags.N = 0;
 }
 
 void CPU6502::LSRAbsoluteX()
@@ -1221,14 +1221,14 @@ void CPU6502::LSRAbsoluteX()
 
     Byte value = ReadByte(addr);
 
-    StatusFlags.C = (value & 0b00000001) > 0;
+    m_StatusFlags.C = (value & 0b00000001) > 0;
 
     value >>= 1;
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value = 0);
-    StatusFlags.N = 0;
+    m_StatusFlags.Z = (value = 0);
+    m_StatusFlags.N = 0;
 }
 
 void CPU6502::ADCImmediate()
@@ -1308,15 +1308,15 @@ void CPU6502::ADCIndirectY()
 
 void CPU6502::AddWithCarry(const Byte value)
 {
-    Word sum = m_A + value + StatusFlags.C;
+    Word sum = m_A + value + m_StatusFlags.C;
 
-    StatusFlags.C = (sum > 0xFF);
-    StatusFlags.V = (~(m_A ^ value) & (m_A ^ sum) & 0x80) != 0;
+    m_StatusFlags.C = (sum > 0xFF);
+    m_StatusFlags.V = (~(m_A ^ value) & (m_A ^ sum) & 0x80) != 0;
 
     m_A = static_cast<Byte>(sum);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::SBCImmediate()
@@ -1393,55 +1393,55 @@ void CPU6502::SBCIndirectY()
 
 void CPU6502::SubtractWithBorrow(const Byte value)
 {
-    Word result = m_A + (~value) + StatusFlags.C;
+    Word result = m_A + (~value) + m_StatusFlags.C;
 
-    StatusFlags.C = (result > 0xFF);
-    StatusFlags.V = ((m_A ^ value) & (m_A ^ result) & 0x80) != 0;
+    m_StatusFlags.C = (result > 0xFF);
+    m_StatusFlags.V = ((m_A ^ value) & (m_A ^ result) & 0x80) != 0;
 
     m_A = static_cast<Byte>(result);
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0x80) != 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0x80) != 0;
 }
 
 void CPU6502::TAX()
 {
     m_X = m_A;
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::TAY()
 {
     m_Y = m_A;
 
-    StatusFlags.Z = (m_Y == 0);
-    StatusFlags.N = (m_Y & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
 
 void CPU6502::TXA()
 {
     m_A = m_X;
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::TYA()
 {
     m_A = m_Y;
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
 void CPU6502::TSX()
 {
     m_X = m_SP;
 
-    StatusFlags.Z = (m_X == 0);
-    StatusFlags.N = (m_X & 0b10000000) > 0;
+    m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
 void CPU6502::TXS()
@@ -1525,8 +1525,8 @@ void CPU6502::ExclusiveOR(const Byte value)
 {
     m_A ^= value;
 
-    StatusFlags.Z = (m_A == 0);
-    StatusFlags.N = (m_A & 0x80) != 0;
+    m_StatusFlags.Z = (m_A == 0);
+    m_StatusFlags.N = (m_A & 0x80) != 0;
 }
 
 void CPU6502::CMPImmediate()
@@ -1605,9 +1605,9 @@ void CPU6502::Compare(const Byte registerValue, const Byte value)
 {
     Byte result = registerValue - value;
 
-    StatusFlags.C = (registerValue >= value);
-    StatusFlags.Z = (result == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.C = (registerValue >= value);
+    m_StatusFlags.Z = (result == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::INCZeroPage()
@@ -1618,8 +1618,8 @@ void CPU6502::INCZeroPage()
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::INCZeroPageX()
@@ -1630,8 +1630,8 @@ void CPU6502::INCZeroPageX()
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::INCAbsolute()
@@ -1642,8 +1642,8 @@ void CPU6502::INCAbsolute()
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::INCAbsoluteX()
@@ -1654,8 +1654,8 @@ void CPU6502::INCAbsoluteX()
 
     WriteByte(addr, value);
 
-    StatusFlags.Z = (value == 0);
-    StatusFlags.N = (value & 0b10000000) > 0;
+    m_StatusFlags.Z = (value == 0);
+    m_StatusFlags.N = (value & 0b10000000) > 0;
 }
 
 void CPU6502::InvalidOpcode()

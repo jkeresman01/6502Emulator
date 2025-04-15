@@ -300,7 +300,7 @@ class CPU6502
     ////////////////////            STATUS FLAGS        ////////////////////
     union {
         Byte m_StatusRegisterFlags;
-        Flags StatusFlags;
+        Flags m_StatusFlags;
     };
 
     ////////////////////            DISPATCH TABLE        ////////////////////
