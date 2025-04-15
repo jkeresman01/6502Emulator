@@ -19,9 +19,9 @@ void LEDs::Render() noexcept
     ImDrawList *draw_list = ImGui::GetWindowDrawList();
     ImVec2 startPos = ImGui::GetCursorScreenPos();
 
-    for (size_t i = 0; i < 16; ++i)
+    for (size_t i = 0; i < LEDS_NO; ++i)
     {
-        bool isOn = (ledBits >> (15 - i)) & 1;
+        bool isOn = (ledBits >> (LEDS_NO - 1 - i)) & 1;
 
         ImVec2 center = ImVec2(startPos.x + i * (2 * RADIUS + SPACING) + RADIUS, startPos.y + RADIUS);
 
@@ -29,7 +29,7 @@ void LEDs::Render() noexcept
         draw_list->AddCircleFilled(center, RADIUS, color);
     }
 
-    ImGui::Dummy(ImVec2(16 * (2 * RADIUS + SPACING), 2 * RADIUS + SPACING));
+    ImGui::Dummy(ImVec2(LEDS_NO * (2 * RADIUS + SPACING), 2 * RADIUS + SPACING));
     ImGui::End();
 }
 

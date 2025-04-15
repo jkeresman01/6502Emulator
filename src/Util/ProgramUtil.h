@@ -24,8 +24,7 @@ class ProgramUtil
     //////////////////////////////////////////////////////////////
     ProgramUtil() = delete;
 
-    static void LoadProgramIntoMemory(const std::string &asmCode,
-                                      const std::unique_ptr<Assembler> &assembler);
+    static void LoadProgramIntoMemory(const std::vector<Byte> &machineCode);
     static std::vector<Byte> ReadProgramFromMemory();
 };
 } // namespace emulator6502

@@ -29,7 +29,7 @@ using Word = uint16_t;
 class Emulator6502
 {
   public:
-    Emulator6502() = default;
+    Emulator6502();
 
     void Init();
     void Run();
@@ -56,20 +56,19 @@ class Emulator6502
     void OpenDissasemblyPopup();
 
   private:
-    GLFWwindow *m_Window;
+    GLFWwindow *m_Window = nullptr;
     std::unique_ptr<CPU6502> m_CPU = std::make_unique<CPU6502>();
 
     std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
     std::unique_ptr<Disassembler> m_Disssembler = std::make_unique<Disassembler>();
 
     std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
-    std::unique_ptr<PixelDisplay> m_PixelDisplay = std::make_unique<PixelDisplay>();
-    std::unique_ptr<MemoryLayout> m_MemoryLayout = std::make_unique<MemoryLayout>();
-    std::unique_ptr<HEXDisplay> m_HEXDisplay = std::make_unique<HEXDisplay>();
-    std::unique_ptr<LEDs> m_LEDs = std::make_unique<LEDs>();
-    std::unique_ptr<SwitchPanel> m_SwitchPanel = std::make_unique<SwitchPanel>();
 
+    std::vector<std::unique_ptr<AbstractComponent>> m_Components;
+    
     std::vector<std::string> m_Dissasembly;
     bool m_ShowDisassemblyPopup = false;
+
+    static constexpr uint32_t COMPONENTS_NO = 5;
 };
 } // namespace emulator6502

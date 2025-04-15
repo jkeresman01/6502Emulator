@@ -9,6 +9,16 @@
 
 namespace emulator6502
 {
+Emulator6502::Emulator6502()    
+{
+    m_Components.reserve(COMPONENTS_NO - 1);
+
+    m_Components.emplace_back(std::make_unique<PixelDisplay>());
+    m_Components.emplace_back(std::make_unique<MemoryLayout>());
+    m_Components.emplace_back(std::make_unique<HEXDisplay>());
+    m_Components.emplace_back(std::make_unique<LEDs>());
+    m_Components.emplace_back(std::make_unique<SwitchPanel>());
+}
 
 void Emulator6502::Init()
 {
@@ -25,13 +35,14 @@ void Emulator6502::Init()
 void Emulator6502::InitComponents()
 {
     Random::Init();
+
     m_CPU->Init();
     m_AsmEditor->Init();
-    m_MemoryLayout->Init();
-    m_PixelDisplay->Init();
-    m_HEXDisplay->Init();
-    m_LEDs->Init();
-    m_SwitchPanel->Init();
+
+    for (const auto& component : m_Components)
+    {
+        component->Init();
+    }
 }
 
 void Emulator6502::InitWindow()
@@ -84,11 +95,11 @@ void Emulator6502::RenderCPUStatusWindow()
 void Emulator6502::RenderComponents()
 {
     m_AsmEditor->Render();
-    m_PixelDisplay->Render();
-    m_MemoryLayout->Render();
-    m_HEXDisplay->Render();
-    m_LEDs->Render();
-    m_SwitchPanel->Render();
+
+    for (const auto &component : m_Components)
+    {
+        component->Render();
+    }
 }
 
 void Emulator6502::RenderControlButtonsWindow()
@@ -162,7 +173,9 @@ void Emulator6502::OpenDissasemblyPopup()
 void Emulator6502::LoadProgramIntoMemory()
 {
     const std::string &asmCode = m_AsmEditor->GetText();
-    ProgramUtil::LoadProgramIntoMemory(asmCode, m_Assembler);
+    const std::vector<Byte> &machineCode = m_Assembler->Assemble(asmCode);
+
+    ProgramUtil::LoadProgramIntoMemory(machineCode);
 }
 
 void Emulator6502::Shutdown()
@@ -178,11 +191,12 @@ void Emulator6502::Shutdown()
 void Emulator6502::DestroyComponents()
 {
     m_AsmEditor->Destroy();
-    m_PixelDisplay->Destroy();
-    m_MemoryLayout->Destroy();
-    m_HEXDisplay->Destroy();
-    m_LEDs->Destroy();
-    m_SwitchPanel->Destroy();
+
+    
+    for (const auto &component : m_Components)
+    {
+        component->Destroy();
+    }
 }
 
 void Emulator6502::Reset()

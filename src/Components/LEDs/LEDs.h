@@ -12,6 +12,8 @@ class LEDs : public AbstractComponent
     virtual void Destroy() noexcept override;
 
   private:
+    static constexpr uint8_t LEDS_NO = 16;
+
     static constexpr float RADIUS = 8.0f;
     static constexpr float SPACING = 4.0f;
 };

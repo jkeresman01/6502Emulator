@@ -2,11 +2,8 @@
 
 namespace emulator6502
 {
-void ProgramUtil::LoadProgramIntoMemory(const std::string &asmCode,
-                                        const std::unique_ptr<Assembler> &assembler)
+void ProgramUtil::LoadProgramIntoMemory(const std::vector<Byte> &machineCode)
 {
-    std::vector<Byte> machineCode = assembler->Assemble(asmCode);
-
     for (size_t i = 0; i < machineCode.size(); ++i)
     {
         Memory::s_RAM[0x8000 + i] = machineCode[i];
