@@ -909,13 +909,32 @@ void CPU6502::BITAbsolute()
 
 void CPU6502::JMPAbsolute()
 {
-    // TODO
+    Word addr = FetchWord();
+    m_PC = addr;
 }
 
 void CPU6502::JMPIndirect()
 {
-    // TODO
+    Word pointer = FetchWord();
+
+    ///////////////////////////////////////////////////////////////
+    //
+    // Emulate 6502 page boundary hardware bug (if low byte is 0xFF)
+    //
+    ///////////////////////////////////////////////////////////////
+   
+    Byte low = ReadByte(pointer);
+    Byte high = ReadByte((pointer & 0xFF00) | ((pointer + 1) & 0x00FF));
+
+    ///////////////////////////////////////////////////////////////
+    // 
+    // Emulate 6502 page boundary hardware bug (if low byte is 0xFF)
+    //
+    ///////////////////////////////////////////////////////////////
+
+    m_PC = (high << 8) | low;
 }
+
 
 void CPU6502::STAZeroPage()
 {
