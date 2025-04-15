@@ -18,7 +18,7 @@ void SwitchPanel::Render()
 
     Word &switchBits = *(Word *)&Memory::s_RAM[0x0606];
 
-    for (int32_t i = 9; i >= 0; --i)
+    for (int32_t i = SWITCHES_COUNT; i >= 0; --i)
     {
         char label[8];
         sprintf(label, "##bit%d", i);
@@ -40,11 +40,11 @@ void SwitchPanel::Render()
     ImGui::Spacing();
     ImGui::SameLine();
 
-    bool areAllLEDsOn = (switchBits & 0x03FF) == 0x03FF;
+    bool areAllSwitchesPressed = (switchBits & 0x03FF) == 0x03FF;
 
-    if (ImGui::Checkbox("All", &areAllLEDsOn))
+    if (ImGui::Checkbox("All", &areAllSwitchesPressed))
     {
-        areAllLEDsOn ? switchBits |= 0x03FF : switchBits &= ~0x03FF;
+        areAllSwitchesPressed ? switchBits |= 0x03FF : switchBits &= ~0x03FF;
     }
 
     ImGui::End();
