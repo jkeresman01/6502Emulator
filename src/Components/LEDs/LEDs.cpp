@@ -9,6 +9,9 @@
 namespace emulator6502
 {
 
+static constexpr uint8_t LEDS_NO = 16;
+
+
 void LEDs::Init() noexcept {}
 void LEDs::Render() noexcept
 {
@@ -21,11 +24,11 @@ void LEDs::Render() noexcept
 
     for (size_t i = 0; i < LEDS_NO; ++i)
     {
-        bool isOn = (ledBits >> (LEDS_NO - 1 - i)) & 1;
+        bool isLEDOn = (ledBits >> (LEDS_NO - 1 - i)) & 1;
 
         ImVec2 center = ImVec2(startPos.x + i * (2 * RADIUS + SPACING) + RADIUS, startPos.y + RADIUS);
 
-        ImU32 color = isOn ? IM_COL32(255, 0, 0, 255) : IM_COL32(60, 60, 60, 255);
+        ImU32 color = isLEDOn ? IM_COL32(255, 0, 0, 255) : IM_COL32(60, 60, 60, 255);
         draw_list->AddCircleFilled(center, RADIUS, color);
     }
 

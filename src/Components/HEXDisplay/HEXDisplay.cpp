@@ -4,6 +4,8 @@
 
 namespace emulator6502
 {
+static constexpr uint8_t SEGMENTS_NO = 7;
+static constexpr uint8_t DIGITS_NUMS_NO = 16;
 
 static constexpr bool SEGMENTS[DIGITS_NUMS_NO][SEGMENTS_NO] = {
     {1, 1, 1, 1, 1, 1, 0}, // 0

@@ -24,8 +24,6 @@ class HEXDisplay : public AbstractComponent
 
   private:
     static constexpr uint8_t DIGITS_NO = 4;
-    static constexpr uint8_t SEGMENTS_NO = 7;
-    static constexpr uint8_t DIGITS_NUMS_NO = 7;
   
     static const Word BASE_ADDR = 0x0602;
 
