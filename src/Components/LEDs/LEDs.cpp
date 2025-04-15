@@ -11,7 +11,6 @@ namespace emulator6502
 
 static constexpr uint8_t LEDS_NO = 16;
 
-
 void LEDs::Init() noexcept {}
 void LEDs::Render() noexcept
 {

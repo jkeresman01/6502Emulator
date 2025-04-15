@@ -24,11 +24,10 @@ class HEXDisplay : public AbstractComponent
 
   private:
     static constexpr uint8_t DIGITS_NO = 4;
-  
+
     static const Word BASE_ADDR = 0x0602;
 
     static constexpr float SIZE = 80.0f;
     static constexpr float SPACING = 20.0f;
-
 };
 } // namespace emulator6502

@@ -10,8 +10,8 @@ class SwitchPanel : public AbstractComponent
     virtual void Init() override;
     virtual void Render() override;
     virtual void Destroy() override;
-    
-    private:
+
+  private:
     static constexpr int SWITCHES_COUNT = 9;
 };
 } // namespace emulator6502

@@ -9,7 +9,7 @@
 
 namespace emulator6502
 {
-Emulator6502::Emulator6502()    
+Emulator6502::Emulator6502()
 {
     m_Components.reserve(COMPONENTS_NO - 1);
 
@@ -39,7 +39,7 @@ void Emulator6502::InitComponents()
     m_CPU->Init();
     m_AsmEditor->Init();
 
-    for (const auto& component : m_Components)
+    for (const auto &component : m_Components)
     {
         component->Init();
     }
@@ -192,7 +192,6 @@ void Emulator6502::DestroyComponents()
 {
     m_AsmEditor->Destroy();
 
-    
     for (const auto &component : m_Components)
     {
         component->Destroy();

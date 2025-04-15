@@ -65,7 +65,7 @@ class Emulator6502
     std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
 
     std::vector<std::unique_ptr<AbstractComponent>> m_Components;
-    
+
     std::vector<std::string> m_Dissasembly;
     bool m_ShowDisassemblyPopup = false;
 
