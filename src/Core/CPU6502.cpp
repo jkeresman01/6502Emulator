@@ -889,12 +889,22 @@ void CPU6502::RORAbsoluteX()
 
 void CPU6502::BITZeroPage()
 {
-    // TODO
+    Byte addr = FetchByte();
+    Byte value = ReadByte(addr);
+
+    m_StatusFlags.Z = ((m_A & value) == 0);
+    m_StatusFlags.V = (value & 0x40) != 0;
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::BITAbsolute()
 {
-    // TODO
+    Word addr = FetchWord();
+    Byte value = ReadByte(addr);
+
+    m_StatusFlags.Z = ((m_A & value) == 0);
+    m_StatusFlags.V = (value & 0x40) != 0;
+    m_StatusFlags.N = (value & 0x80) != 0;
 }
 
 void CPU6502::JMPAbsolute()
