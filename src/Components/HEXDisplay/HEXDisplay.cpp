@@ -36,17 +36,15 @@ void HEXDisplay::Render() noexcept
     ImDrawList *draw = ImGui::GetWindowDrawList();
     ImVec2 start = ImGui::GetCursorScreenPos();
 
-    const float size = 80.0f;
-    const float spacing = 20.0f;
 
-    for (int i = 0; i < NUM_DIGITS; ++i)
+    for (size_t i = 0; i < NUM_DIGITS; ++i)
     {
         Byte value = Memory::Read(BASE_ADDR + i);
-        ImVec2 pos = ImVec2(start.x + i * (size + spacing), start.y);
-        DrawSevenSegmentDigit(draw, pos, size, value);
+        ImVec2 pos = ImVec2(start.x + i * (SIZE + SPACING), start.y);
+        DrawSevenSegmentDigit(draw, pos, SIZE, value);
     }
 
-    ImGui::Dummy(ImVec2(NUM_DIGITS * (size + spacing), size + 30));
+    ImGui::Dummy(ImVec2(NUM_DIGITS * (SIZE + SPACING), SIZE + 30));
     ImGui::End();
 }
 
@@ -102,7 +100,7 @@ void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, 
 
     ImVec2 *segments[7] = {a, b, c, d, e, f, g};
 
-    for (int i = 0; i < 7; ++i)
+    for (size_t i = 0; i < 7; ++i)
     {
         drawList->AddConvexPolyFilled(segments[i], 4, segs[i] ? onColor : offColor);
     }
