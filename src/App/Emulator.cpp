@@ -11,7 +11,7 @@ namespace emulator6502
 {
 Emulator6502::Emulator6502()
 {
-    m_Components.reserve(COMPONENTS_NO - 1);
+    m_Components.reserve(COMPONENTS_NO);
 
     m_Components.emplace_back(std::make_unique<PixelDisplay>());
     m_Components.emplace_back(std::make_unique<MemoryLayout>());

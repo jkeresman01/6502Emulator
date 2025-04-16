@@ -25,7 +25,7 @@ struct Flags
 
 class CPU6502
 {
-    using Instruction = void (CPU6502::*)();
+  using Instruction = void (CPU6502::*)();
 
   public:
     CPU6502() = default;
