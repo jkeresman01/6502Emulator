@@ -36,14 +36,14 @@ void HEXDisplay::Render() noexcept
     ImGui::Begin("HEX Display");
     ImGui::Text("$0602 - $0605");
 
-    ImDrawList *draw = ImGui::GetWindowDrawList();
+    ImDrawList *drawList = ImGui::GetWindowDrawList();
     ImVec2 start = ImGui::GetCursorScreenPos();
 
     for (size_t i = 0; i < DIGITS_NO; ++i)
     {
         Byte value = Memory::Read(BASE_ADDR + i);
-        ImVec2 pos = ImVec2(start.x + i * (SIZE + SPACING), start.y);
-        DrawSevenSegmentDigit(draw, pos, SIZE, value);
+        ImVec2 position = ImVec2(start.x + i * (SIZE + SPACING), start.y);
+        DrawSevenSegmentDigit(drawList, position, SIZE, value);
     }
 
     ImGui::Dummy(ImVec2(DIGITS_NO * (SIZE + SPACING), SIZE + 30));

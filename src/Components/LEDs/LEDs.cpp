@@ -20,7 +20,7 @@ void LEDs::Render() noexcept
 
     uint16_t ledBits = Memory::Read(0x0600) | (Memory::Read(0x0601) << 8);
 
-    ImDrawList *draw_list = ImGui::GetWindowDrawList();
+    ImDrawList *drawList = ImGui::GetWindowDrawList();
     ImVec2 startPos = ImGui::GetCursorScreenPos();
 
     for (size_t i = 0; i < LEDS_NO; ++i)
@@ -30,7 +30,7 @@ void LEDs::Render() noexcept
         ImVec2 center = ImVec2(startPos.x + i * (2 * RADIUS + SPACING) + RADIUS, startPos.y + RADIUS);
 
         ImU32 color = isLEDOn ? IM_COL32(255, 0, 0, 255) : IM_COL32(60, 60, 60, 255);
-        draw_list->AddCircleFilled(center, RADIUS, color);
+        drawList->AddCircleFilled(center, RADIUS, color);
     }
 
     ImGui::Dummy(ImVec2(LEDS_NO * (2 * RADIUS + SPACING), 2 * RADIUS + SPACING));
