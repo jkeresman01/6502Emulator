@@ -211,6 +211,11 @@ Byte CPU6502::PopByte()
 
 void CPU6502::PushByte(const Byte value)
 {
+    if (m_SP == 0x00)
+    {
+        m_StackOverflow = true;
+    }
+
     Memory::Write(0x0100 + m_SP, value);
     m_SP--;
 }

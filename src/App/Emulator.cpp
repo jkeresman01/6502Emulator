@@ -75,6 +75,7 @@ void Emulator6502::Render()
     RenderCPUStatusWindow();
     RenderDissasemblyPopup();
     RenderControlButtonsWindow();
+    RenderStackOverflowPopup();
 }
 
 void Emulator6502::RenderCPUStatusWindow()
@@ -161,6 +162,45 @@ void Emulator6502::RenderDissasemblyPopup()
 
         ImGui::EndPopup();
     }
+}
+
+void Emulator6502::RenderStackOverflowPopup()
+{
+	if (m_CPU->HasStackOverflowed())
+	{
+		ImGui::OpenPopup("Stack Overflow!");
+	}
+
+	if (ImGui::BeginPopupModal("Stack Overflow!", nullptr, ImGuiWindowFlags_AlwaysUseWindowPadding))
+	{
+		ImGui::Text("The 6502 stack has overflowed!\nThis may corrupt memory.\n\n");
+
+		if (ImGui::Button("OK"))
+		{
+			ImGui::CloseCurrentPopup();
+			m_CPU->ClearStackOverflowFlag();
+		}
+
+        ImGui::Separator();
+        ImGui::Text("Stack (Top = $01FF):");
+
+        for (size_t i = 0xFF; i > 0x00; --i)
+        {
+            Word addr = 0x0100 + i;
+            Byte value = Memory::Read(addr);
+
+            if (i == m_CPU->GetStackPointer())
+            {
+                ImGui::TextColored(ImVec4(1, 0.5f, 0.5f, 1), "-> $%04x : %02x", addr, value);
+            }
+            else
+            {
+                ImGui::Text("   $%04x : %02x", addr, value);
+            }
+        }
+
+	    ImGui::EndPopup();
+	}
 }
 
 void Emulator6502::OpenDissasemblyPopup()

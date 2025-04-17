@@ -35,12 +35,15 @@ class CPU6502
 
     void Step();
 
-    Byte GetAccumulator() const { return m_A; };
-    Byte GetRegisterX() const { return m_X; };
-    Byte GetRegisterY() const { return m_Y; };
-    Word GetProgramCounter() const { return m_PC; };
-    Byte GetStackPointer() const { return m_SP; };
-    Flags GetStatusFlags() const { return m_StatusFlags; };
+    Byte GetAccumulator() const { return m_A; }
+    Byte GetRegisterX() const { return m_X; }
+    Byte GetRegisterY() const { return m_Y; }
+    Word GetProgramCounter() const { return m_PC; }
+    Byte GetStackPointer() const { return m_SP; }
+    Flags GetStatusFlags() const { return m_StatusFlags; }
+    bool HasStackOverflowed() const { return m_StackOverflow; }
+
+    void ClearStackOverflowFlag() { m_StackOverflow = false;  }
 
     std::string ToString() const;
 
@@ -305,5 +308,8 @@ class CPU6502
 
     ////////////////////            DISPATCH TABLE        ////////////////////
     std::array<Instruction, 256> m_InstructionSetDispatchTable;
+
+    ////////////////////          Stack overflow flag        ////////////////////
+    bool m_StackOverflow = false;
 };
 } // namespace emulator6502
