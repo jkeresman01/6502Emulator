@@ -166,20 +166,20 @@ void Emulator6502::RenderDissasemblyPopup()
 
 void Emulator6502::RenderStackOverflowPopup()
 {
-	if (m_CPU->HasStackOverflowed())
-	{
-		ImGui::OpenPopup("Stack Overflow!");
-	}
+    if (m_CPU->HasStackOverflowed())
+    {
+        ImGui::OpenPopup("Stack Overflow!");
+    }
 
-	if (ImGui::BeginPopupModal("Stack Overflow!", nullptr, ImGuiWindowFlags_AlwaysUseWindowPadding))
-	{
-		ImGui::Text("The 6502 stack has overflowed!\nThis may corrupt memory.\n\n");
+    if (ImGui::BeginPopupModal("Stack Overflow!", nullptr, ImGuiWindowFlags_AlwaysUseWindowPadding))
+    {
+        ImGui::Text("The 6502 stack has overflowed!\nThis may corrupt memory.\n\n");
 
-		if (ImGui::Button("OK"))
-		{
-			ImGui::CloseCurrentPopup();
-			m_CPU->ClearStackOverflowFlag();
-		}
+        if (ImGui::Button("OK"))
+        {
+            ImGui::CloseCurrentPopup();
+            m_CPU->ClearStackOverflowFlag();
+        }
 
         ImGui::Separator();
         ImGui::Text("Stack (Top = $01FF):");
@@ -199,8 +199,8 @@ void Emulator6502::RenderStackOverflowPopup()
             }
         }
 
-	    ImGui::EndPopup();
-	}
+        ImGui::EndPopup();
+    }
 }
 
 void Emulator6502::OpenDissasemblyPopup()

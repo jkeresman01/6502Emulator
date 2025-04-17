@@ -71,6 +71,5 @@ class Emulator6502
     bool m_ShowDisassemblyPopup = false;
 
     static constexpr uint32_t COMPONENTS_NO = 5;
-
 };
 } // namespace emulator6502

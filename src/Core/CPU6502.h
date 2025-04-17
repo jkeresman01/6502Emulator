@@ -25,7 +25,7 @@ struct Flags
 
 class CPU6502
 {
-  using Instruction = void (CPU6502::*)();
+    using Instruction = void (CPU6502::*)();
 
   public:
     CPU6502() = default;
@@ -43,7 +43,7 @@ class CPU6502
     Flags GetStatusFlags() const { return m_StatusFlags; }
     bool HasStackOverflowed() const { return m_StackOverflow; }
 
-    void ClearStackOverflowFlag() { m_StackOverflow = false;  }
+    void ClearStackOverflowFlag() { m_StackOverflow = false; }
 
     std::string ToString() const;
 
