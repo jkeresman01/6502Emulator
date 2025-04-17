@@ -18,7 +18,7 @@ void LEDs::Render() noexcept
 
     ImGui::Text("$0600 - $0601");
 
-    uint16_t ledBits = Memory::Read(0x0600) | (Memory::Read(0x0601) << 8);
+    Word ledBits = Memory::Read(0x0600) | (Memory::Read(0x0601) << 8);
 
     ImDrawList *drawList = ImGui::GetWindowDrawList();
     ImVec2 startPos = ImGui::GetCursorScreenPos();

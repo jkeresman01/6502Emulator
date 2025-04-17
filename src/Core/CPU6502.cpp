@@ -1095,6 +1095,7 @@ void CPU6502::ANDAbsoluteY()
     m_StatusFlags.N = (m_A & 0b10000000) > 0;
 }
 
+
 void CPU6502::ANDIndirectX()
 {
     Byte zeroPageAddr = FetchByte();

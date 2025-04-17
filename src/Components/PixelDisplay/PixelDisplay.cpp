@@ -28,7 +28,7 @@ void PixelDisplay::Render() noexcept
             Word address = START_ADDR + (y * GRID_SIZE + x);
             Byte colorIndex = Memory::Read(address) & 0x0F;
 
-            const ImVec4 &color = ColorsUtil::GetColor(colorIndex);
+            const ImVec4 &color = ColorsUtil::GetPixelColor(colorIndex);
 
             Pixel pixel;
             pixel.SetColor(color);

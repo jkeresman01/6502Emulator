@@ -20,7 +20,8 @@ class ColorsUtil
     //////////////////////////////////////////////////////////////
     ColorsUtil() = delete;
 
-    static ImVec4 GetColor(const uint32_t index);
+    static ImVec4 GetPixelColor(const uint32_t index);
+    static ImVec4 GetFlagColor(const bool isSet);
 
   private:
     static constexpr uint32_t COLORS_COUNT = 16;

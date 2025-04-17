@@ -88,7 +88,26 @@ void Emulator6502::RenderCPUStatusWindow()
     ImGui::Text("SP = 0x%02X", m_CPU->GetStackPointer());
     ImGui::Text("PC = 0x%04X", m_CPU->GetProgramCounter());
 
-    // TODO: Add status flags
+    ImGui::Separator();
+    ImGui::Text("Status Flags:");
+
+    const auto &flags = m_CPU->GetStatusFlags();
+
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.N), "N");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.V), "V");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags._), "_");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.B), "B");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.D), "D");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.I), "I");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.Z), "Z");
+    ImGui::SameLine();
+    ImGui::TextColored(ColorsUtil::GetFlagColor(flags.C), "C");
 
     ImGui::End();
 }
