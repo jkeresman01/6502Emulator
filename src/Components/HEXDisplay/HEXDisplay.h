@@ -27,7 +27,7 @@ class HEXDisplay : public AbstractComponent
 
     static const Word BASE_ADDR = 0x0602;
 
-    static constexpr float SIZE = 80.0f;
+    static constexpr float SIZE = 60.0f;
     static constexpr float SPACING = 20.0f;
 };
 } // namespace emulator6502

@@ -21,5 +21,8 @@ class PixelDisplay : public AbstractComponent
   private:
     static const uint32_t GRID_SIZE = 32;
     static const Word START_ADDR = 0x0200;
+
+    static constexpr uint32_t COLORS_COUNT = 16;
+    static constexpr uint32_t COLORS_PER_ROW = COLORS_COUNT / 2;
 };
 } // namespace emulator6502

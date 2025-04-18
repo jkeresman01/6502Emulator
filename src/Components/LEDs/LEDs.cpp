@@ -17,6 +17,7 @@ void LEDs::Render() noexcept
     ImGui::Begin("LEDs");
 
     ImGui::Text("$0600 - $0601");
+    ImGui::NewLine();
 
     Word ledBits = Memory::Read(0x0600) | (Memory::Read(0x0601) << 8);
 
