@@ -21,7 +21,7 @@ ImVec4 ColorsUtil::GetPixelColor(const uint32_t index)
 
 ImVec4 ColorsUtil::GetFlagColor(const bool isSet)
 {
-	return isSet ? ImVec4(0.3f, 1.0f, 0.3f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+    return isSet ? ImVec4(0.3f, 1.0f, 0.3f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 } // namespace emulator6502

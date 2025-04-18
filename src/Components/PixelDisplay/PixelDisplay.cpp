@@ -37,7 +37,8 @@ void PixelDisplay::Render() noexcept
         for (size_t i = 1; i <= COLORS_COUNT; ++i)
         {
             const ImVec4 &color = ColorsUtil::GetPixelColor(i - 1);
-            ImGui::ColorButton(("##color" + std::to_string(i - 1)).c_str(), color, ImGuiColorEditFlags_NoTooltip, ImVec2(32, 32));
+            ImGui::ColorButton(("##color" + std::to_string(i - 1)).c_str(), color,
+                               ImGuiColorEditFlags_NoTooltip, ImVec2(32, 32));
             ImGui::SameLine();
             ImGui::Text("0x%X", i - 1);
 
@@ -51,7 +52,7 @@ void PixelDisplay::Render() noexcept
             }
         }
 
-		ImGui::NewLine();
+        ImGui::NewLine();
         if (ImGui::Button("Close"))
         {
             ImGui::CloseCurrentPopup();
