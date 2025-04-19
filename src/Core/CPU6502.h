@@ -45,6 +45,9 @@ class CPU6502
 
     void ClearStackOverflowFlag() { m_StackOverflow = false; }
 
+    void SetRegisterX(const Byte value) { m_X = value; }
+    void SetRegisterY(const Byte value) { m_Y = value; }
+
     std::string ToString() const;
 
   private:
