@@ -1,6 +1,6 @@
 ﻿<div align="center">
 
-  <h1>🧠 6502 emulator. </h1>
+  <h1>  6502 emulator. </h1>
   <h3> !!!!!!!   Not baked yet   !!!!!!! </h3>
   <h6> ---> This is custom 6502 emulator. <--- </h6>
 
