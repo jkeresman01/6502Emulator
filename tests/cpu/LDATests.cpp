@@ -5,11 +5,26 @@
 
 using namespace emulator6502;
 
-TEST(CPU6502, LDAImmediate)
+class CPU6502Test : public ::testing::Test
 {
-    Memory::Reset();
+  protected:
     CPU6502 cpu;
 
+    void SetUp() override
+    {
+        Memory::Reset();
+        cpu.Init();
+    }
+
+    void TearDown() override
+    {
+        cpu.Reset();
+        Memory::Reset();
+    }
+};
+
+TEST_F(CPU6502Test, LDAImmediate)
+{
     Memory::Write(0x8000, 0xA9);
     Memory::Write(0x8001, 0x42);
 

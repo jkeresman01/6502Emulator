@@ -12,7 +12,7 @@ ImVec4 ColorsUtil::GetPixelColor(const uint32_t index)
 {
     if (index < 0 || index > COLORS_COUNT - 1)
     {
-        EMULATOR_6502_ERROR(TEXT("Index out of bounds, must be in [0, %u]"), COLORS_COUNT - 1);
+        EMULATOR_6502_ERROR(TEXT("Index out of bounds, must be in [0, %u]", COLORS_COUNT - 1));
         return s_Colors[0];
     }
 

@@ -9,7 +9,9 @@ set(EXTERNAL_DIR external)
 
 add_subdirectory(${EXTERNAL_DIR}/glfw)
 
-include_directories(${EXTERNAL_DIR}/glfw/include)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+add_subdirectory(${EXTERNAL_DIR}/googletest)
+enable_testing()
 
 add_library(imgui STATIC
     ${EXTERNAL_DIR}/imgui/imgui.cpp
@@ -18,7 +20,7 @@ add_library(imgui STATIC
     ${EXTERNAL_DIR}/imgui/imgui_widgets.cpp
     ${EXTERNAL_DIR}/imgui/backends/imgui_impl_glfw.cpp
     ${EXTERNAL_DIR}/imgui/backends/imgui_impl_opengl3.cpp
- "src/Components/SwitchPanel/SwitchPanel.h" "src/Components/SwitchPanel/SwitchPanel.cpp")
+)
 
 target_include_directories(imgui PUBLIC
     ${EXTERNAL_DIR}/imgui
@@ -28,34 +30,38 @@ target_include_directories(imgui PUBLIC
 
 find_package(OpenGL REQUIRED)
 
-file(GLOB_RECURSE PROJECT_SOURCES 
-    ${SRC_DIR}/*.cpp 
-    ${SRC_DIR}/*.h
+file(GLOB_RECURSE CORE_SOURCES
+    ${SRC_DIR}/Core/*.cpp
+    ${SRC_DIR}/Assembler/*.cpp
+    ${SRC_DIR}/Disassembler/*.cpp
+    ${SRC_DIR}/Util/*.cpp
 )
 
-add_executable(6502Emulator ${PROJECT_SOURCES} 
-    "src/Assembler/Assembler.h"
-    "src/Assembler/Assembler.cpp"
-    "src/Util/ColorUtils.cpp"
-    "src/Util/RandomUtil.h"
-    "src/Util/RandomUtil.cpp"
-    "src/Components/AbstractComponent.h"
-    "src/Components/PixelDisplay/Pixel.h"
-    "src/Components/PixelDisplay/Pixel.cpp"
-    "src/Components/PixelDisplay/PixelDisplay.h"
-    "src/Components/PixelDisplay/PixelDisplay.cpp"
-    "src/Components/HEXDisplay/HEXDisplay.h"
-    "src/Components/HEXDisplay/HEXDisplay.cpp"
-    "src/Components/LEDs/LEDs.h"
-    "src/Components/LEDs/LEDs.cpp"
-    "src/Util/ProgramUtil.h"
-    "src/Util/ProgramUtil.cpp"
-    "src/Components/SwitchPanel/SwitchPanel.h"
-    "src/Components/SwitchPanel/SwitchPanel.cpp"
+add_library(EmulatorCore STATIC ${CORE_SOURCES})
+target_include_directories(EmulatorCore PUBLIC
+    ${SRC_DIR}
+    ${EXTERNAL_DIR}/imgui
+    ${EXTERNAL_DIR}/imgui/backends
+    ${EXTERNAL_DIR}/glfw/include
 )
 
-target_include_directories(6502Emulator PRIVATE ${SRC_DIR})
-target_include_directories(6502Emulator PRIVATE ${EXTERNAL_DIR}/imgui)
-target_include_directories(6502Emulator PRIVATE ${EXTERNAL_DIR}/glfw/include)
 
-target_link_libraries(6502Emulator PRIVATE imgui glfw OpenGL::GL)
+file(GLOB_RECURSE GUI_SOURCES
+    ${SRC_DIR}/App/*.cpp
+    ${SRC_DIR}/Components/*.cpp
+)
+
+add_library(EmulatorApp STATIC ${GUI_SOURCES})
+target_include_directories(EmulatorApp PUBLIC ${SRC_DIR})
+target_link_libraries(EmulatorApp PRIVATE EmulatorCore imgui glfw OpenGL::GL)
+
+add_executable(6502Emulator src/Main.cpp)
+target_include_directories(6502Emulator PRIVATE
+    ${SRC_DIR}
+    ${EXTERNAL_DIR}/imgui
+    ${EXTERNAL_DIR}/imgui/backends
+    ${EXTERNAL_DIR}/glfw/include
+)
+target_link_libraries(6502Emulator PRIVATE EmulatorApp)
+
+add_subdirectory(tests)

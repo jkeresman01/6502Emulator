@@ -1798,7 +1798,7 @@ void CPU6502::InvalidOpcode()
 
 void CPU6502::PrintRegisterState()
 {
-    EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X"), m_A, m_X, m_Y, m_SP, m_PC);
+    EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X", m_A, m_X, m_Y, m_SP, m_PC));
 }
 
 std::string CPU6502::ToString() const
