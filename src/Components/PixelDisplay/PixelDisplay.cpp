@@ -34,7 +34,7 @@ void PixelDisplay::Render() noexcept
         ImGui::Text("Each value ($0-$F) maps to one of these colors: ");
         ImGui::NewLine();
 
-        for (size_t i = 1; i <= COLORS_COUNT; ++i)
+        for (uint32_t i = 1; i <= COLORS_COUNT; ++i)
         {
             const ImVec4 &color = ColorsUtil::GetPixelColor(i - 1);
             ImGui::ColorButton(("##color" + std::to_string(i - 1)).c_str(), color,

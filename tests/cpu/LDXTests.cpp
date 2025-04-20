@@ -353,3 +353,231 @@ TEST_F(CPU6502LDXTests, WillLDXLoadNegativeValueCorrectlyZeroPageY)
 }
 
 
+TEST_F(CPU6502LDXTests, WillLDXLoadPositiveValueAbsolute)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+
+    cpu.SetRegisterY(0x01);
+
+    Memory::Write(0x1234, 0x42);
+    Memory::Write(0x8000, 0xAE); // LDX Absolute
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0x42);
+    EXPECT_FALSE(cpu.GetStatusFlags().N);
+    EXPECT_FALSE(cpu.GetStatusFlags().Z);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
+
+TEST_F(CPU6502LDXTests, WillLDXLoadZeroValueCorrectlyAbsolute)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+
+    Memory::Write(0x1234, 0x00);
+    Memory::Write(0x8000, 0xAE); // LDX Absolute
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0x00);
+    EXPECT_TRUE(cpu.GetStatusFlags().Z);
+    EXPECT_FALSE(cpu.GetStatusFlags().N);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
+
+TEST_F(CPU6502LDXTests, WillLDXLoadNegativeValueCorrectlyAbsolute)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+
+    Memory::Write(0x1234, 0xFF);
+    Memory::Write(0x8000, 0xAE); // LDX Absolute
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0xFF);
+    EXPECT_TRUE(cpu.GetStatusFlags().N);
+    EXPECT_FALSE(cpu.GetStatusFlags().Z);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
+
+TEST_F(CPU6502LDXTests, WillLDXLoadPositiveValueCorrectlyAbsoluteY)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+    cpu.SetRegisterY(0x01);
+
+    Memory::Write(0x1235, 0x42);
+    Memory::Write(0x8000, 0xBE); // LDX Absolute,Y
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0x42);
+    EXPECT_FALSE(cpu.GetStatusFlags().N);
+    EXPECT_FALSE(cpu.GetStatusFlags().Z);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
+
+TEST_F(CPU6502LDXTests, WillLDXLoadZeroValueCorrectlyAbsoluteY)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+    cpu.SetRegisterY(0x01);
+
+    Memory::Write(0x1235, 0x00);
+    Memory::Write(0x8000, 0xBE); // LDX Absolute,Y
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0x00);
+    EXPECT_TRUE(cpu.GetStatusFlags().Z);
+    EXPECT_FALSE(cpu.GetStatusFlags().N);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
+
+TEST_F(CPU6502LDXTests, WillLDXLoadNegativeValueCorrectlyAbsoluteY)
+{
+    // GIVEN
+    Byte carryBefore = cpu.GetStatusFlags().C;
+    Byte interruptBefore = cpu.GetStatusFlags().I;
+    Byte decimalBefore = cpu.GetStatusFlags().D;
+    Byte overflowBefore = cpu.GetStatusFlags().V;
+    Byte notUsedFlagBefore = cpu.GetStatusFlags()._;
+
+    cpu.Reset();
+    cpu.SetRegisterY(0x01);
+
+    Memory::Write(0x1235, 0xFF);
+    Memory::Write(0x8000, 0xBE); // LDX Absolute,Y
+    Memory::Write(0x8001, 0x34);
+    Memory::Write(0x8002, 0x12);
+
+    // WHEN
+    cpu.Step();
+
+    // THEN
+    EXPECT_EQ(cpu.GetRegisterX(), 0xFF);
+    EXPECT_TRUE(cpu.GetStatusFlags().N);
+    EXPECT_FALSE(cpu.GetStatusFlags().Z);
+
+    Byte carryAfter = cpu.GetStatusFlags().C;
+    Byte interruptAfter = cpu.GetStatusFlags().I;
+    Byte decimalAfter = cpu.GetStatusFlags().D;
+    Byte overflowAfter = cpu.GetStatusFlags().V;
+    Byte notUsedFlagAfter = cpu.GetStatusFlags()._;
+
+    EXPECT_EQ(carryBefore, carryAfter);
+    EXPECT_EQ(interruptBefore, interruptAfter);
+    EXPECT_EQ(decimalBefore, decimalAfter);
+    EXPECT_EQ(overflowBefore, overflowAfter);
+    EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
+}
