@@ -32,6 +32,14 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x81] = &CPU6502::STAIndirectX;
     m_InstructionSetDispatchTable[0x91] = &CPU6502::STAIndirectY;
 
+    m_InstructionSetDispatchTable[0x86] = &CPU6502::STXZeroPage;
+    m_InstructionSetDispatchTable[0x96] = &CPU6502::STXZeroPageY;
+    m_InstructionSetDispatchTable[0x8E] = &CPU6502::STXAbsolute;
+
+    m_InstructionSetDispatchTable[0x84] = &CPU6502::STYZeroPage;
+    m_InstructionSetDispatchTable[0x94] = &CPU6502::STYZeroPageX;
+    m_InstructionSetDispatchTable[0x8C] = &CPU6502::STYAbsolute;
+
     m_InstructionSetDispatchTable[0xA2] = &CPU6502::LDXImmediate;
     m_InstructionSetDispatchTable[0xA6] = &CPU6502::LDXZeroPage;
     m_InstructionSetDispatchTable[0xB6] = &CPU6502::LDXZeroPageY;
