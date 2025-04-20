@@ -45,8 +45,12 @@ class CPU6502
 
     void ClearStackOverflowFlag() { m_StackOverflow = false; }
 
+    void SetAccumulator(const Byte value) { m_A = value; }
+
     void SetRegisterX(const Byte value) { m_X = value; }
     void SetRegisterY(const Byte value) { m_Y = value; }
+
+    void SetStackPointer(const Byte value) { m_SP = value; }
 
     void SetFlags(const Flags &flags) { m_StatusFlags = flags;  }
 
