@@ -48,6 +48,8 @@ class CPU6502
     void SetRegisterX(const Byte value) { m_X = value; }
     void SetRegisterY(const Byte value) { m_Y = value; }
 
+    void SetFlags(const Flags &flags) { m_StatusFlags = flags;  }
+
     std::string ToString() const;
 
   private:
