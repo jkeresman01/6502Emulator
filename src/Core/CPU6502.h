@@ -238,6 +238,9 @@ class CPU6502
 	////////////////////  INX (Increment X register)  ////////////////////
     void INX();
 
+	////////////////////  INY (Increment Y register)  ////////////////////
+    void INY();
+
     ////////////////////  Branch Instructions  ////////////////////
     void BNE();
     void BEQ();

@@ -118,6 +118,8 @@ void CPU6502::InitDispatchTable()
 
     m_InstructionSetDispatchTable[0xE8] = &CPU6502::INX;
 
+    m_InstructionSetDispatchTable[0xC8] = &CPU6502::INY;
+
     m_InstructionSetDispatchTable[0xC6] = &CPU6502::DECZeroPage;
     m_InstructionSetDispatchTable[0xD6] = &CPU6502::DECZeroPageX;
     m_InstructionSetDispatchTable[0xCE] = &CPU6502::DECAbsolute;
@@ -1800,6 +1802,15 @@ void CPU6502::INX()
 	m_StatusFlags.Z = (m_X == 0);
     m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
+
+void CPU6502::INY()
+{
+    m_Y++;
+
+	m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.N = (m_Y & 0b10000000) > 0;
+}
+
 
 void CPU6502::InvalidOpcode()
 {
