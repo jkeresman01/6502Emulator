@@ -235,6 +235,9 @@ class CPU6502
     void INCAbsolute();
     void INCAbsoluteX();
 
+	////////////////////  INX (Increment X register)  ////////////////////
+    void INX();
+
     ////////////////////  Branch Instructions  ////////////////////
     void BNE();
     void BEQ();
