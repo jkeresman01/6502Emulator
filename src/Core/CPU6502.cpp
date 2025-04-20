@@ -126,8 +126,12 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xEE] = &CPU6502::INCAbsolute;
     m_InstructionSetDispatchTable[0xFE] = &CPU6502::INCAbsoluteX;
 
-    m_InstructionSetDispatchTable[0xE8] = &CPU6502::INX;
+	m_InstructionSetDispatchTable[0x18] = &CPU6502::CLC;
+    m_InstructionSetDispatchTable[0xD8] = &CPU6502::CLD;
+    m_InstructionSetDispatchTable[0x58] = &CPU6502::CLI;
+    m_InstructionSetDispatchTable[0xB8] = &CPU6502::CLV;
 
+    m_InstructionSetDispatchTable[0xE8] = &CPU6502::INX;
     m_InstructionSetDispatchTable[0xC8] = &CPU6502::INY;
 
     m_InstructionSetDispatchTable[0xC6] = &CPU6502::DECZeroPage;
