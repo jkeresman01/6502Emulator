@@ -125,6 +125,10 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xCE] = &CPU6502::DECAbsolute;
     m_InstructionSetDispatchTable[0xDE] = &CPU6502::DECAbsoluteX;
 
+	m_InstructionSetDispatchTable[0xCA] = &CPU6502::DEX;
+
+    m_InstructionSetDispatchTable[0x88] = &CPU6502::DEY;
+
     m_InstructionSetDispatchTable[0xD0] = &CPU6502::BNE;
     m_InstructionSetDispatchTable[0xF0] = &CPU6502::BEQ;
     m_InstructionSetDispatchTable[0x10] = &CPU6502::BPL;
