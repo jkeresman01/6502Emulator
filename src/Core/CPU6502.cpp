@@ -126,7 +126,7 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xEE] = &CPU6502::INCAbsolute;
     m_InstructionSetDispatchTable[0xFE] = &CPU6502::INCAbsoluteX;
 
-	m_InstructionSetDispatchTable[0x18] = &CPU6502::CLC;
+    m_InstructionSetDispatchTable[0x18] = &CPU6502::CLC;
     m_InstructionSetDispatchTable[0xD8] = &CPU6502::CLD;
     m_InstructionSetDispatchTable[0x58] = &CPU6502::CLI;
     m_InstructionSetDispatchTable[0xB8] = &CPU6502::CLV;
@@ -139,7 +139,7 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0xCE] = &CPU6502::DECAbsolute;
     m_InstructionSetDispatchTable[0xDE] = &CPU6502::DECAbsoluteX;
 
-	m_InstructionSetDispatchTable[0xCA] = &CPU6502::DEX;
+    m_InstructionSetDispatchTable[0xCA] = &CPU6502::DEX;
 
     m_InstructionSetDispatchTable[0x88] = &CPU6502::DEY;
 
@@ -1817,7 +1817,7 @@ void CPU6502::INX()
 {
     m_X++;
 
-	m_StatusFlags.Z = (m_X == 0);
+    m_StatusFlags.Z = (m_X == 0);
     m_StatusFlags.N = (m_X & 0b10000000) > 0;
 }
 
@@ -1825,10 +1825,9 @@ void CPU6502::INY()
 {
     m_Y++;
 
-	m_StatusFlags.Z = (m_Y == 0);
+    m_StatusFlags.Z = (m_Y == 0);
     m_StatusFlags.N = (m_Y & 0b10000000) > 0;
 }
-
 
 void CPU6502::InvalidOpcode()
 {

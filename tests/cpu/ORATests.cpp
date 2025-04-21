@@ -764,7 +764,6 @@ TEST_F(CPU6502ORATests, WillORASetAccumulatorCorrectlyIndirectX_Zero)
     EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
 }
 
-
 TEST_F(CPU6502ORATests, WillORASetAccumulatorCorrectlyIndirectX_Negative)
 {
     // GIVEN

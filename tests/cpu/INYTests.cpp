@@ -101,4 +101,3 @@ TEST_F(CPU6502INYTests, WillINYSetNegativeFlagCorrectly)
     EXPECT_EQ(flagsAfter._, flagsBefore._);
     EXPECT_EQ(flagsAfter.V, flagsBefore.V);
 }
-

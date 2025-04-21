@@ -298,7 +298,3 @@ TEST_F(CPU6502STXTests, WillSTXStoreNegativeValueCorrectlyAbsolute)
     EXPECT_EQ(overflowBefore, overflowAfter);
     EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
 }
-
-
-
-

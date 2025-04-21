@@ -23,7 +23,6 @@ class CPU6502INCTests : public ::testing::Test
     }
 };
 
-
 TEST_F(CPU6502INCTests, WillINCIncrementValueCorrectlyZeroPage)
 {
     // GIVEN

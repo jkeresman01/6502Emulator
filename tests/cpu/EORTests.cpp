@@ -131,7 +131,6 @@ TEST_F(CPU6502EORTests, WillEORSetAccumulatorCorrectlyZeroPage_Negative)
     EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
 }
 
-
 TEST_F(CPU6502EORTests, WillEORZeroPageXPositiveResult)
 {
     // GIVEN

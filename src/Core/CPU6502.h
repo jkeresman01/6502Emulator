@@ -52,7 +52,7 @@ class CPU6502
 
     void SetStackPointer(const Byte value) { m_SP = value; }
 
-    void SetFlags(const Flags &flags) { m_StatusFlags = flags;  }
+    void SetFlags(const Flags &flags) { m_StatusFlags = flags; }
 
     std::string ToString() const;
 
@@ -239,10 +239,10 @@ class CPU6502
     void INCAbsolute();
     void INCAbsoluteX();
 
-	////////////////////  INX (Increment X register)  ////////////////////
+    ////////////////////  INX (Increment X register)  ////////////////////
     void INX();
 
-	////////////////////  INY (Increment Y register)  ////////////////////
+    ////////////////////  INY (Increment Y register)  ////////////////////
     void INY();
 
     ////////////////////  Branch Instructions  ////////////////////

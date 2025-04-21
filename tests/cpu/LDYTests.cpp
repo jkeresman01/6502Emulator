@@ -291,7 +291,6 @@ TEST_F(CPU6502LDYTests, WillLDYLoadZeroValueCorrectlyZeroPageX)
     Memory::Write(0x8000, 0xB4); // LDY Zero Page, Y
     Memory::Write(0x8001, 0x09);
 
-
     // WHEN
     cpu.Step();
 
@@ -330,7 +329,6 @@ TEST_F(CPU6502LDYTests, WillLDYLoadNegativeValueCorrectlyZeroPageX)
     Memory::Write(0x8000, 0xB4); // LDY Zero Page, Y
     Memory::Write(0x8001, 0x00);
 
-
     // WHEN
     cpu.Step();
 
@@ -351,7 +349,6 @@ TEST_F(CPU6502LDYTests, WillLDYLoadNegativeValueCorrectlyZeroPageX)
     EXPECT_EQ(overflowBefore, overflowAfter);
     EXPECT_EQ(notUsedFlagBefore, notUsedFlagAfter);
 }
-
 
 TEST_F(CPU6502LDYTests, WillLDYLoadPositiveValueAbsolute)
 {
@@ -408,7 +405,6 @@ TEST_F(CPU6502LDYTests, WillLDYLoadZeroValueCorrectlyAbsolute)
     Memory::Write(0x8001, 0x34);
     Memory::Write(0x8002, 0x12);
 
-
     // WHEN
     cpu.Step();
 
@@ -445,7 +441,6 @@ TEST_F(CPU6502LDYTests, WillLDYLoadNegativeValueCorrectlyAbsolute)
     Memory::Write(0x8000, 0xAC); // LDY Absolute
     Memory::Write(0x8001, 0x34);
     Memory::Write(0x8002, 0x12);
-
 
     // WHEN
     cpu.Step();
