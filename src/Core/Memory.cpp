@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "../Util/Logger.h"
+
 namespace emulator6502
 {
 
@@ -22,7 +24,7 @@ void Memory::Reset()
 
 Byte Memory::Read(const Word address)
 {
-    if (addr >= 0x0000 && addr <= 0xFFFF)
+    if (address >= 0x0000 && address <= 0xFFFF)
     {
         return s_RAM[address];
     }
@@ -35,7 +37,7 @@ Byte Memory::Read(const Word address)
 
 void Memory::Write(const Word address, const Byte value)
 {
-    if (addr >= 0x0000 && addr <= 0xFFFF)
+    if (address >= 0x0000 && address <= 0xFFFF)
     {
         s_RAM[address] = value;
     }
