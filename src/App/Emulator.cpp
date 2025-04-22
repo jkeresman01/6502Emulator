@@ -47,9 +47,9 @@ void Emulator6502::InitComponents()
 
 void Emulator6502::InitWindow()
 {
-    GLFWmonitor *primary = glfwGetPrimaryMonitor();
-    const GLFWvidmode *mode = glfwGetVideoMode(primary);
-    m_Window = glfwCreateWindow(mode->width, mode->height, "6502 Emulator", NULL, NULL);
+    GLFWmonitor *primaryMonitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode *videoMode = glfwGetVideoMode(primaryMonitor);
+    m_Window = glfwCreateWindow(videoMode->width, videoMode->height, "6502 Emulator", NULL, NULL);
 }
 
 void Emulator6502::Run()
