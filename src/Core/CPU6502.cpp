@@ -236,6 +236,7 @@ void CPU6502::PushByte(const Byte value)
     if (m_SP == 0x00)
     {
         m_StackOverflow = true;
+        m_SP = 0xFD;
     }
 
     Memory::Write(0x0100 + m_SP, value);
