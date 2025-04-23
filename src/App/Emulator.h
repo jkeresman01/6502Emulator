@@ -61,7 +61,7 @@ class Emulator6502
     std::unique_ptr<CPU6502> m_CPU = std::make_unique<CPU6502>();
 
     std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
-    std::unique_ptr<Disassembler> m_Disssembler = std::make_unique<Disassembler>();
+    std::unique_ptr<Disassembler> m_Dissasembler = std::make_unique<Disassembler>();
 
     std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
 

@@ -225,7 +225,7 @@ void Emulator6502::RenderStackOverflowPopup()
 void Emulator6502::OpenDissasemblyPopup()
 {
     const std::vector<Byte> &machineCode = ProgramUtil::ReadProgramFromMemory();
-    m_Dissasembly = m_Disssembler->Disassmble(machineCode);
+    m_Dissasembly = m_Dissasembler->Disassmble(machineCode);
     m_ShowDisassemblyPopup = true;
 }
 
