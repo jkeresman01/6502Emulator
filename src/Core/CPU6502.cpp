@@ -1844,11 +1844,11 @@ std::string CPU6502::ToString() const
 {
     std::stringstream ss;
 
-    ss << "Accumulator (A): " << std::hex << std::uppercase << (int32_t)m_A << "\r\n";
-    ss << "X Register (X): " << std::hex << (int32_t)m_X << "\r\n";
-    ss << "Y Register (Y): " << std::hex << (int32_t)m_Y << "\r\n";
-    ss << "Stack Pointer (SP): " << std::hex << (int32_t)m_SP << "\r\n";
-    ss << "Program Counter (PC): " << std::hex << (int32_t)m_PC << "\r\n";
+    ss << "Accumulator (A): " << std::hex << static_cast<int32_t>(m_A) << "\r\n";
+    ss << "X Register (X): " << std::hex << static_cast<int32_t>(m_X) << "\r\n";
+    ss << "Y Register (Y): " << std::hex << static_cast<int32_t>(m_Y) << "\r\n";
+    ss << "Stack Pointer (SP): " << std::hex << static_cast<int32_t>(m_SP) << "\r\n";
+    ss << "Program Counter (PC): " << std::hex << static_cast<int32_t>(m_PC) << "\r\n";
 
     return ss.str();
 }
