@@ -1,50 +1,38 @@
 #include "Memory.h"
 
 #include <cstdint>
+#include <algorithm>
 
 #include "../Util/Logger.h"
+#include "../Util/Assert.h"
 
 namespace emulator6502
 {
 
-Byte Memory::s_RAM[MEMORY_64KB] = {0};
+Byte Memory::s_RAM[MEMORY_64KB] = {};
 
 void Memory::Init()
 {
     Reset();
 }
 
+static_assert(MEMORY_64KB == 65536, "MEMORY_64KB must be 65536 bytes (64KB)");
+
 void Memory::Reset()
 {
-    for (size_t i = 0; i < MEMORY_64KB; ++i)
-    {
-        s_RAM[i] = 0x00;
-    }
+    std::fill(std::begin(s_RAM), std::end(s_RAM), 0x00);
 }
 
 Byte Memory::Read(const Word address)
 {
-    if (address >= 0x0000 && address <= 0xFFFF)
-    {
-        return s_RAM[address];
-    }
-    else
-    {
-        EMULATOR_6502_ERROR(TEXT("Invalid address!"));
-        return s_RAM[0x00];
-    }
+    ASSERT(address < MEMORY_64KB);
+    return s_RAM[address];
 }
 
 void Memory::Write(const Word address, const Byte value)
 {
-    if (address >= 0x0000 && address <= 0xFFFF)
-    {
-        s_RAM[address] = value;
-    }
-    else
-    {
-        EMULATOR_6502_ERROR(TEXT("Invalid address!"));
-    }
+    ASSERT(address < MEMORY_64KB);
+    s_RAM[address] = value;
 }
 
 } // namespace emulator6502
