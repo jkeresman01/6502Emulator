@@ -3,7 +3,9 @@
 #include "imgui.h"
 
 #include "../../Core/Memory.h"
+
 #include <cstdio>
+#include <string>
 
 namespace emulator6502
 {
@@ -19,18 +21,17 @@ void SwitchPanel::Render()
     ImGui::Text("$0606 - $0608");
     ImGui::NewLine();
 
-    Word &switchBits = *(Word *)&Memory::s_RAM[0x0606];
+    Word switchBits = Memory::s_RAM[0x0606] | (Memory::s_RAM[0x0607] << 8);
 
     for (int32_t i = SWITCHES_COUNT; i >= 0; --i)
     {
-        char label[8];
-        sprintf(label, "##bit%d", i);
+        std::string label = "##bit" + std::to_string(i);
 
-        bool state = (switchBits >> i) & 1;
+        bool switchState  = (switchBits >> i) & 1;
 
-        if (ImGui::Checkbox(label, &state))
+        if (ImGui::Checkbox(label.c_str(), &switchState))
         {
-            state ? switchBits |= (1 << i) : switchBits &= ~(1 << i);
+            switchState ? switchBits |= (1 << i) : switchBits &= ~(1 << i);
         }
 
         if (i > 0)
