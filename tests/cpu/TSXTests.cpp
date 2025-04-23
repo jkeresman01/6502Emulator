@@ -12,7 +12,7 @@ class CPU6502TSXTests : public ::testing::Test
 
     void SetUp() override
     {
-        Memory::Reset();
+        Memory::Init();
         cpu.Init();
     }
 

@@ -12,7 +12,7 @@ class CPU6502ROLTests : public ::testing::Test
 
     void SetUp() override
     {
-        Memory::Reset();
+        Memory::Init();
         cpu.Init();
     }
 
