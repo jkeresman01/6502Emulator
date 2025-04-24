@@ -182,6 +182,12 @@ void CPU6502::InitDispatchTable()
     m_InstructionSetDispatchTable[0x6E] = &CPU6502::RORAbsolute;
     m_InstructionSetDispatchTable[0x7E] = &CPU6502::RORAbsoluteX;
 
+    m_InstructionSetDispatchTable[0x0A] = &CPU6502::ASLAccumulator;
+    m_InstructionSetDispatchTable[0x06] = &CPU6502::ASLZeroPage;
+    m_InstructionSetDispatchTable[0x16] = &CPU6502::ASLZeroPageX;
+    m_InstructionSetDispatchTable[0x0E] = &CPU6502::ASLAbsolute;
+    m_InstructionSetDispatchTable[0x1E] = &CPU6502::ASLAbsoluteX;
+
     m_InstructionSetDispatchTable[0x4C] = &CPU6502::JMPAbsolute;
     m_InstructionSetDispatchTable[0x6C] = &CPU6502::JMPIndirect;
 }
