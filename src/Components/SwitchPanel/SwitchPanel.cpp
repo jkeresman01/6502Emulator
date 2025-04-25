@@ -21,7 +21,7 @@ void SwitchPanel::Render()
     ImGui::Text("$0606 - $0608");
     ImGui::NewLine();
 
-    Word switchBits = Memory::s_RAM[0x0606] | (Memory::s_RAM[0x0607] << 8);
+    Word &switchBits = *(Word *)&Memory::s_RAM[0x0606];
 
     for (int32_t i = SWITCHES_COUNT; i >= 0; --i)
     {
