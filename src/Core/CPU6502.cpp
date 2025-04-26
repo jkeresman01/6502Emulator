@@ -211,7 +211,6 @@ void CPU6502::Reset()
 
     m_StatusFlags.C = 0;
     m_StatusFlags.Z = 0;
-    m_StatusFlags._ = 0;
     m_StatusFlags.I = 0;
     m_StatusFlags.D = 0;
     m_StatusFlags.B = 0;
