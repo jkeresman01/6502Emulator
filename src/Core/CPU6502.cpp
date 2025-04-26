@@ -1,6 +1,11 @@
 #include "CPU6502.h"
 
 #include "Memory.h"
+#include "../Util/Logger.h"
+
+#include <string>
+#include <algorithm>
+#include <vector>
 
 namespace emulator6502
 {
@@ -287,9 +292,9 @@ void CPU6502::LDAImmediate()
 
 void CPU6502::LDAZeroPage()
 {
-    Byte ZeroPageAddr = FetchByte();
+    Byte zeroPageAddr = FetchByte();
 
-    m_A = ReadByte(ZeroPageAddr);
+    m_A = ReadByte(zeroPageAddr);
 
     m_StatusFlags.Z = (m_A == 0);
     m_StatusFlags.N = (m_A & 0b10000000) > 0;
@@ -297,11 +302,11 @@ void CPU6502::LDAZeroPage()
 
 void CPU6502::LDAZeroPageX()
 {
-    Byte ZeroPageAddr = FetchByte();
+    Byte zeroPageAddr = FetchByte();
 
-    ZeroPageAddr += m_X;
+    zeroPageAddr += m_X;
 
-    m_A = ReadByte(ZeroPageAddr);
+    m_A = ReadByte(zeroPageAddr);
 
     m_StatusFlags.Z = (m_A == 0);
     m_StatusFlags.N = (m_A & 0b10000000) > 0;
@@ -734,6 +739,7 @@ void CPU6502::PLP()
 void CPU6502::CPXImmediate()
 {
     Byte value = FetchByte();
+
     Compare(m_X, value);
 }
 
@@ -741,6 +747,7 @@ void CPU6502::CPXZeroPage()
 {
     Byte addr = FetchByte();
     Byte value = ReadByte(addr);
+
     Compare(m_X, value);
 }
 
@@ -748,12 +755,14 @@ void CPU6502::CPXAbsolute()
 {
     Word addr = FetchWord();
     Byte value = ReadByte(addr);
+
     Compare(m_X, value);
 }
 
 void CPU6502::CPYImmediate()
 {
     Byte value = FetchByte();
+
     Compare(m_Y, value);
 }
 
@@ -761,6 +770,7 @@ void CPU6502::CPYZeroPage()
 {
     Byte addr = FetchByte();
     Byte value = ReadByte(addr);
+
     Compare(m_Y, value);
 }
 
@@ -768,6 +778,7 @@ void CPU6502::CPYAbsolute()
 {
     Word addr = FetchWord();
     Byte value = ReadByte(addr);
+
     Compare(m_Y, value);
 }
 
@@ -1839,11 +1850,6 @@ void CPU6502::INY()
 void CPU6502::InvalidOpcode()
 {
     EMULATOR_6502_ERROR(TEXT("Invalid opcode: 0x{:02X} at PC: 0x{:04X}", ReadByte(m_PC), m_PC));
-}
-
-void CPU6502::PrintRegisterState()
-{
-    EMULATOR_6502_DEBUG(TEXT("Registers: A=%02X X=%02X Y=%02X SP=%02X PC=%04X", m_A, m_X, m_Y, m_SP, m_PC));
 }
 
 std::string CPU6502::ToString() const

@@ -43,28 +43,26 @@ class CPU6502
     Flags GetStatusFlags() const { return m_StatusFlags; }
     bool HasStackOverflowed() const { return m_StackOverflow; }
 
-    void ClearStackOverflowFlag() { m_StackOverflow = false; }
-
     void SetAccumulator(const Byte value) { m_A = value; }
-
     void SetRegisterX(const Byte value) { m_X = value; }
     void SetRegisterY(const Byte value) { m_Y = value; }
-
     void SetStackPointer(const Byte value) { m_SP = value; }
-
     void SetFlags(const Flags &flags) { m_StatusFlags = flags; }
+
+    void ClearStackOverflowFlag() { m_StackOverflow = false; }
 
     std::string ToString() const;
 
   private:
     void InitDispatchTable();
+    void InvalidOpcode();
 
-    void WriteByte(const Word address, const Byte value);
-
+  private:
     Byte FetchByte();
     Word FetchWord();
 
     Byte ReadByte(const Word address);
+    void WriteByte(const Word address, const Byte value);
 
     Byte PopByte();
     void PushByte(const Byte value);
@@ -300,12 +298,6 @@ class CPU6502
     ////////////////////  Unconditional Jump  ////////////////////
     void JMPAbsolute();
     void JMPIndirect();
-
-    ////////////////////        Invalid opcode         ////////////////////
-    void InvalidOpcode();
-
-  private:
-    void PrintRegisterState();
 
   private:
     ////////////////////            REGISTERS            ////////////////////
