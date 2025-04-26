@@ -6,8 +6,7 @@
 
 #include "../../Core/Memory.h"
 #include "../../Util/ColorsUtil.h"
-
-#include "Pixel.h"
+#include "../../Types/Pixel.h"
 
 namespace emulator6502
 {

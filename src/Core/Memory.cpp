@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <algorithm>
 
-#include "../Util/Logger.h"
-#include "../Util/Assert.h"
+#include "../Common/Logger.h"
+#include "../Common/Assert.h"
 
 namespace emulator6502
 {

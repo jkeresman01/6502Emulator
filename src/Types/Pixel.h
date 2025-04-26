@@ -1,17 +1,15 @@
 #pragma once
 
-#include "../AbstractComponent.h"
-
 #include "imgui.h"
 
 namespace emulator6502
 {
-class Pixel : public AbstractComponent
+class Pixel
 {
   public:
-    virtual void Init() noexcept override;
-    virtual void Render() noexcept override;
-    virtual void Destroy() noexcept override;
+    Pixel() = default;
+
+    void Render();
 
     ImVec4 GetColor() const { return m_Color; }
 

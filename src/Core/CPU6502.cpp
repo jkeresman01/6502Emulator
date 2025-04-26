@@ -1,7 +1,7 @@
 #include "CPU6502.h"
 
 #include "Memory.h"
-#include "../Util/Logger.h"
+#include "../Common/Logger.h"
 
 #include <string>
 #include <algorithm>
