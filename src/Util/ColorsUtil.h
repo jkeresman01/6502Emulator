@@ -5,11 +5,19 @@
 ////////////////////////////////////////////////////////////
 
 #include "../Common/Logger.h"
-
 #include "imgui.h"
 
 namespace emulator6502
 {
+////////////////////////////////////////////////////////////
+///
+/// @class ColorsUtil
+///
+/// @brief A utility class that provides functions for retrieving
+///        colors used for pixel and flag representations in the
+///        emulator.
+
+////////////////////////////////////////////////////////////
 class ColorsUtil
 {
   public:
@@ -21,11 +29,41 @@ class ColorsUtil
     //////////////////////////////////////////////////////////////
     ColorsUtil() = delete;
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Gets the color for a specific pixel index.
+    ///
+    /// @param [in] index The pixel index.
+    ///
+    /// @return The color as an ImVec4 object.
+    ///
+    //////////////////////////////////////////////////////////////
     static ImVec4 GetPixelColor(const uint32_t index);
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Gets the color for a flag, based on its state.
+    ///
+    /// @param [in] isSet The flag state: true if set, false if not.
+    ///
+    /// @return The color as an ImVec4 object.
+    ///
+    //////////////////////////////////////////////////////////////
     static ImVec4 GetFlagColor(const bool isSet);
 
   private:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief The total number of colors available in the color palette.
+    ///
+    //////////////////////////////////////////////////////////////
     static constexpr uint32_t COLORS_COUNT = 16;
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief The color palette containing a set of predefined colors.
+    ///
+    //////////////////////////////////////////////////////////////
     static const ImVec4 s_Colors[COLORS_COUNT];
 };
 } // namespace emulator6502
