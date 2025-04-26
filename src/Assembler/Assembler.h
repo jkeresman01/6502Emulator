@@ -9,12 +9,6 @@ namespace emulator6502
 using Byte = uint8_t;
 using Word = uint16_t;
 
-struct Instruction
-{
-    Byte opcode;
-    Byte operandSize;
-};
-
 class Assembler
 {
   public:

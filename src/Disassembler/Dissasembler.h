@@ -1,5 +1,9 @@
 #pragma once
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <string>
 #include <vector>
 
@@ -8,12 +12,6 @@ namespace emulator6502
 
 using Byte = uint8_t;
 using Word = uint16_t;
-
-struct DisassembledInstruction
-{
-    std::string mnemonic;
-    Byte operandSize;
-};
 
 class Disassembler
 {

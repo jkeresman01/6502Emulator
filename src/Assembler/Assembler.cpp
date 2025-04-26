@@ -5,6 +5,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "../Types/Instruction.h"
+
 namespace emulator6502
 {
 
@@ -47,20 +49,20 @@ std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
         {
             const auto &instruction = it->second;
             machineCode.push_back(instruction.opcode);
-            appendOperands(machineCode, operand, instruction.operandSize);
+            appendOperands(machineCode, operand, instruction.operandCount);
         }
     }
     return machineCode;
 }
 
-void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandSize)
+void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandCount)
 {
-    if (operandSize == 1)
+    if (operandCount == 1)
     {
         machineCode.push_back(static_cast<Byte>(std::stoi(operand, nullptr, 16)));
     }
 
-    if (operandSize == 2)
+    if (operandCount == 2)
     {
         Word address = static_cast<Word>(std::stoi(operand, nullptr, 16));
 

@@ -1,9 +1,16 @@
 #include "Dissasembler.h"
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <iomanip>
 #include <sstream>
 #include <string>
+
 #include <unordered_map>
+
+#include "../Types/Instruction.h"
 
 namespace emulator6502
 {
@@ -32,7 +39,7 @@ std::vector<std::string> Disassembler::Disassmble(const std::vector<Byte> &machi
             const DisassembledInstruction &instruction = it->second;
             ss << instruction.mnemonic;
 
-            appendOperands(ss, machineCode, programCounter, instruction.operandSize);
+            appendOperands(ss, machineCode, programCounter, instruction.operandCount);
         }
         else
         {
@@ -48,15 +55,15 @@ std::vector<std::string> Disassembler::Disassmble(const std::vector<Byte> &machi
     return assembly;
 }
 void Disassembler::appendOperands(std::stringstream &ss, const std::vector<Byte> &machineCode,
-                                  std::size_t &programCounter, Byte operandSize)
+                                  std::size_t &programCounter, Byte operandCount)
 {
-    if (operandSize == 1 && (programCounter + 1 < machineCode.size()))
+    if (operandCount == 1 && (programCounter + 1 < machineCode.size()))
     {
         Byte operand = machineCode[programCounter + 1];
         ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int32_t>(operand);
         programCounter += 2;
     }
-    else if (operandSize == 2 && (programCounter + 2 < machineCode.size()))
+    else if (operandCount == 2 && (programCounter + 2 < machineCode.size()))
     {
         Word address = static_cast<Word>(machineCode[programCounter + 1]) |
                        (static_cast<Word>(machineCode[programCounter + 2]) << 8);
