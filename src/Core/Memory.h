@@ -7,7 +7,7 @@
 namespace emulator6502
 {
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @class Memory
 ///
 /// @brief A utility class responsible for managing the emulator's

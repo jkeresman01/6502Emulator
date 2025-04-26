@@ -5,8 +5,8 @@
 #include "imgui.h"
 
 #include "../../Core/Memory.h"
-#include "../../Util/ColorsUtil.h"
 #include "../../Types/Pixel.h"
+#include "../../Util/ColorsUtil.h"
 
 namespace emulator6502
 {

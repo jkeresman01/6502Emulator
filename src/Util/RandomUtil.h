@@ -5,11 +5,11 @@
 namespace emulator6502
 {
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @class Random
 ///
 /// @brief A utility class for generating random numbers using the
-///        Mersenne Twister algorithm. 
+///        Mersenne Twister algorithm.
 ///        This class provides methods
 ///        to initialize the random engine and generate random numbers
 ///        within a specified range.
@@ -37,7 +37,7 @@ class Random
     ///
     /// @brief Generates a random number within the range [0, max).
     ///
-    /// @param [in] max The upper limit of the random number 
+    /// @param [in] max The upper limit of the random number
     ///                 range (exclusive).
     ///
     /// @return A random number between 0 and max.

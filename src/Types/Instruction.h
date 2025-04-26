@@ -11,10 +11,10 @@ namespace emulator6502
 using Byte = uint8_t;
 
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @struct Instruction
 ///
-/// @brief Represents an instruction with its opcode 
+/// @brief Represents an instruction with its opcode
 ///        and operand count.
 //
 ////////////////////////////////////////////////////////////
@@ -36,10 +36,10 @@ struct Instruction
 };
 
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @struct DisassembledInstruction
 ///
-/// @brief Represents a disassembled instruction with 
+/// @brief Represents a disassembled instruction with
 ///        its mnemonic and operand count.
 ///
 ////////////////////////////////////////////////////////////

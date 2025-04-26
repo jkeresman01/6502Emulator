@@ -27,7 +27,7 @@ void SwitchPanel::Render()
     {
         std::string label = "##bit" + std::to_string(i);
 
-        bool switchState  = (switchBits >> i) & 1;
+        bool switchState = (switchBits >> i) & 1;
 
         if (ImGui::Checkbox(label.c_str(), &switchState))
         {

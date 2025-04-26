@@ -5,10 +5,10 @@
 namespace emulator6502
 {
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @class Pixel
 ///
-/// @brief Represents a single pixel in the emulator 
+/// @brief Represents a single pixel in the emulator
 ///        with a color value.
 //
 ////////////////////////////////////////////////////////////

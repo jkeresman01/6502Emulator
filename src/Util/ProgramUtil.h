@@ -18,7 +18,7 @@ namespace emulator6502
 ///
 /// @class ProgramUtil
 ///
-/// @brief A utility class for loading and reading programs 
+/// @brief A utility class for loading and reading programs
 ///        (machine code) into and from memory.
 ///
 ////////////////////////////////////////////////////////////

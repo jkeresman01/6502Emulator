@@ -182,7 +182,6 @@ TEST_F(CPU6502ADCTests, WillADCSetNegativeAndOverflowZeroPage)
     EXPECT_TRUE(cpu.GetStatusFlags().V);
 }
 
-
 TEST_F(CPU6502ADCTests, WillADCAddCorrectlyZeroPageX)
 {
     // GIVEN

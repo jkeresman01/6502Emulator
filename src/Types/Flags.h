@@ -11,7 +11,7 @@ namespace emulator6502
 using Byte = uint8_t;
 
 ////////////////////////////////////////////////////////////
-/// 
+///
 /// @struct Flags
 ///
 /// @brief Represents the status flags of the 6502 CPU.
