@@ -6,6 +6,10 @@
 
 namespace emulator6502
 {
+
+using Byte = uint8_t;
+using Word = uint16_t;
+
 ////////////////////////////////////////////////////////////
 ///
 /// @class Memory

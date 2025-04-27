@@ -6,7 +6,7 @@
 
 namespace emulator6502
 {
-void Pixel::Render()
+void Pixel::Render() const
 {
     ImGui::PushStyleColor(ImGuiCol_Button, m_Color);
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_Color);

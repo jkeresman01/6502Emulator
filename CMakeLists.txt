@@ -35,6 +35,7 @@ file(GLOB_RECURSE CORE_SOURCES
     ${SRC_DIR}/Assembler/*.cpp
     ${SRC_DIR}/Disassembler/*.cpp
     ${SRC_DIR}/Util/*.cpp
+    ${SRC_DIR}/Types/*.cpp
 )
 
 add_library(EmulatorCore STATIC ${CORE_SOURCES})
@@ -49,6 +50,7 @@ target_include_directories(EmulatorCore PUBLIC
 file(GLOB_RECURSE GUI_SOURCES
     ${SRC_DIR}/App/*.cpp
     ${SRC_DIR}/Components/*.cpp
+    ${SRC_DIR}/Types/*.cpp
 )
 
 add_library(EmulatorApp STATIC ${GUI_SOURCES})
