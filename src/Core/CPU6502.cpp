@@ -1861,6 +1861,17 @@ std::string CPU6502::ToString() const
     ss << "Stack Pointer (SP): " << std::hex << static_cast<int32_t>(m_SP) << "\r\n";
     ss << "Program Counter (PC): " << std::hex << static_cast<int32_t>(m_PC) << "\r\n";
 
+    ss << "//-------------------//   Status flags   //--------------------//" << "\r\n";
+
+    ss << "N: " << m_StatusFlags.N << "\r\n";
+    ss << "V: " << m_StatusFlags.V << "\r\n";
+    ss << "_: " << m_StatusFlags._ << "\r\n";
+    ss << "N: " << m_StatusFlags.N << "\r\n";
+    ss << "B: " << m_StatusFlags.B << "\r\n";
+    ss << "I: " << m_StatusFlags.I << "\r\n";
+    ss << "Z: " << m_StatusFlags.Z << "\r\n";
+    ss << "C: " << m_StatusFlags.C << "\r\n";
+
     return ss.str();
 }
 
