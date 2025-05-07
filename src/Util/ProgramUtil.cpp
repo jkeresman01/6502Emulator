@@ -2,13 +2,6 @@
 
 namespace emulator6502
 {
-void ProgramUtil::LoadProgramIntoMemory(const std::vector<Byte> &machineCode)
-{
-    for (size_t i = 0; i < machineCode.size(); ++i)
-    {
-        Memory::s_RAM[0x8000 + i] = machineCode[i];
-    }
-}
 
 std::vector<Byte> ProgramUtil::ReadProgramFromMemory()
 {

@@ -7,6 +7,8 @@
 #include "../Util/ProgramUtil.h"
 #include "../Util/RandomUtil.h"
 
+#include "../SoftwareLoader/SoftwareLoader.h"
+
 namespace emulator6502
 {
 Emulator6502::Emulator6502()
@@ -234,12 +236,13 @@ void Emulator6502::LoadProgramIntoMemory()
     const std::string &asmCode = m_AsmEditor->GetText();
     const std::vector<Byte> &machineCode = m_Assembler->Assemble(asmCode);
 
-    ProgramUtil::LoadProgramIntoMemory(machineCode);
+    SoftwareLoader::Load(machineCode);
 }
 
 void Emulator6502::Shutdown()
 {
     DestroyComponents();
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
