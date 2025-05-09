@@ -35,16 +35,6 @@ class ProgramUtil
 
     //////////////////////////////////////////////////////////////
     ///
-    /// @brief Loads the program (machine code) into memory.
-    ///
-    /// @param [in] machineCode A vector of bytes representing
-    ///             the machine code of the program.
-    ///
-    //////////////////////////////////////////////////////////////
-    static void LoadProgramIntoMemory(const std::vector<Byte> &machineCode);
-
-    //////////////////////////////////////////////////////////////
-    ///
     /// @brief Reads the program (machine code) from memory.
     ///
     /// @return A vector of bytes representing the machine code
