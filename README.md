@@ -9,6 +9,11 @@
 
 </div>
 
+## Preview 
+<img width="1452" height="957" alt="image" src="https://github.com/user-attachments/assets/121125ae-10ac-40d2-9f08-3892e88a8f28" />
+
+
+
 ## 6502 Emulator Memory Map
 
 ---
