@@ -3,6 +3,8 @@
 #define MEMORY_64KB 65536
 
 #include <cstdint>
+#include <cstdio>
+#include <vector>
 
 namespace emulator6502
 {

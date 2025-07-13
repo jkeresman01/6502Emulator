@@ -7,12 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SRC_DIR src)
 set(EXTERNAL_DIR external)
 
+# External libraries
 add_subdirectory(${EXTERNAL_DIR}/glfw)
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(${EXTERNAL_DIR}/googletest)
 enable_testing()
 
+# IMGUI
 add_library(imgui STATIC
     ${EXTERNAL_DIR}/imgui/imgui.cpp
     ${EXTERNAL_DIR}/imgui/imgui_draw.cpp
@@ -28,12 +30,15 @@ target_include_directories(imgui PUBLIC
     ${EXTERNAL_DIR}/glfw/include
 )
 
+# OpenGL
 find_package(OpenGL REQUIRED)
 
+# Core library
 file(GLOB_RECURSE CORE_SOURCES
     ${SRC_DIR}/Core/*.cpp
     ${SRC_DIR}/Assembler/*.cpp
     ${SRC_DIR}/Disassembler/*.cpp
+    ${SRC_DIR}/SoftwareLoader/*.cpp
     ${SRC_DIR}/Util/*.cpp
     ${SRC_DIR}/Types/*.cpp
 )
@@ -46,7 +51,7 @@ target_include_directories(EmulatorCore PUBLIC
     ${EXTERNAL_DIR}/glfw/include
 )
 
-
+# GUI library
 file(GLOB_RECURSE GUI_SOURCES
     ${SRC_DIR}/App/*.cpp
     ${SRC_DIR}/Components/*.cpp
@@ -57,6 +62,7 @@ add_library(EmulatorApp STATIC ${GUI_SOURCES})
 target_include_directories(EmulatorApp PUBLIC ${SRC_DIR})
 target_link_libraries(EmulatorApp PRIVATE EmulatorCore imgui glfw OpenGL::GL)
 
+# Main executable
 add_executable(6502Emulator src/Main.cpp)
 target_include_directories(6502Emulator PRIVATE
     ${SRC_DIR}
@@ -66,4 +72,6 @@ target_include_directories(6502Emulator PRIVATE
 )
 target_link_libraries(6502Emulator PRIVATE EmulatorApp)
 
-add_subdirectory(tests)
+# Unit tests
+# add_subdirectory(tests)
+

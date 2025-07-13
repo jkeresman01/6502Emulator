@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 #include "../Core/Memory.h"
 
@@ -16,12 +17,5 @@ class SoftwareLoader
     static void Load(const std::vector<Byte> &machineCode);
 };
 
-static void Load(const std::vector<Byte> &machineCode)
-{
-    for (size_t i = 0; i < machineCode.size(); ++i)
-    {
-        Memory::s_RAM[0x8000 + i] = machineCode[i];
-    }
 }
 
-} // namespace emulator6502

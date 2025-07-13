@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "../AbstractComponent.h"
 
 namespace emulator6502
