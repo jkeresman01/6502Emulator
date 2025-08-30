@@ -1,77 +1,50 @@
-cmake_minimum_required(VERSION 3.10)
-project(6502Emulator)
+cmake_minimum_required(VERSION 3.16)
+project(6502Emulator LANGUAGES CXX)
+
+option(BUILD_TESTING "Build tests" ON)
+option(ENABLE_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+option(ENABLE_SANITIZERS "Enable ASan/UBSan" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(SRC_DIR src)
-set(EXTERNAL_DIR external)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(cmake/warnings.cmake)
+include(cmake/sanitizers.cmake)
 
-# External libraries
-add_subdirectory(${EXTERNAL_DIR}/glfw)
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(${EXTERNAL_DIR}/googletest)
-enable_testing()
-
-# IMGUI
-add_library(imgui STATIC
-    ${EXTERNAL_DIR}/imgui/imgui.cpp
-    ${EXTERNAL_DIR}/imgui/imgui_draw.cpp
-    ${EXTERNAL_DIR}/imgui/imgui_tables.cpp
-    ${EXTERNAL_DIR}/imgui/imgui_widgets.cpp
-    ${EXTERNAL_DIR}/imgui/backends/imgui_impl_glfw.cpp
-    ${EXTERNAL_DIR}/imgui/backends/imgui_impl_opengl3.cpp
-)
-
-target_include_directories(imgui PUBLIC
-    ${EXTERNAL_DIR}/imgui
-    ${EXTERNAL_DIR}/imgui/backends
-    ${EXTERNAL_DIR}/glfw/include
-)
-
-# OpenGL
+# Silence legacy OpenGL warning and prefer GLVND
+cmake_policy(SET CMP0072 NEW)
+set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 
-# Core library
-file(GLOB_RECURSE CORE_SOURCES
-    ${SRC_DIR}/Core/*.cpp
-    ${SRC_DIR}/Assembler/*.cpp
-    ${SRC_DIR}/Disassembler/*.cpp
-    ${SRC_DIR}/SoftwareLoader/*.cpp
-    ${SRC_DIR}/Util/*.cpp
-    ${SRC_DIR}/Types/*.cpp
+# External deps via submodules you already have
+# GLFW
+add_subdirectory(external/glfw)
+# ImGui (build minimal static lib with glfw & opengl backends)
+add_library(imgui_lib
+  external/imgui/imgui.cpp
+  external/imgui/imgui_draw.cpp
+  external/imgui/imgui_tables.cpp
+  external/imgui/imgui_widgets.cpp
+  external/imgui/backends/imgui_impl_glfw.cpp
+  external/imgui/backends/imgui_impl_opengl3.cpp
 )
-
-add_library(EmulatorCore STATIC ${CORE_SOURCES})
-target_include_directories(EmulatorCore PUBLIC
-    ${SRC_DIR}
-    ${EXTERNAL_DIR}/imgui
-    ${EXTERNAL_DIR}/imgui/backends
-    ${EXTERNAL_DIR}/glfw/include
+target_include_directories(imgui_lib PUBLIC
+  external/imgui
+  external/imgui/backends
 )
+target_link_libraries(imgui_lib PUBLIC glfw OpenGL::OpenGL)
 
-# GUI library
-file(GLOB_RECURSE GUI_SOURCES
-    ${SRC_DIR}/App/*.cpp
-    ${SRC_DIR}/Components/*.cpp
-    ${SRC_DIR}/Types/*.cpp
-)
+# GTest (only when testing)
+include(CTest)
+if (BUILD_TESTING)
+  add_subdirectory(external/googletest)
+endif()
 
-add_library(EmulatorApp STATIC ${GUI_SOURCES})
-target_include_directories(EmulatorApp PUBLIC ${SRC_DIR})
-target_link_libraries(EmulatorApp PRIVATE EmulatorCore imgui glfw OpenGL::GL)
-
-# Main executable
-add_executable(6502Emulator src/Main.cpp)
-target_include_directories(6502Emulator PRIVATE
-    ${SRC_DIR}
-    ${EXTERNAL_DIR}/imgui
-    ${EXTERNAL_DIR}/imgui/backends
-    ${EXTERNAL_DIR}/glfw/include
-)
-target_link_libraries(6502Emulator PRIVATE EmulatorApp)
-
-# Unit tests
-# add_subdirectory(tests)
-
+# Modules
+add_subdirectory(emulator-shared)
+add_subdirectory(emulator-utilities)
+add_subdirectory(emulator-core)
+add_subdirectory(emulator-components)
+add_subdirectory(emulator-application)
