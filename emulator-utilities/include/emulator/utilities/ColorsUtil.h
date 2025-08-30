@@ -4,7 +4,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include "../Common/Logger.h"
+#include <emulator/shared/Logger.h>
 #include "imgui.h"
 
 namespace emulator6502

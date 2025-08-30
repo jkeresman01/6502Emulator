@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "../Assembler/Assembler.h"
-#include "../Core/Memory.h"
+#include <emulator/core/Assembler.h>
+#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {
