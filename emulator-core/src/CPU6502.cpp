@@ -1,11 +1,12 @@
-#include "CPU6502.h"
+#include <emulator/core/CPU6502.h>
 
-#include "../Common/Logger.h"
-#include "Memory.h"
+#include <emulator/shared/Logger.h>
+#include <emulator/core/Memory.h>
 
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace emulator6502
 {

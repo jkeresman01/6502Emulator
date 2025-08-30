@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "../Core/Memory.h"
+#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {

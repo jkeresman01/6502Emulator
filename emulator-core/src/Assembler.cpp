@@ -1,11 +1,11 @@
-#include "Assembler.h"
+#include <emulator/core/Assembler.h>
 
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 
-#include "../Types/Instruction.h"
+#include <emulator/core/Instruction.h>
 
 namespace emulator6502
 {

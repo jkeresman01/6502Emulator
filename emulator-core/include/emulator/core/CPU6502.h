@@ -2,8 +2,7 @@
 
 #include <array>
 #include <cstdint>
-
-#include "../Common/Logger.h"
+#include <emulator/shared/Logger.h>
 
 namespace emulator6502
 {

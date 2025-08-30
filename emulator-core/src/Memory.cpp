@@ -1,10 +1,10 @@
-#include "Memory.h"
+#include <emulator/core/Memory.h>
 
 #include <algorithm>
 #include <cstdint>
 
-#include "../Common/Assert.h"
-#include "../Common/Logger.h"
+#include <emulator/shared/Assert.h>
+#include <emulator/shared/Logger.h>
 
 namespace emulator6502
 {
