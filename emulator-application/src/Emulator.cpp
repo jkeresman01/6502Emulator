@@ -1,13 +1,13 @@
-#include "Emulator.h"
+#include <emulator/app/Emulator.h>
 
 #include <string>
 #include <vector>
 
-#include "../Util/ColorsUtil.h"
-#include "../Util/ProgramUtil.h"
-#include "../Util/RandomUtil.h"
+#include <emulator/utilities/ColorsUtil.h>
+#include <emulator/utilities/ProgramUtil.h>
+#include <emulator/utilities/RandomUtil.h>
 
-#include "../SoftwareLoader/SoftwareLoader.h"
+#include <emulator/core/SoftwareLoader.h>
 
 namespace emulator6502
 {
@@ -227,7 +227,7 @@ void Emulator6502::RenderStackOverflowPopup()
 void Emulator6502::OpenDissasemblyPopup()
 {
     const std::vector<Byte> &machineCode = ProgramUtil::ReadProgramFromMemory();
-    m_Dissasembly = m_Dissasembler->Disassmble(machineCode);
+    m_Dissasembly = m_Disassembler->Disassmble(machineCode);
     m_ShowDisassemblyPopup = true;
 }
 

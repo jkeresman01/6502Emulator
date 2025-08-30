@@ -9,16 +9,16 @@
 #include <iostream>
 #include <memory>
 
-#include "../Assembler/Assembler.h"
-#include "../Components/Editor/Editor.h"
-#include "../Components/HEXDisplay/HEXDisplay.h"
-#include "../Components/LEDs/LEDs.h"
-#include "../Components/MemoryLayout/MemoryLayout.h"
-#include "../Components/PixelDisplay/PixelDisplay.h"
-#include "../Components/SwitchPanel/SwitchPanel.h"
-#include "../Core/CPU6502.h"
-#include "../Core/Memory.h"
-#include "../Disassembler/Dissasembler.h"
+#include <emulator/core/Assembler.h>
+#include <emulator/components/Editor.h>
+#include <emulator/components/HEXDisplay.h>
+#include <emulator/components/LEDs.h>
+#include <emulator/components/MemoryLayout.h>
+#include <emulator/components/PixelDisplay.h>
+#include <emulator/components/SwitchPanel.h>
+#include <emulator/core/CPU6502.h>
+#include <emulator/core/Memory.h>
+#include <emulator/core/Disassembler.h>
 
 namespace emulator6502
 {
@@ -61,7 +61,7 @@ class Emulator6502
     std::unique_ptr<CPU6502> m_CPU = std::make_unique<CPU6502>();
 
     std::unique_ptr<Assembler> m_Assembler = std::make_unique<Assembler>();
-    std::unique_ptr<Disassembler> m_Dissasembler = std::make_unique<Disassembler>();
+    std::unique_ptr<Disassembler> m_Disassembler = std::make_unique<Disassembler>();
 
     std::unique_ptr<Editor> m_AsmEditor = std::make_unique<Editor>();
 
