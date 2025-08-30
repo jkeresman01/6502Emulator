@@ -1,4 +1,4 @@
-#include "Editor.h"
+#include <emulator/components/Editor.h>
 
 #include <cstdint>
 

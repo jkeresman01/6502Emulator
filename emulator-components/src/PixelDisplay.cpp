@@ -1,12 +1,12 @@
-#include "PixelDisplay.h"
+#include <emulator/components/PixelDisplay.h>
 
 #include <string>
 
 #include "imgui.h"
 
-#include "../../Core/Memory.h"
-#include "../../Types/Pixel.h"
-#include "../../Util/ColorsUtil.h"
+#include <emulator/core/Memory.h>
+#include <emulator/components/Pixel.h>
+#include <emulator/utilities/ColorsUtil.h>
 
 namespace emulator6502
 {

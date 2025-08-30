@@ -1,8 +1,8 @@
-#include "MemoryLayout.h"
+#include <emulator/components/MemoryLayout.h>
 
 #include "imgui.h"
 
-#include "../../Core/Memory.h"
+#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {

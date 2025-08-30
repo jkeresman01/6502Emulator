@@ -1,8 +1,8 @@
-#include "SwitchPanel.h"
+#include <emulator/components/SwitchPanel.h>
 
 #include "imgui.h"
 
-#include "../../Core/Memory.h"
+#include <emulator/core/Memory.h>
 
 #include <cstdio>
 #include <string>

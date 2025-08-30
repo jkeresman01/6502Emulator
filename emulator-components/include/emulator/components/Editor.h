@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../AbstractComponent.h"
+#include <emulator/components/AbstractComponent.h>
 
 namespace emulator6502
 {

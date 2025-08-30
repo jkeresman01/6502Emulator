@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../AbstractComponent.h"
+#include <emulator/components/AbstractComponent.h>
 
 #include <cstdint>
 

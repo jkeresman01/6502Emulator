@@ -1,6 +1,6 @@
-#include "HEXDisplay.h"
+#include <emulator/components/HEXDisplay.h>
 
-#include "../../Core/Memory.h"
+#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {
