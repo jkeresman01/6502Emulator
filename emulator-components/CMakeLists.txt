@@ -27,11 +27,18 @@ option(ENABLE_GUI_TESTS "Run GL/GLFW-dependent tests" OFF)
 
 if (BUILD_TESTING)
     file(GLOB COMP_TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+
     if (COMP_TESTS AND ENABLE_GUI_TESTS)
         add_executable(emulator_components_tests ${COMP_TESTS})
+
         target_link_libraries(emulator_components_tests PRIVATE emulator_components gtest gtest_main)
+
         target_warnings(emulator_components_tests)
-        if(ENABLE_SANITIZERS) target_sanitizers(emulator_components_tests) endif()
-                add_test(NAME emulator_components_tests COMMAND emulator_components_tests)
+
+        if(ENABLE_SANITIZERS) 
+            target_sanitizers(emulator_components_tests) 
         endif()
+
+        add_test(NAME emulator_components_tests COMMAND emulator_components_tests)
+    endif()
 endif()
