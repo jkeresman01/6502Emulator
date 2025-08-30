@@ -1,4 +1,4 @@
-#include "../src/Util/ColorsUtil.h"
+#include <emulator/utilities/ColorsUtil.h>
 #include <gtest/gtest.h>
 
 using namespace emulator6502;

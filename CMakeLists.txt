@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 include(cmake/warnings.cmake)
 include(cmake/sanitizers.cmake)
 
@@ -18,9 +19,9 @@ cmake_policy(SET CMP0072 NEW)
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 
-# External deps via submodules you already have
-# GLFW
+# External deps via submodules
 add_subdirectory(external/glfw)
+
 # ImGui (build minimal static lib with glfw & opengl backends)
 add_library(imgui_lib
   external/imgui/imgui.cpp

@@ -1,4 +1,7 @@
+#include <emulator/core/Disassembler.h>
+
 #include <emulator/core/CPU6502.h>
+#include <emulator/core/Instruction.h>
 
 #include <emulator/shared/Logger.h>
 #include <emulator/core/Memory.h>

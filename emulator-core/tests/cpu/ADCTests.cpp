@@ -1,5 +1,6 @@
-#include "../src/Core/CPU6502.h"
-#include "../src/Core/Memory.h"
+#include <emulator/core/CPU6502.h>
+#include <emulator/core/Memory.h>
+
 #include <gtest/gtest.h>
 
 using namespace emulator6502;

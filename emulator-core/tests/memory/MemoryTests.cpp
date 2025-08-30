@@ -1,4 +1,4 @@
-#include "../src/Core/Memory.h"
+#include <emulator/core/Memory.h>
 #include <gtest/gtest.h>
 
 using namespace emulator6502;

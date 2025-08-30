@@ -1,10 +1,10 @@
-#include "LEDs.h"
+#include <emulator/components/LEDs.h>
 
 #include <cstdint>
 
 #include "imgui.h"
 
-#include "../../Core/Memory.h"
+#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {
