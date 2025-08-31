@@ -1,7 +1,12 @@
 #pragma once
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <array>
 #include <cstdint>
+#include <string>
 #include <emulator/shared/Logger.h>
 
 namespace emulator6502
@@ -10,30 +15,90 @@ namespace emulator6502
 using Byte = uint8_t;
 using Word = uint16_t;
 
+//////////////////////////////////////////////////////////////
+///
+/// @struct Flags
+///
+/// @brief Represents the 6502 CPU status flags. Although the
+///        real 6502 packs these into a single byte, exposing
+///        them as bit fields improves readability when
+///        inspecting/modifying individual flags.
+///
+//////////////////////////////////////////////////////////////
 struct Flags
 {
-    Byte C : 1;
-    Byte Z : 1;
-    Byte I : 1;
-    Byte D : 1;
-    Byte B : 1;
-    Byte _ : 1;
-    Byte V : 1;
-    Byte N : 1;
+    Byte C : 1; ///< Carry Flag
+    Byte Z : 1; ///< Zero Flag
+    Byte I : 1; ///< Interrupt Disable
+    Byte D : 1; ///< Decimal Mode
+    Byte B : 1; ///< Break Command
+    Byte _ : 1; ///< Unused (on real 6502 typically set to 1 when pushed)
+    Byte V : 1; ///< Overflow Flag
+    Byte N : 1; ///< Negative Flag
 };
 
+//////////////////////////////////////////////////////////////
+///
+/// @class CPU6502
+///
+/// @brief Emulates the MOS 6502 CPU: registers, status flags,
+///        memory access, stack operations, instruction fetch/
+///        decode/execute via a dispatch table, and a complete
+///        set of opcode handlers.
+///
+/// Typical usage:
+/// @code
+/// CPU6502 cpu;
+/// cpu.Init();
+/// cpu.Reset();
+/// while (running) {
+///     cpu.Step();  // fetch, decode, execute one instruction
+/// }
+/// @endcode
+///
+//////////////////////////////////////////////////////////////
 class CPU6502
 {
     using Instruction = void (CPU6502::*)();
 
   public:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Default constructor
+    ///
+    //////////////////////////////////////////////////////////////
     CPU6502() = default;
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Initializes CPU internals (e.g., dispatch table).
+    ///        Call once before using the CPU.
+    ///
+    //////////////////////////////////////////////////////////////
     void Init();
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Resets CPU to power-on state: registers, flags,
+    ///        program counter, and stack pointer.
+    ///
+    //////////////////////////////////////////////////////////////
     void Reset();
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Executes a single instruction (fetch, decode,
+    ///        execute). Advances PC and updates flags as needed.
+    ///
+    //////////////////////////////////////////////////////////////
     void Step();
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @name Register Accessors
+    ///
+    //////////////////////////////////////////////////////////////
+    ///@{
     Byte GetAccumulator() const { return m_A; }
     Byte GetRegisterX() const { return m_X; }
     Byte GetRegisterY() const { return m_Y; }
@@ -41,33 +106,84 @@ class CPU6502
     Byte GetStackPointer() const { return m_SP; }
     Flags GetStatusFlags() const { return m_StatusFlags; }
     bool HasStackOverflowed() const { return m_StackOverflow; }
+    ///@}
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @name Register Mutators
+    ///
+    //////////////////////////////////////////////////////////////
+    ///@{
     void SetAccumulator(const Byte value) { m_A = value; }
     void SetRegisterX(const Byte value) { m_X = value; }
     void SetRegisterY(const Byte value) { m_Y = value; }
     void SetStackPointer(const Byte value) { m_SP = value; }
     void SetFlags(const Flags &flags) { m_StatusFlags = flags; }
+    ///@}
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Clears the internal stack overflow indicator.
+    ///
+    //////////////////////////////////////////////////////////////
     void ClearStackOverflowFlag() { m_StackOverflow = false; }
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Returns a human-readable dump of the CPU state
+    ///        (registers, flags, program counter).
+    ///
+    //////////////////////////////////////////////////////////////
     std::string ToString() const;
 
   private:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Sets up the opcode->handler dispatch table.
+    ///
+    //////////////////////////////////////////////////////////////
     void InitDispatchTable();
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Handler invoked when an invalid/unimplemented
+    ///        opcode is encountered.
+    ///
+    //////////////////////////////////////////////////////////////
     void InvalidOpcode();
 
   private:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @name Fetch / Memory / Stack helpers
+    ///
+    //////////////////////////////////////////////////////////////
+    ///@{
+
+    /// @brief Fetches the next byte from memory and increments PC.
     Byte FetchByte();
+
+    /// @brief Fetches the next word (little-endian) from memory and increments PC by 2.
     Word FetchWord();
 
+    /// @brief Reads a byte from memory at @p address.
     Byte ReadByte(const Word address);
+
+    /// @brief Writes a byte @p value to memory at @p address.
     void WriteByte(const Word address, const Byte value);
 
+    /// @brief Pops a byte from the stack into a register.
     Byte PopByte();
+
+    /// @brief Pushes a byte @p value onto the stack.
     void PushByte(const Byte value);
 
+    /// @brief Pops a word (high byte after low byte) from the stack.
     Word PopWord();
+
+    /// @brief Pushes a word @p value onto the stack (low, then high).
     void PushWord(const Word value);
+    ///@}
 
   private:
     ////////////////////            LDA (Load accumulator)            ////////////////////
@@ -184,6 +300,7 @@ class CPU6502
     void ADCIndirectX();
     void ADCIndirectY();
 
+    /// @brief Helper for ADC family: adds @p value + Carry to A and updates flags.
     void AddWithCarry(const Byte value);
 
     ////////////////////  SBC (Subtract with Borrow)  ////////////////////
@@ -196,6 +313,7 @@ class CPU6502
     void SBCIndirectX();
     void SBCIndirectY();
 
+    /// @brief Helper for SBC family: A = A - value - (1 - Carry), updates flags.
     void SubtractWithBorrow(const Byte value);
 
     ////////////////////  Register Transfers  ////////////////////
@@ -216,6 +334,7 @@ class CPU6502
     void EORIndirectX();
     void EORIndirectY();
 
+    /// @brief Helper for EOR family: A ^= value; updates Z/N.
     void ExclusiveOR(const Byte value);
 
     ////////////////////  CMP (Compare Accumulator)  ////////////////////
@@ -228,6 +347,7 @@ class CPU6502
     void CMPIndirectX();
     void CMPIndirectY();
 
+    /// @brief Helper for CMP/CPX/CPY: sets C/Z/N as if (register - value) occurred.
     void Compare(const Byte registerValue, const Byte value);
 
     ////////////////////  INC (Increment Memory)  ////////////////////
@@ -299,23 +419,46 @@ class CPU6502
     void JMPIndirect();
 
   private:
-    ////////////////////            REGISTERS            ////////////////////
-    Byte m_A;
-    Byte m_X;
-    Byte m_Y;
-    Word m_PC;
-    Byte m_SP;
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @name CPU Registers
+    ///
+    //////////////////////////////////////////////////////////////
+    ///@{
+    Byte m_A;  ///< Accumulator
+    Byte m_X;  ///< Index register X
+    Byte m_Y;  ///< Index register Y
+    Word m_PC; ///< Program counter
+    Byte m_SP; ///< Stack pointer
+    ///@}
 
-    ////////////////////            STATUS FLAGS        ////////////////////
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Program status register. Exposed both as a raw
+    ///        byte and as bitfields for convenience.
+    ///
+    //////////////////////////////////////////////////////////////
     union {
-        Byte m_StatusRegisterFlags;
-        Flags m_StatusFlags;
+        Byte  m_StatusRegisterFlags; ///< Raw processor status (P)
+        Flags m_StatusFlags;         ///< Bitfield access to P
     };
 
-    ////////////////////            DISPATCH TABLE        ////////////////////
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Opcode dispatch table (0x00–0xFF) mapping to
+    ///        instruction handlers.
+    ///
+    //////////////////////////////////////////////////////////////
     std::array<Instruction, 256> m_InstructionSetDispatchTable;
 
-    ////////////////////          Stack overflow flag        ////////////////////
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Indicates that a stack overflow condition occurred
+    ///        (implementation-defined; useful for UI warnings).
+    ///
+    //////////////////////////////////////////////////////////////
     bool m_StackOverflow = false;
 };
+
 } // namespace emulator6502
+

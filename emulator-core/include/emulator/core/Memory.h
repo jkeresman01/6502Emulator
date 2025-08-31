@@ -16,10 +16,8 @@ using Word = uint16_t;
 ///
 /// @class Memory
 ///
-/// @brief A utility class responsible for managing the emulator's
+/// @brief Class responsible for managing the emulator's
 ///        memory (64KB).
-///        This class provides methods to initialize,
-///        reset, read, and write data to memory locations.
 ///
 ////////////////////////////////////////////////////////////
 class Memory

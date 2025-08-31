@@ -1,8 +1,12 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
+
 #include <emulator/core/Disassembler.h>
 
 #include <emulator/core/CPU6502.h>
 #include <emulator/core/Instruction.h>
-
 #include <emulator/shared/Logger.h>
 #include <emulator/core/Memory.h>
 
@@ -14,6 +18,8 @@
 namespace emulator6502
 {
 
+
+////////////////////////////////////////////////////////////
 static const std::unordered_map<Byte, DisassembledInstruction> disassemblyTable = {
     {0xA9, {"LDA #", 1}}, {0xAD, {"LDA $", 2}}, {0x8D, {"STA $", 2}}, {0xA2, {"LDX #", 1}},
     {0xAE, {"LDX $", 2}}, {0x8E, {"STX $", 2}}, {0xA0, {"LDY #", 1}}, {0xAC, {"LDY $", 2}},
@@ -21,6 +27,8 @@ static const std::unordered_map<Byte, DisassembledInstruction> disassemblyTable 
     {0xED, {"SBC $", 2}}, {0xE8, {"INX", 0}},   {0xC8, {"INY", 0}},   {0xCA, {"DEX", 0}},
     {0x88, {"DEY", 0}},   {0xEA, {"NOP", 0}},   {0x00, {"BRK", 0}}};
 
+
+////////////////////////////////////////////////////////////
 std::vector<std::string> Disassembler::Disassmble(const std::vector<Byte> &machineCode)
 {
     std::vector<std::string> assembly;
@@ -53,6 +61,9 @@ std::vector<std::string> Disassembler::Disassmble(const std::vector<Byte> &machi
 
     return assembly;
 }
+
+
+////////////////////////////////////////////////////////////
 void Disassembler::appendOperands(std::stringstream &ss, const std::vector<Byte> &machineCode,
                                   std::size_t &programCounter, Byte operandCount)
 {

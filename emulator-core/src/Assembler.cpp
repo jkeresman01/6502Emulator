@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/core/Assembler.h>
 
 #include <iostream>
@@ -10,6 +14,8 @@
 namespace emulator6502
 {
 
+
+////////////////////////////////////////////////////////////
 static const std::unordered_map<std::string, Instruction> instructionSetLookupTable = {
     {"LDA #", {0xA9, 1}}, {"LDA $", {0xAD, 2}}, {"STA $", {0x8D, 2}}, {"LDX #", {0xA2, 1}},
     {"LDX $", {0xAE, 2}}, {"STX $", {0x8E, 2}}, {"LDY #", {0xA0, 1}}, {"LDY $", {0xAC, 2}},
@@ -17,6 +23,8 @@ static const std::unordered_map<std::string, Instruction> instructionSetLookupTa
     {"SBC $", {0xED, 2}}, {"INX", {0xE8, 0}},   {"INY", {0xC8, 0}},   {"DEX", {0xCA, 0}},
     {"DEY", {0x88, 0}},   {"NOP", {0xEA, 0}}};
 
+
+////////////////////////////////////////////////////////////
 std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
 {
     std::vector<Byte> machineCode;
@@ -55,6 +63,8 @@ std::vector<Byte> Assembler::Assemble(const std::string &asmCode)
     return machineCode;
 }
 
+
+////////////////////////////////////////////////////////////
 void Assembler::appendOperands(std::vector<Byte> &machineCode, const std::string &operand, Byte operandCount)
 {
     if (operandCount == 1)
