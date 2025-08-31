@@ -5,9 +5,9 @@
 namespace emulator6502
 {
 static constexpr uint8_t SEGMENTS_NO = 7;
-static constexpr uint8_t DIGITS_LETTERS_NO = 16;
+static constexpr uint8_t HEX_SYMBOLS_NO = 16;
 
-static constexpr bool SEGMENTS[DIGITS_LETTERS_NO][SEGMENTS_NO] = {
+static constexpr bool SEGMENTS[HEX_SYMBOLS_NO][SEGMENTS_NO] = {
     {1, 1, 1, 1, 1, 1, 0}, // 0
     {0, 1, 1, 0, 0, 0, 0}, // 1
     {1, 1, 0, 1, 1, 0, 1}, // 2
