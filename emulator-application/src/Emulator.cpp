@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/app/Emulator.h>
 
 #include <string>
@@ -11,6 +15,8 @@
 
 namespace emulator6502
 {
+
+////////////////////////////////////////////////////////////
 Emulator6502::Emulator6502()
 {
     m_Components.reserve(COMPONENTS_NO);
@@ -22,6 +28,8 @@ Emulator6502::Emulator6502()
     m_Components.emplace_back(std::make_unique<SwitchPanel>());
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::Init()
 {
     InitComponents();
@@ -34,6 +42,8 @@ void Emulator6502::Init()
     ImGui_ImplOpenGL3_Init();
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::InitComponents()
 {
     Random::Init();
@@ -47,6 +57,8 @@ void Emulator6502::InitComponents()
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::InitWindow()
 {
     GLFWmonitor *primaryMonitor = glfwGetPrimaryMonitor();
@@ -54,6 +66,8 @@ void Emulator6502::InitWindow()
     m_Window = glfwCreateWindow(videoMode->width, videoMode->height, "6502 Emulator", NULL, NULL);
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::Run()
 {
     while (!glfwWindowShouldClose(m_Window))
@@ -71,6 +85,7 @@ void Emulator6502::Run()
     }
 }
 
+////////////////////////////////////////////////////////////
 void Emulator6502::Render()
 {
     RenderComponents();
@@ -80,6 +95,8 @@ void Emulator6502::Render()
     RenderStackOverflowPopup();
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::RenderCPUStatusWindow()
 {
     ImGui::Begin("CPU Registers");
@@ -114,6 +131,8 @@ void Emulator6502::RenderCPUStatusWindow()
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::RenderComponents()
 {
     m_AsmEditor->Render();
@@ -124,6 +143,8 @@ void Emulator6502::RenderComponents()
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::RenderControlButtonsWindow()
 {
     ImGui::Begin("Controls");
@@ -161,6 +182,8 @@ void Emulator6502::RenderControlButtonsWindow()
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::RenderDissasemblyPopup()
 {
     if (m_ShowDisassemblyPopup)
@@ -185,6 +208,8 @@ void Emulator6502::RenderDissasemblyPopup()
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::RenderStackOverflowPopup()
 {
     if (m_CPU->HasStackOverflowed())
@@ -224,6 +249,8 @@ void Emulator6502::RenderStackOverflowPopup()
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::OpenDissasemblyPopup()
 {
     const std::vector<Byte> &machineCode = ProgramUtil::ReadProgramFromMemory();
@@ -231,6 +258,8 @@ void Emulator6502::OpenDissasemblyPopup()
     m_ShowDisassemblyPopup = true;
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::LoadProgramIntoMemory()
 {
     const std::string &asmCode = m_AsmEditor->GetText();
@@ -239,6 +268,8 @@ void Emulator6502::LoadProgramIntoMemory()
     SoftwareLoader::Load(machineCode);
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::Shutdown()
 {
     DestroyComponents();
@@ -250,6 +281,8 @@ void Emulator6502::Shutdown()
     glfwTerminate();
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::DestroyComponents()
 {
     m_AsmEditor->Destroy();
@@ -260,6 +293,8 @@ void Emulator6502::DestroyComponents()
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void Emulator6502::Reset()
 {
     Memory::Reset();
