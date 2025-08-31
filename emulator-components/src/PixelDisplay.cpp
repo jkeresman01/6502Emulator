@@ -9,7 +9,6 @@
 #include <emulator/utilities/ColorsUtil.h>
 
 #include <string>
-
 #include "imgui.h"
 
 namespace emulator6502
@@ -19,7 +18,7 @@ namespace emulator6502
 ////////////////////////////////////////////////////////////
 void PixelDisplay::Init() noexcept
 {
-    // Do nothing
+    // No-op
 }
 
 
@@ -27,68 +26,12 @@ void PixelDisplay::Init() noexcept
 void PixelDisplay::Render() noexcept
 {
     ImGui::Begin("Pixel Display");
-
     ImGui::Text("$0200 - $05FF");
 
-    ImGui::SameLine(150);
-    if (ImGui::Button("Show Color Palette"))
-    {
-        ImGui::OpenPopup("Color Palette");
-    }
-
-    if (ImGui::BeginPopupModal("Color Palette", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("Each value ($0-$F) maps to one of these colors: ");
-        ImGui::NewLine();
-
-        for (uint32_t i = 1; i <= COLORS_COUNT; ++i)
-        {
-            const ImVec4 &color = ColorsUtil::GetPixelColor(i - 1);
-            ImGui::ColorButton(("##color" + std::to_string(i - 1)).c_str(), color,
-                               ImGuiColorEditFlags_NoTooltip, ImVec2(32, 32));
-            ImGui::SameLine();
-            ImGui::Text("0x%X", i - 1);
-
-            if (i % COLORS_PER_ROW == 0)
-            {
-                ImGui::NewLine();
-            }
-            else
-            {
-                ImGui::SameLine();
-            }
-        }
-
-        ImGui::NewLine();
-        if (ImGui::Button("Close"))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-
-        ImGui::EndPopup();
-    }
-
+    RenderPaletteButton();
     ImGui::NewLine();
 
-    for (uint32_t y = 0; y < GRID_SIZE; ++y)
-    {
-        for (uint32_t x = 0; x < GRID_SIZE; ++x)
-        {
-            Word address = START_ADDR + (y * GRID_SIZE + x);
-            Byte colorIndex = Memory::Read(address) & 0x0F;
-
-            const ImVec4 &color = ColorsUtil::GetPixelColor(colorIndex);
-
-            Pixel pixel;
-            pixel.SetColor(color);
-            pixel.Render();
-
-            if (x < GRID_SIZE - 1)
-            {
-                ImGui::SameLine();
-            }
-        }
-    }
+    RenderPixelGrid();
 
     ImGui::End();
 }
@@ -97,7 +40,85 @@ void PixelDisplay::Render() noexcept
 ////////////////////////////////////////////////////////////
 void PixelDisplay::Destroy() noexcept
 {
-    // Do nothing
+    // No-op
+}
+
+
+////////////////////////////////////////////////////////////
+void PixelDisplay::RenderPaletteCell(uint32_t idx) const
+{
+    const ImVec4& color = ColorsUtil::GetPixelColor(idx);
+    ImGui::ColorButton(("##color" + std::to_string(idx)).c_str(),
+                       color,
+                       ImGuiColorEditFlags_NoTooltip,
+                       ImVec2(32, 32));
+    ImGui::SameLine();
+    ImGui::Text("0x%X", idx);
+}
+
+
+////////////////////////////////////////////////////////////
+void PixelDisplay::RenderPalettePopup() const
+{
+    if (!ImGui::BeginPopupModal("Color Palette", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+        return;
+
+    ImGui::Text("Each value ($0-$F) maps to one of these colors:");
+    ImGui::NewLine();
+
+    for (uint32_t i = 0; i < COLORS_COUNT; ++i)
+    {
+        RenderPaletteCell(i);
+        ( (i + 1) % COLORS_PER_ROW == 0 ) ? ImGui::NewLine() : ImGui::SameLine();
+    }
+
+    ImGui::NewLine();
+
+    if (ImGui::Button("Close"))
+    {
+        ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::EndPopup();
+}
+
+
+////////////////////////////////////////////////////////////
+void PixelDisplay::RenderPaletteButton() const
+{
+    ImGui::SameLine(150);
+    if (ImGui::Button("Show Color Palette"))
+        ImGui::OpenPopup("Color Palette");
+
+    RenderPalettePopup();
+}
+
+
+////////////////////////////////////////////////////////////
+void PixelDisplay::RenderPixelAt(uint32_t x, uint32_t y) const
+{
+    const Word address   = START_ADDR + (y * GRID_SIZE + x);
+    const Byte colorIdx  = Memory::Read(address) & 0x0F;
+    const ImVec4& color  = ColorsUtil::GetPixelColor(colorIdx);
+
+    Pixel p;
+    p.SetColor(color);
+    p.Render();
+}
+
+
+////////////////////////////////////////////////////////////
+void PixelDisplay::RenderPixelGrid() const
+{
+    for (uint32_t y = 0; y < GRID_SIZE; ++y)
+    {
+        for (uint32_t x = 0; x < GRID_SIZE; ++x)
+        {
+            RenderPixelAt(x, y);
+            if (x + 1 < GRID_SIZE) ImGui::SameLine();
+        }
+    }
 }
 
 } // namespace emulator6502
+
