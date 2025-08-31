@@ -31,7 +31,7 @@ void HEXDisplay::Init() noexcept
     // Do nothing for now
 }
 
-void HEXDisplay::Render() noexcept
+void SevenSegmentDisplay::Render() noexcept
 {
     ImGui::Begin("HEX Display");
     ImGui::Text("$0602 - $0605");
@@ -51,7 +51,7 @@ void HEXDisplay::Render() noexcept
     ImGui::End();
 }
 
-void HEXDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &position, const float size,
+void SevenSegmentDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &position, const float size,
                                        const uint8_t value)
 {
     const float segmentLength = size;

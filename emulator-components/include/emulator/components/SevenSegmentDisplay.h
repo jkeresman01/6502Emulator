@@ -11,7 +11,7 @@ namespace emulator6502
 using Byte = uint8_t;
 using Word = uint16_t;
 
-class HEXDisplay : public AbstractComponent
+class SevenSegmentDisplay : public AbstractComponent
 {
   public:
     virtual void Init() noexcept override;
