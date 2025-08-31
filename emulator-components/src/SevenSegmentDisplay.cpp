@@ -2,7 +2,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <emulator/components/HEXDisplay.h>
+#include <emulator/components/SevenSegmentDisplay.h>
 
 #include <emulator/core/Memory.h>
 
@@ -32,7 +32,7 @@ static constexpr bool SEGMENTS[HEX_SYMBOLS_NO][SEGMENTS_NO] = {
 
 
 ////////////////////////////////////////////////////////////
-void HEXDisplay::Init() noexcept
+void SevenSegmentDisplay::Init() noexcept
 {
     // Do nothing for now
 }
@@ -125,7 +125,7 @@ void SevenSegmentDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVe
 
 
 ////////////////////////////////////////////////////////////
-void HEXDisplay::Destroy() noexcept
+void SevenSegmentDisplay::Destroy() noexcept
 {
     // Do nothing for now
 }
