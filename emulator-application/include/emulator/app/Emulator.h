@@ -17,7 +17,7 @@
 
 #include <emulator/core/Assembler.h>
 #include <emulator/components/Editor.h>
-#include <emulator/components/HEXDisplay.h>
+#include <emulator/components/SevenSegmentDisplay.h>
 #include <emulator/components/LEDs.h>
 #include <emulator/components/MemoryLayout.h>
 #include <emulator/components/PixelDisplay.h>
