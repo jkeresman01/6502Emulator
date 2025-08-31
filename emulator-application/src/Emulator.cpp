@@ -23,7 +23,7 @@ Emulator6502::Emulator6502()
 
     m_Components.emplace_back(std::make_unique<PixelDisplay>());
     m_Components.emplace_back(std::make_unique<MemoryLayout>());
-    m_Components.emplace_back(std::make_unique<HEXDisplay>());
+    m_Components.emplace_back(std::make_unique<SevenSegmentDisplay>());
     m_Components.emplace_back(std::make_unique<LEDs>());
     m_Components.emplace_back(std::make_unique<SwitchPanel>());
 }
