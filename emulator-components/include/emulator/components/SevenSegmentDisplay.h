@@ -1,5 +1,9 @@
 #pragma once
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/AbstractComponent.h>
 
 #include <cstdint>
@@ -8,26 +12,90 @@
 
 namespace emulator6502
 {
+
 using Byte = uint8_t;
 using Word = uint16_t;
 
+//////////////////////////////////////////////////////////////
+///
+/// @class SevenSegmentDisplay
+///
+/// @brief A UI component that simulates a 7-segment display,
+///        commonly used for showing hexadecimal or decimal
+///        values in digital systems.  
+///
+/// Each digit is drawn individually using ImGui’s drawing API.
+///
+//////////////////////////////////////////////////////////////
 class SevenSegmentDisplay : public AbstractComponent
 {
-  public:
+public:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Initializes the 7-segment display component.
+    ///
+    //////////////////////////////////////////////////////////////
     virtual void Init() noexcept override;
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Renders the 7-segment display in the emulator UI.
+    ///
+    //////////////////////////////////////////////////////////////
     virtual void Render() noexcept override;
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Cleans up resources used by the display.
+    ///
+    //////////////////////////////////////////////////////////////
     virtual void Destroy() noexcept override;
 
-  private:
-    void DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &pos, const float size,
+private:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Draws a single 7-segment digit.
+    ///
+    /// @param [in] drawList ImGui draw list to render into
+    /// @param [in] pos      Position of the digit in the UI
+    /// @param [in] size     Size of the digit
+    /// @param [in] value    Value (0–F) to render
+    ///
+    //////////////////////////////////////////////////////////////
+    void DrawSevenSegmentDigit(ImDrawList* drawList,
+                               const ImVec2& pos,
+                               const float size,
                                const uint8_t value);
 
-  private:
+private:
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Number of digits in the display
+    ///
+    //////////////////////////////////////////////////////////////
     static constexpr uint8_t DIGITS_NO = 4;
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Base memory address used to read digit values
+    ///
+    //////////////////////////////////////////////////////////////
     static const Word BASE_ADDR = 0x0602;
 
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Default size of each digit
+    ///
+    //////////////////////////////////////////////////////////////
     static constexpr float SIZE = 60.0f;
+
+    //////////////////////////////////////////////////////////////
+    ///
+    /// @brief Spacing between digits
+    ///
+    //////////////////////////////////////////////////////////////
     static constexpr float SPACING = 20.0f;
 };
+
 } // namespace emulator6502
+

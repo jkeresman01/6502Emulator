@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/HEXDisplay.h>
 
 #include <emulator/core/Memory.h>
@@ -26,11 +30,15 @@ static constexpr bool SEGMENTS[HEX_SYMBOLS_NO][SEGMENTS_NO] = {
     {1, 0, 0, 0, 1, 1, 1}  // F
 };
 
+
+////////////////////////////////////////////////////////////
 void HEXDisplay::Init() noexcept
 {
     // Do nothing for now
 }
 
+
+////////////////////////////////////////////////////////////
 void SevenSegmentDisplay::Render() noexcept
 {
     ImGui::Begin("HEX Display");
@@ -51,6 +59,8 @@ void SevenSegmentDisplay::Render() noexcept
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void SevenSegmentDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVec2 &position, const float size,
                                        const uint8_t value)
 {
@@ -113,6 +123,8 @@ void SevenSegmentDisplay::DrawSevenSegmentDigit(ImDrawList *drawList, const ImVe
     }
 }
 
+
+////////////////////////////////////////////////////////////
 void HEXDisplay::Destroy() noexcept
 {
     // Do nothing for now

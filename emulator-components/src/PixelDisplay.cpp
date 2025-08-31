@@ -1,21 +1,29 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/PixelDisplay.h>
-
-#include <string>
-
-#include "imgui.h"
 
 #include <emulator/core/Memory.h>
 #include <emulator/components/Pixel.h>
 #include <emulator/utilities/ColorsUtil.h>
 
+#include <string>
+
+#include "imgui.h"
+
 namespace emulator6502
 {
 
+
+////////////////////////////////////////////////////////////
 void PixelDisplay::Init() noexcept
 {
     // Do nothing
 }
 
+
+////////////////////////////////////////////////////////////
 void PixelDisplay::Render() noexcept
 {
     ImGui::Begin("Pixel Display");
@@ -85,6 +93,8 @@ void PixelDisplay::Render() noexcept
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void PixelDisplay::Destroy() noexcept
 {
     // Do nothing

@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/Editor.h>
 
 #include <cstdint>
@@ -10,11 +14,14 @@ namespace emulator6502
 constexpr int64_t BUFFER_SIZE = 8192;
 static char asmCode[BUFFER_SIZE] = "";
 
+////////////////////////////////////////////////////////////
 void Editor::Init() noexcept
 {
     // Do nothing
 }
 
+
+////////////////////////////////////////////////////////////
 void Editor::Render() noexcept
 {
     ImGui::Begin("Assembly Editor");
@@ -22,11 +29,15 @@ void Editor::Render() noexcept
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void Editor::Destroy() noexcept
 {
     // Do nothing
 }
 
+
+////////////////////////////////////////////////////////////
 std::string Editor::GetText() const
 {
     return asmCode;

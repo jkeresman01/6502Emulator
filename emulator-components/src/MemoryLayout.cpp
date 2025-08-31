@@ -1,17 +1,24 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/MemoryLayout.h>
+#include <emulator/core/Memory.h>
 
 #include "imgui.h"
-
-#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {
 
+
+////////////////////////////////////////////////////////////
 void MemoryLayout::Init() noexcept
 {
     // Do nothing
 }
 
+
+////////////////////////////////////////////////////////////
 void MemoryLayout::Render() noexcept
 {
     ImGui::Begin("Memory Viewer");
@@ -38,6 +45,8 @@ void MemoryLayout::Render() noexcept
     ImGui::End();
 }
 
+
+////////////////////////////////////////////////////////////
 void MemoryLayout::Destroy() noexcept
 {
     // Do nothing

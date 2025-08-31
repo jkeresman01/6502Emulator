@@ -1,17 +1,29 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+
 #include <emulator/components/LEDs.h>
 
-#include <cstdint>
+#include <emulator/core/Memory.h>
 
+#include <cstdint>
 #include "imgui.h"
 
-#include <emulator/core/Memory.h>
 
 namespace emulator6502
 {
 
 static constexpr uint8_t LEDS_NO = 16;
 
-void LEDs::Init() noexcept {}
+
+////////////////////////////////////////////////////////////
+void LEDs::Init() noexcept 
+{
+    //Do nothing
+}
+
+
+////////////////////////////////////////////////////////////
 void LEDs::Render() noexcept
 {
     ImGui::Begin("LEDs");
@@ -38,6 +50,11 @@ void LEDs::Render() noexcept
     ImGui::End();
 }
 
-void LEDs::Destroy() noexcept {}
+
+////////////////////////////////////////////////////////////
+void LEDs::Destroy() noexcept 
+{
+    //Do nothing
+}
 
 } // namespace emulator6502
