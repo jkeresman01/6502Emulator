@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test (${{ matrix.build_type }})
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+
+    env:
+      BUILD_DIR: build
+      CMAKE_GENERATOR: Ninja
+      BUILD_TESTING: "ON"
+      ENABLE_SANITIZERS: "OFF"
+      ENABLE_WARNINGS_AS_ERRORS: "OFF"
+
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake ninja-build pkg-config ccache \
+            libx11-dev libxext-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev \
+            libgl1-mesa-dev libwayland-dev wayland-protocols libxkbcommon-dev
+
+      - name: Setup ccache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ccache
+          key: ccache-${{ runner.os }}-${{ matrix.build_type }}-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ runner.os }}-${{ matrix.build_type }}-
+            ccache-${{ runner.os }}-
+      - name: Configure ccache
+        run: |
+          ccache --zero-stats || true
+          ccache --max-size=500M || true
+
+      - name: Configure (CMake)
+        run: |
+          cmake -S . -B "${BUILD_DIR}" -G "${CMAKE_GENERATOR}" \
+            -DCMAKE_BUILD_TYPE="${{ matrix.build_type }}" \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -DBUILD_TESTING="${BUILD_TESTING}" \
+            -DENABLE_SANITIZERS="${ENABLE_SANITIZERS}" \
+            -DENABLE_WARNINGS_AS_ERRORS="${ENABLE_WARNINGS_AS_ERRORS}"
+
+      - name: Build
+        run: cmake --build "${BUILD_DIR}" --config "${{ matrix.build_type }}" -j"$(nproc)"
+
+      - name: Tests
+        if: env.BUILD_TESTING == 'ON'
+        run: ctest --test-dir "${BUILD_DIR}" --output-on-failure --build-config "${{ matrix.build_type }}"
+
+      - name: ccache stats
+        if: always()
+        run: ccache --show-stats || true
+
+      - name: Upload app artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 6502EmulatorApp-${{ matrix.build_type }}-${{ runner.os }}
+          path: |
+            ${{ env.BUILD_DIR }}/bin/6502EmulatorApp
+          if-no-files-found: warn
+
